@@ -1,0 +1,13 @@
+// Entra Passkey Addition Threat Detection
+// https://www.linkedin.com/posts/activity-7184406157707390977-6N3C/
+
+//Entra Passkey Addition Threat Detection KQL:
+
+AuditLogs
+| where ActivityDisplayName == "Add Passkey (device-bound) security key"
+| where Result == "success"
+| extend AccountUPN = TargetResources[0].userPrincipalName
+| extend AAGUID = AdditionalDetails[1].value
+| extend WebAuthnInfo = AdditionalDetails[0].value
+| project TimeGenerated, AccountUPN, ActivityDisplayName, AAGUID, WebAuthnInfo
+
