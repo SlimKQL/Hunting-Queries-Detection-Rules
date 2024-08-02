@@ -1,0 +1,10 @@
+// Defending against dot zip domain phishing attack with Microsoft 365 Defender Advanced Hunting
+// https://www.linkedin.com/pulse/defending-against-zip-domain-phishing-attack-microsoft-steven-lim/
+
+EmailUrlInfo
+| where Timestamp > ago(1h)
+| where UrlDomain endswith ".zip"
+| where Url contains "@"
+| join EmailEvents on $left.NetworkMessageId == $right.NetworkMessageId
+| project Timestamp, NetworkMessageId, SenderFromAddress, RecipientEmailAddress, Subject, Url, UrlDomain, ThreatTypes, EmailAction, ReportId
+
