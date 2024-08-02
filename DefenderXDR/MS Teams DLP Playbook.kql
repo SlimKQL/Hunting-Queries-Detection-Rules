@@ -1,0 +1,11 @@
+// MS Teams DLP Playbook
+// https://www.linkedin.com/posts/activity-7196076361977847808-JGST/
+
+// The document (Teams DLP Playbook 2024.pdf) in the blog provides an overview of how enterprise customers can deploy Microsoft Teams-DLP for protecting sensitive information.
+
+// Using Defender Custom Detection, the below KQL allow you to detect real-time DLP rules triggered:
+
+CloudAppEvents
+| where Application == "Microsoft Teams"
+| where ActionType contains "DlpRuleMatch"
+
