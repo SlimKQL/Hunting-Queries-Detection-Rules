@@ -1,0 +1,13 @@
+// Monthly Report Entra Eligible Role Activation
+// https://www.linkedin.com/posts/activity-7195656523899965442-aZTj/
+
+// Entra offers an “Alert detail” view that monitors whether eligible administrators are activating their privileged roles. However, it lacks a built-in feature to measure the frequency of these activations. To overcome this, you can schedule the following KQL query to run every 30 days. This will generate a report detailing the activation history of eligible administrators’ roles over a specified timeframe. It’s important to adhere to the principle of least privilege and revoke any roles that are excessively provisioned and not necessary. 😎
+
+IdentityInfo
+| where Timestamp > ago(30d)
+| where AssignedRoles != ""
+| mv-expand AssignedRoles
+| extend EntraAdminRole = tostring(AssignedRoles)
+| distinct EntraAdminRole, AccountUpn
+| where AccountUpn != ""
+| sort by EntraAdminRole asc
