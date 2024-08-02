@@ -1,0 +1,20 @@
+// High Precision KQL to detect MuddyWater BugSleep Backdoor
+// https://www.linkedin.com/posts/activity-7219263422280945664-JfyY/
+
+let DeviceAccessIOCDomain =
+DeviceFileEvents
+| where TimeGenerated > (90d)
+| where ActionType == "FileCreated"
+| where FileOriginUrl contains "egnyte.com" and FileName contains "zip"
+| distinct DeviceName;
+let DevicewithScheduledTask =
+DeviceEvents
+| where ActionType == "ScheduledTaskCreated"
+| where DeviceName has_any(DeviceAccessIOCDomain)
+| distinct DeviceName;
+DeviceNetworkEvents
+| where RemoteIP == "146.19.143.14" or RemoteIP == "91.235.234.202" or RemoteIP == "85.239.61.97"
+| where DeviceName has_any(DevicewithScheduledTask)
+
+// CheckPoint: New Bugsleep backdoor deployed in recent MuddyWater Campaigns
+// Link: https://lnkd.in/grK6knuU
