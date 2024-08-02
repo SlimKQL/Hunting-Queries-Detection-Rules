@@ -1,0 +1,24 @@
+// Insider Threat Monitoring - Exfiltrate data via Link to Windows app
+// https://www.linkedin.com/posts/activity-7222581799716016128-7Nww/
+
+// Microsoft has simplified accessing Android phones from a PC on Windows 11. However, this convenience could potentially allow critical identities to exfiltrate data, as it lacks logging via browser or network access. By utilizing DefenderXDR exposure management, the following KQL can detect the installation of the ‘Link to Windows’ app on endpoints associated with critical identities for DLP monitoring.
+
+let CriticalIdentities =
+ExposureGraphNodes
+| where set_has_element(Categories, "identity")
+| where isnotnull(NodeProperties.rawData.criticalityLevel) and
+NodeProperties.rawData.criticalityLevel.criticalityLevel < 4 
+| distinct NodeName;
+let CriticalDevices =
+ExposureGraphEdges 
+| where EdgeLabel == @"can authenticate to"
+| join ExposureGraphNodes on $left.TargetNodeId==$right.NodeId
+| extend DName = tostring(NodeProperties.rawData.deviceName)
+| extend isLocalAdmin = EdgeProperties.rawData.userRightsOnDevice.isLocalAdmin
+| where SourceNodeName has_any (CriticalIdentities)
+| distinct DName;
+DeviceFileEvents
+| where Timestamp > ago(30d)
+| where ActionType == "FileCreated"
+| where FileName contains "YourPhoneAppProxy"
+| where DeviceName has_any (CriticalDevices)
