@@ -1,0 +1,18 @@
+// Critical Monitor for Critical Assets
+// https://www.linkedin.com/posts/activity-7189844353610088448-BajA/
+
+Custom DefenderXDR KQL Monitor for Tier 0 Critical Identities on High Security Alerts:
+
+let HighlyPrivilegedAdmins =
+ExposureGraphNodes
+| where set_has_element(Categories, "identity")
+| where isnotnull(NodeProperties.rawData.criticalityLevel) and 
+NodeProperties.rawData.criticalityLevel.criticalityLevel==0 
+| extend EntraObjectID = NodeProperties.rawData.accountObjectId
+| project EntraObjectID;
+AlertInfo
+| join AlertEvidence on AlertId
+| extend ReportId = AlertId
+| where Severity == "High"
+| where AccountObjectId has_any(HighlyPrivilegedAdmins)
+
