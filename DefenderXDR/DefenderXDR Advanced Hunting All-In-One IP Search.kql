@@ -1,0 +1,30 @@
+// DefenderXDR Advanced Hunting All-In-One IP Search
+// https://www.linkedin.com/pulse/defenderxdr-advanced-hunting-all-in-one-ip-search-steven-lim-a2j7c/
+
+// This KQL query searches across these DefenderXDR log tables for the ip variable that is defined at the start:
+// AADSignInEventsBeta, AADSignInEventsBeta, CloudAppEvents, IdentityLogonEvents, UrlClickEvents, DeviceNetworkInfo, CloudAuditEvents, DeviceFileEvents, AlertEvidence, BehaviorEntities, DeviceEvents, DeviceLogonEvents, DeviceNetworkEvents, EmailEvents, DeviceInfo and ExposureGraphNodes
+
+let ip = "223.171.89.199"; // Sample Malicious IP
+search in (AADSignInEventsBeta, AADSignInEventsBeta, CloudAppEvents, IdentityLogonEvents, CloudAuditEvents, UrlClickEvents, DeviceNetworkInfo, CloudAuditEvents, DeviceFileEvents, AlertEvidence, ExposureGraphNodes, BehaviorEntities, DeviceEvents, DeviceLogonEvents, DeviceNetworkEvents, EmailEvents, DeviceInfo)
+Timestamp between (ago(7d) .. now())
+and (
+// AADSignInEventsBeta AADSpnSignInEventsBeta CloudAppEvents IdentityLogonEvents
+// UrlClickEvents DeviceNetworkInfo CloudAuditEvents
+IPAddress == ip
+// DeviceFileEvents
+or RequestSourceIP == ip
+// AlertEvidence BehaviorEntities DeviceEvents DeviceLogonEvents DeviceNetworkEvents
+or RemoteIP == ip
+// DeviceEvents DeviceFileEvents
+or FileOriginIP == ip
+// EmailEvents
+or SenderIPv4 == ip
+// IdentityLogonEvents
+or DestinationIPAddress == ip
+// DeviceInfo
+or PublicIP == ip
+// AlertEvidence BehaviorEntities DeviceEvents DeviceNetworkEvents
+or LocalIP == ip
+// ExposureGraphNodes
+or NodeProperties.rawData.publicIP == ip
+) 
