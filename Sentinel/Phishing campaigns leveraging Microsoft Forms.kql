@@ -1,0 +1,12 @@
+// Phishing campaigns leveraging Microsoft Forms
+// https://www.linkedin.com/posts/activity-7223704172028665858-99AA/
+
+// The below KQL will help you pick up some forms phisher🫡
+
+EmailUrlInfo
+| where Timestamp > ago(1h)
+| join EmailEvents on NetworkMessageId
+| extend AuthDetail = parse_json(AuthenticationDetails)
+| where EmailDirection == "Inbound"
+| where UrlDomain == "forms.microsoft.com"
+| where AuthDetail.SPF == "fail" and AuthDetail.DKIM == "fail" and AuthDetail.DMARC == "fail"
