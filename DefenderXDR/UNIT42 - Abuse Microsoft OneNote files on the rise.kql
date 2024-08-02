@@ -1,0 +1,9 @@
+// UNIT42 - Abuse Microsoft OneNote files on the rise
+// https://www.linkedin.com/posts/activity-7199081015439495168-zjvc/
+
+// Analyzing onenote files sent into your tenant as email attachment.
+
+EmailAttachmentInfo
+| where TimeGenerated > ago(90d)
+| where FileType=="one;onenote"
+| join EmailEvents on NetworkMessageId
