@@ -1,0 +1,9 @@
+// Near real-time (NRT) custom DefenderXDR detection & isolation for Windows Whatsapp security risk
+// https://www.linkedin.com/posts/activity-7222989513491460096-7M9Y/
+
+Trigger & isolate device: 
+
+DeviceFileEvents
+| where ActionType == "FileCreated"
+| where InitiatingProcessFileName contains "WhatsApp.exe"
+| where FileName endswith ".pyz" or FileName endswith ".pyzw" or FileName endswith ".php"
