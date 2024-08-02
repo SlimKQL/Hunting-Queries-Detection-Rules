@@ -1,0 +1,8 @@
+Detect Copilot Plugin Installation
+https://www.linkedin.com/feed/update/urn:li:activity:7176504602702356481/
+
+CloudAppEvents
+| where ActionType == "AppInstalled"
+| extend AppName = tostring(RawEventData.AddOnName)
+| summarize by AppName , AccountType, AccountDisplayName
+| sort by AppName asc
