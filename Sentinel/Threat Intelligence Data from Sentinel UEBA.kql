@@ -1,0 +1,30 @@
+// Threat Intelligence Data from Sentinel UEBA
+// https://www.linkedin.com/posts/activity-7199353581236338689-AJdl/
+
+// The following KQL query extracts threat intelligence data for Entra users with a score of 5 or higher. This data helps you visualize the types of threats your cloud environment might be facing.
+
+//Here's what you can potentially expect to uncover:
+//- Scanner IP addresses
+//- Malicious activity identified by honeypots
+//- Microsoft Deep Research threat intelligence
+//- Command and Control (C2) server communication attempts
+//- Port scans
+//- Phishing attempts
+//- Distributed Denial-of-Service (DDoS) attacks
+//- Hacking tools
+//- Compromised Entra credential activity
+//- Brute-force attacks
+//- Remote Code Execution (RCE) vulnerabilities
+//- Email spam campaigns
+//- Spoofing attempts
+
+//By analyzing this threat intelligence, you can gain valuable insights and take steps to protect your cloud environment. 🫡
+
+//KQL Code:
+
+BehaviorAnalytics
+| where TimeGenerated > ago(90d)
+| where DevicesInsights contains "ThreatIntelIndicatorType"
+| extend ThreatIntel=tostring(DevicesInsights.ThreatIntelIndicatorDescription)
+| where InvestigationPriority > 5
+| distinct ThreatIntel
