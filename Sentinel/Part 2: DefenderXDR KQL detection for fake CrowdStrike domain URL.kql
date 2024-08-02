@@ -1,0 +1,15 @@
+// Part 2: DefenderXDR KQL detection for fake CrowdStrike domain URL
+// https://www.linkedin.com/posts/activity-7220748665924042752-pRST/
+
+// Hourly custom detection: Detect & Purge
+
+EmailUrlInfo
+| where Timestamp > ago(1h)
+| join EmailEvents on NetworkMessageId
+| where EmailDirection == "Inbound"
+| where LatestDeliveryAction == "Delivered"
+| where UrlDomain contains "crowdstrike"
+| where UrlDomain !endswith "crowdstrike.com"
+| where SenderFromDomain !endswith "crowdstrike.com" and
+SenderFromDomain !endswith "litmos.com" and
+SenderFromDomain !endswith "zoom.us"
