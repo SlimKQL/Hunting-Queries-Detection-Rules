@@ -1,0 +1,8 @@
+Microsoft Entra Identity Attack Threat Detection
+https://www.linkedin.com/pulse/microsoft-entra-identity-attack-threat-detection-steven-lim-tycnc/
+
+let companydomain = "@contoso.com"; //update your corporate domain
+AzureActivity
+| where TimeGenerated > ago(1h)
+| where CategoryValue == "Administrative"
+| where Caller contains "@" and Caller !contains companydomain
