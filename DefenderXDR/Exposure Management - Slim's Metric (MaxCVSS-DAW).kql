@@ -1,9 +1,9 @@
-Exposure Management - Slim's Metric (MaxCVSS-DAW)
-https://www.linkedin.com/posts/activity-7178429122094772224-aK3e/
+//Exposure Management - Slim's Metric (MaxCVSS-DAW)
+//https://www.linkedin.com/posts/activity-7178429122094772224-aK3e/
 
-Maximum CVSS for Domain Admin Workstations. A favorite KQL wish list for all CISO 😜 Secure your "keys" to your kingdom before it gets breached!
+//Maximum CVSS for Domain Admin Workstations. A favorite KQL wish list for all CISO 😜 Secure your "keys" to your kingdom before it gets breached!
 
-KQL Code:
+//KQL Code:
 
 ExposureGraphNodes
 | where NodeProperties.rawData.criticalityLevel contains "Domain Admin Workstations"
