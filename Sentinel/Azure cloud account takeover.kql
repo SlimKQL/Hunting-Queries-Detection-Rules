@@ -1,5 +1,5 @@
-Azure cloud account takeover
-https://www.linkedin.com/feed/update/urn:li:activity:7163049034528481281/
+//Azure cloud account takeover
+//https://www.linkedin.com/feed/update/urn:li:activity:7163049034528481281/
 
 SigninLogs
 | where TimeGenerated > ago(90d)
