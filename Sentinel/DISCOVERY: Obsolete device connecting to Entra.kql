@@ -1,0 +1,9 @@
+// DISCOVERY: Obsolete device connecting to Entra
+// https://www.linkedin.com/posts/activity-7222163567834230785-BgVr/
+
+// Detect unpatched Windows 10 and 11 clients connecting to your Entra tenant via AADSTS5000611 (Symmetric Key Derivation Function version 'KDFV1' is invalid)
+
+union isfuzzy=true SigninLogs, AADNonInteractiveUserSignInLogs
+| where ResultType != 0 and ResultDescription == "Other"
+| where ResultType == "500061"
+| distinct Category, Identity
