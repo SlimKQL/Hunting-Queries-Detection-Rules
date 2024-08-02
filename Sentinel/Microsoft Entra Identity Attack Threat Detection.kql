@@ -6,3 +6,4 @@ AzureActivity
 | where TimeGenerated > ago(1h)
 | where CategoryValue == "Administrative"
 | where Caller contains "@" and Caller !contains companydomain
+
