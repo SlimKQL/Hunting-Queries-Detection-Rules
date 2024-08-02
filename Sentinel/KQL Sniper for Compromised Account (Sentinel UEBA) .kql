@@ -1,0 +1,14 @@
+// KQL Sniper for Compromised Account (Sentinel UEBA) 
+// https://www.linkedin.com/posts/activity-7199442661735374850-GqAK/
+
+// The KQL script provided demonstrates a high level of precision in detecting a breached account by employing Sentinel UEBA analytics, given that every criterion within the conditions is satisfied. 🎯
+
+BehaviorAnalytics
+| where TimeGenerated > ago(90d)
+| where DevicesInsights contains "ThreatIntelIndicatorType"
+| extend ThreatIntel=tostring(DevicesInsights.ThreatIntelIndicatorDescription)
+| where ThreatIntel contains "IP Address used for validating compromised Entra ID credentials"
+| where SourceDevice == "" and ActivityType != "FailedLogOn"
+| where InvestigationPriority > 0
+| project TimeGenerated, InvestigationPriority, UserPrincipalName, SourceIPAddress, SourceIPLocation, UsersInsights, DevicesInsights, ActivityInsights
+
