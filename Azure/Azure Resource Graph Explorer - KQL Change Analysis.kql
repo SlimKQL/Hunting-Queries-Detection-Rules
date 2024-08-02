@@ -11,4 +11,3 @@ resourcechanges
 | project changeType, changedBy, changedByType, clientType
 | summarize count() by changedBy, changeType, clientType
 | order by count_ desc
-
