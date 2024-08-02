@@ -1,0 +1,18 @@
+// Conditional Access Report
+// https://www.linkedin.com/posts/activity-7192037878783205377-lq27/
+
+// Do you know you can access all these CA statistics from Signin Logs table using KQL? 😎
+
+// Using Sentinel and the below KQL will provide you the statistics ("Success"/"Failure"/"Not applied") of all your conditional access rules based on certain number of days. You can further summarize these set of data to better understand your conditional access rule trigger and tweak it to improve the security controls. 🛡
+
+SigninLogs
+| where TimeGenerated > ago(30d)
+// Additional Toggle to determine CA result for success/failure login
+//| where ResultType == "0"
+| where ConditionalAccessPolicies != "[]"
+| mv-expand ConditionalAccessPolicies
+| extend CADisplayName = tostring(ConditionalAccessPolicies.displayName)
+| extend CAResult = tostring(ConditionalAccessPolicies.result)
+| summarize Count=count() by CADisplayName, CAResult
+| sort by CADisplayName asc 
+
