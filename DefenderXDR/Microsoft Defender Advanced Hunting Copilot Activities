@@ -1,0 +1,79 @@
+Microsoft Defender Advanced Hunting Copilot Activities
+https://www.linkedin.com/pulse/microsoft-defender-advanced-hunting-copilot-activities-steven-lim-cudyc/
+
+CloudAppEvents
+| where ActionType == @"CopilotInteraction"
+| extend UserID = tostring(RawEventData.UserId)
+| extend CopilotData = todynamic(RawEventData.CopilotEventData)
+| extend CopilotAccessResources = (CopilotData.AccessedResources)
+| extend CopilotAppHost = tostring(CopilotData.AppHost)
+| extend CopilotContexts = tostring(CopilotData.Contexts)
+| extend CopilotType = tostring(CopilotData.Type)
+| extend CopilotMessageIds = tostring(CopilotData.MessageIds)
+| extend CopilotThreadId = tostring(CopilotData.ThreadId)
+| project Timestamp, UserID, CopilotAccessResources, CopilotAppHost, 
+CopilotContexts, CopilotType, CopilotMessageIds, CopilotThreadId
+// Copilot Interaction Data Formatted
+// Insert your hunting query for copilot related activities.
+
+The below Defender custom KQL detection rule detects potential Copilot abuse by threat actors at regular interval.
+
+CloudAppEvents
+| where Timestamp > ago(1h)
+| where IPTags has_any ("Brute force attacker", "Password spray attacker", "malicious", "Possible Hackers", "Tor")
+| where ActionType == "CopilotInteraction" 
+
+Detect token theft via AiTM phishing attack whereby token is then used to conduct copilot activities for data summarization and extraction.
+
+let AnomalousTokenRequestId=
+SecurityAlert
+| where TimeGenerated > ago(30d)
+| where AlertName == "Anomalous Token"
+| mv-expand todynamic(Entities)
+| project Entities
+| extend RequestId = tostring(Entities.RequestId)
+| distinct RequestId;
+let CopilotClientIP=
+SigninLogs
+| where TimeGenerated > ago(30d)
+| where AppDisplayName contains "copilot"
+| distinct IPAddress;
+AADUserRiskEvents
+| where TimeGenerated > ago(30d)
+| where RequestId has_any(AnomalousTokenRequestId)
+| where IpAddress has_any(CopilotClientIP) 
+| project TimeGenerated, UserPrincipalName, RiskEventType, RiskLevel, DetectionTimingType, IpAddress, Location
+
+Detect malicious Copilot external data search via Microsoft Graph Connectors. This detection is useful when your Copilot has external plugin enabled and access external corporate data via plugin through graph connectors.
+
+let CopilotIPs =
+MicrosoftGraphActivityLogs
+| where TimeGenerated > ago(30d)
+| where RequestUri contains "Microsoft365Copilot@communication.microsoft.com"
+| distinct IPAddress;
+SigninLogs
+| where TimeGenerated > ago(30d)
+| where RiskEventTypes contains "maliciousIPAddress" 
+| where IPAddress has_any (CopilotIPs)
+
+Microsoft Defender for Cloud App added the application "Microsoft Copilot for Microsoft 365", it will be easier to threat hunt using the activity log or using advance hunting KQL.
+
+CloudAppEvents
+| where Application == "Microsoft Copilot for Microsoft 365"
+
+Identify token theft through AiTM phishing attacks, where stolen tokens are exploited for Copilot activities involving data summarization and extraction from a non-malicious IP. Leverage Sentinel Behavior Analytics to detect initial logins from new ISPs (potentially threat actors) and correlate this IP data with Copilot activities from CloudAppEvents.
+
+let FirstTimeUserConnectedISPIP =
+BehaviorAnalytics
+| where TimeGenerated > ago(7d)
+// Behaviour Analytics detecting user first time connected to a new ISP
+| where tostring(ActivityInsights.FirstTimeUserConnectedViaISP) == "True"
+| where ActivityType == "LogOn"
+| where SourceDevice == ""          // Non-corporate endpoint
+| where InvestigationPriority > 0   // Suspicious Session
+| project SourceIPAddress;
+CloudAppEvents
+| where ActionType == "CopilotInteraction"
+// Correlating copilot activities from the new ISP IP
+| where IPAddress has_any(FirstTimeUserConnectedISPIP)
+
