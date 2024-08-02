@@ -1,0 +1,12 @@
+// MDE KQL to detect UAC bypass of Fickle Stealer
+// https://www.linkedin.com/posts/activity-7209814018230738945-6413/
+
+// The article discusses “Fickle Stealer,” a new malware that uses the Rust programming language to steal sensitive information from Windows users. It is distributed through various methods, including VBA and PowerShell scripts, making it a versatile and dangerous threat.
+
+// KQL to detect UAC bypass of Fickle Stealer
+
+DeviceFileEvents
+| where Timestamp > ago(1h)
+| where ActionType == "FileCreated"
+| where FileName == "WmiMgmt.msc"
+| where FolderPath contains "\Windows\System32\en-US"
