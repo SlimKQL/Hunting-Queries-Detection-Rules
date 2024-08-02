@@ -1,0 +1,32 @@
+// Sentinel All-In-One IP ThreatHunt
+// https://www.linkedin.com/pulse/microsoft-sentinel-kql-solo-leveling-steven-lim-8hsqc/
+
+// This KQL query searches across these Sentinel log tables for the ip variable that is defined at the start:
+// Anomalies, CloudAppEvents, CommonSecurityLog, DeviceEvents, DeviceFileEvents, DeviceInfo, DeviceLogonEvents, AzureActivity DeviceNetworkEvents, EmailEvents, OfficeActivity, SecurityEvent, ThreatIntelligenceIndicator, UrlClickEvents, BehaviorAnalytics
+
+let ip = "127.0.0.1";
+search in (Anomalies,CloudAppEvents,CommonSecurityLog,DeviceEvents,DeviceFileEvents,DeviceInfo,DeviceLogonEvents,AzureActivity,
+DeviceNetworkEvents,EmailEvents,OfficeActivity,SecurityEvent,ThreatIntelligenceIndicator,UrlClickEvents,BehaviorAnalytics)
+TimeGenerated between (ago(1d) .. now())
+and (
+// ** Events initiated by this IP **
+DestinationIpAddress == ip          // Anomalies, UrlClickEvents  
+or IPAddress == ip                  // CloudAppEvents
+or RemoteIP == ip                   // CommonSecurityLog, DeviceEvents, DeviceLogonEvents, DeviceNetworkEvents  
+or FileOriginIP == ip               // DeviceFileEvents
+or SenderIPv4 == ip                 // EmailEvents
+or ClientIP == ip                   // OfficeActivity
+or NetworkDestinationIP == ip       // ThreatIntelligenceIndicator
+or DestinationIPAddress == ip       // BehaviorAnalytics 
+//
+// ** Events affecting this IP **
+or SourceIpAddress == ip            // Anomalies
+or SourceIP == ip                   // CommonSecurityLog, DeviceEvents
+or CallerIpAddress == ip            // AzureActivity
+or RequestSourceIP == ip            // DeviceFileEvents
+or PublicIP == ip                   // DeviceInfo
+or LocalIP == ip                    // DeviceNetworkEvents
+or ClientIPAddress == ip            // SecurityEvent
+or NetworkSourceIP == ip            // ThreatIntelligenceIndicator
+or SourceIPAddress == ip            // BehaviorAnalytics 
+)
