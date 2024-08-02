@@ -1,0 +1,14 @@
+Azure Resource Graph Explorer - KQL Change Analysis
+https://www.linkedin.com/feed/update/urn:li:activity:7171786606188724224/
+
+Identifying who made a change to your Azure resources during a security investigation and how the change was made just became easier! With Change Analysis, you can now see who initiated the change and with which client that change was made, for changes across all your tenants and subscriptions. You can try it out by querying the “resourcechanges” or “resourcecontainerchanges” tables in Azure Resource Graph. Check out the below article for list of KQL change analysis queries
+
+Summarization of Resource Changes past 7 days
+
+resourcechanges
+| extend changeTime = todatetime (properties.changeAttributes.timestamp), targetResourceId = tostring(properties.targetResourceId), changeType = tostring (properties.changeType), changedBy = tostring(properties.changeAttributes. changedBy), changedByType = properties.changeAttributes.changedByType, clientType = tostring (properties.changeAttributes.clientType)
+| where changeTime > ago(7d)
+| project changeType, changedBy, changedByType, clientType
+| summarize count() by changedBy, changeType, clientType
+| order by count_ desc
+
