@@ -13,3 +13,5 @@ EmailUrlInfo
 | where SenderFromDomain !endswith "crowdstrike.com" and
 SenderFromDomain !endswith "litmos.com" and
 SenderFromDomain !endswith "zoom.us"
+
+
