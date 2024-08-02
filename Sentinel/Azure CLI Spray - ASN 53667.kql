@@ -1,0 +1,13 @@
+// Azure CLI Spray - ASN 53667
+// https://www.linkedin.com/posts/activity-7216141179648716800-703J/
+
+// Defenders take note of this ASN using IPV6 to conduct Azure CLI Spray on your Entra Tenant. Use the below KQL to check against you Sentinel.🤝
+
+// ASN 53667 Lookup - https://lnkd.in/gAVK5htd
+
+SigninLogs
+| where TimeGenerated > ago(30d)
+| where ResultType == "50126" or ResultType == "50053"
+| where UserAgent == "node-fetch"
+| where AutonomousSystemNumber == "53667"
+| where AppDisplayName == "Microsoft Azure CLI"
