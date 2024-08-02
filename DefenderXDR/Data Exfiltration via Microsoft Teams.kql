@@ -1,0 +1,21 @@
+// Data Exfiltration via Microsoft Teams
+// https://www.linkedin.com/posts/activity-7202676905441964032-Qi3m/
+
+// Should a malicious actor gain access to an Office 365 user account and initiate the unauthorized transfer of email content by utilizing Power Automate to trigger an Office 365 Outlook flow that sends a Teams message to an external domain upon the arrival of a new email, do you possess the detection capabilities for such unauthorized data transfers? The KQL script provided leverages Microsoft Defender’s CloudAppEvents to identify unusual patterns in the volume of Teams messages directed to specific external domains. Upon activation of the monitoring alert, the security team is prompted to conduct a thorough investigation to verify the authenticity of the Teams communications. In instances where your users frequently collaborate with known external partner tenants, implementing a whitelist can help avert unwarranted rule activations.
+
+CloudAppEvents
+| where Application == "Microsoft Teams"
+| where ActionType == "MessageSent"
+| extend AccountUPN = RawEventData.UserId
+| extend CommsType = RawEventData.CommunicationType
+| extend ExternalTenant = RawEventData.ParticipantInfo.HasForeignTenantUsers
+| extend ExtUserDomain = tostring(split(AccountUPN, '@')[1])
+| where CommsType == "OneOnOne" or CommsType == "GroupChat"
+| where ExternalTenant == "true"
+| where ExtUserDomain != ""
+| summarize Count=count() by ExtUserDomain
+| sort by Count desc
+// Set your Teams msg trigger threshold to external tenant 
+| where Count > 20
+// Whitelist External Partner Domain
+| where ExtUserDomain !contains "trusteddomain.com"
