@@ -1,0 +1,15 @@
+// Nation State Actors via Microsoft Graph
+// https://www.linkedin.com/posts/activity-7194188372691607552-dtJv/
+
+// IP addresses identified by the Microsoft Threat Intelligence Center (MSTIC) as being linked to state-sponsored entities or cybercriminal organizations are reportedly exploiting the Graph API. As of April 11, Microsoft Graph activity logs have become widely accessible. It is highly recommended to begin aggregating these logs if you haven’t already. The trend of malicious actors utilizing the Graph API as a platform for their illicit activities is on the rise.
+
+let NationStateIP =
+    SigninLogs
+    | where TimeGenerated > ago(90d)
+    | where RiskEventTypes_V2 contains "estsNationStateIP"
+    | distinct IPAddress;
+MicrosoftGraphActivityLogs
+| where TimeGenerated > ago(90d)
+| where IPAddress has_any(NationStateIP)
+| count
+
