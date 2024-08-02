@@ -1,0 +1,13 @@
+// NEW Microsoft Graph API Identity Protection KQL Detection
+// https://www.linkedin.com/posts/activity-7194389287620997120-OVjs/
+
+// With the new developments from Microsoft Entra Blog, it is now possible to identify user making an abnormally high number of calls to MS Graph and AAD Graph compared to that user’s baseline, which will help identify both compromised users and insider threats scavenging for intel. As this is an offline detection, it may take up to 48 hours to surface in the reports and aggregate the user graph activities.
+
+let SuspiciousGraphUserIP =
+SigninLogs
+| where TimeGenerated > ago(48h)
+| where RiskEventTypes contains "suspiciousAPITraffic"
+| distinct IPAddress;
+MicrosoftGraphActivityLogs
+| where TimeGenerated > ago(48h)
+| where IPAddress has_any (SuspiciousGraphUserIP)
