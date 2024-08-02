@@ -1,0 +1,19 @@
+// Analyzing Malicious Microsoft Graph API Rate Limit Count
+// https://www.linkedin.com/posts/activity-7218488532250546178-zAMf/
+
+// Utilizing Sentinel’s BehaviourAnalytics with MicrosoftGraphActivityLogs to pinpoint Entra app IDs that are abusing the Microsoft Graph API and causing throttling due to malicious activities. Once the throttling operation resource is identified, additional KQLs can be further deployed to detect specific use case misuse. 🎯
+
+let AttackerIPs =
+BehaviorAnalytics
+| where TimeGenerated > ago(90d)
+| extend ThreatIntelIndicatorDescription = tostring(DevicesInsights.ThreatIntelIndicatorDescription)
+| where ThreatIntelIndicatorDescription contains "proxy"
+| distinct SourceIPAddress;
+MicrosoftGraphActivityLogs 
+| where TimeGenerated > ago(90d) 
+| where IPAddress has_any(AttackerIPs)
+| extend path = replace_string(replace_string(replace_regex(tostring(parse_url(RequestUri).Path), @'(\/)+','//'),'v1.0/',''),'beta/','') 
+| extend UriSegments = extract_all(@'\/([A-z2]+|\$batch)($|\/|\(|\$)',dynamic([1]),tolower(path))
+| extend OperationResource = strcat_array(UriSegments,'/')| summarize RateLimitedCount=count() by AppId, OperationResource, RequestMethod 
+| sort by RateLimitedCount desc
+
