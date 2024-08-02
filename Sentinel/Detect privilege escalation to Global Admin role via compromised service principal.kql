@@ -1,0 +1,16 @@
+// Detect privilege escalation to Global Admin role via compromised service principal
+// https://www.linkedin.com/posts/activity-7223370832763351040-TieO/
+
+// The below Sentinel KQL analytics rule is able to detect potential privilege escalation to Global Admin role via compromised service principal in view of the recent blog from Emilien Socchi (Abusing PIM-related application permissions in Microsoft Graph - Part 1)
+Link: https://lnkd.in/gmFqY4Hm
+
+//Hourly Sentinel Analytics Rule:
+
+let GA = dynamic(['GA1@acme.com', 'GA2@acme.com', 'GA3@acme.com']);
+AuditLogs 
+| where TimeGenerated > ago(1h)
+| where Category == "RoleManagement"
+| where ActivityDisplayName == "Add member to role"
+| where TargetResources contains "Global Administrator"
+| extend UPN = tostring(TargetResources[0].userPrincipalName)
+| where not (UPN has_any(GA))
