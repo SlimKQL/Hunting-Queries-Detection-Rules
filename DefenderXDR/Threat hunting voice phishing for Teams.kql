@@ -15,3 +15,4 @@ EmailEvents
 | where SenderFromAddress contains "XXXXXXX2650"
 | project SenderFromAddress, Subject
 
+
