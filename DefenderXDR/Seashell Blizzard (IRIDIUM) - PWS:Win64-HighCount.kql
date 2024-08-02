@@ -1,0 +1,16 @@
+// Seashell Blizzard (IRIDIUM) - PWS:Win64-HighCount
+// https://www.linkedin.com/posts/activity-7198555614627651584-z6C7/
+
+// Seashell Blizzard (IRIDIUM) is high-impact threat actor linked to the Russian Federation and conducts global activities on behalf of Russian Military Intelligence Unit 74455 (GRU). Below are some KQL detections to complement the Threat Analytics Report.
+
+// Persistance KQL Detection:
+
+DeviceRegistryEvents 
+| where ActionType == @"RegistryKeyCreated"
+| where RegistryValueData contains "win32msa.exe"
+
+
+// PWS:Win64/HighCount KQL Detection:
+
+DeviceFileEvents 
+| where SHA256 == "e62e418ffa87fdcfe14125ab8b429cb9d91a07088e13cd15423bd084c713564e" or FileName == "win32msa.exe"
