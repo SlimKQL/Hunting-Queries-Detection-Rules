@@ -1,0 +1,15 @@
+// Sentinel Alerts & MITRE ATT&CK Analysis
+// https://www.linkedin.com/posts/activity-7195301674301759488-rMQS/
+
+// The Microsoft Sentinel MITRE ATT&CK (Preview) blade offers a comprehensive overview of all Sentinel detections aligned with the MITRE ATT&CK technique matrix. As a Security Operations Center (SOC) analyst overseeing analytic rules, are you aware of which MITRE Techniques are activated most frequently or infrequently? Running the subsequent KQL query will unveil the technique adversaries most commonly employ. Evaluate which techniques are triggered most or least often in comparison to your Microsoft Sentinel MITRE ATT&CK (preview) coverage. This analysis is crucial to determine if your analytic rules are sufficiently robust to identify these frequently used techniques.
+
+// KQL - Summarization of Techniques Triggered
+
+SecurityAlert
+| where TimeGenerated > ago(90d)
+| mv-expand todynamic(Techniques)
+| extend MitreAttackTechniques = tostring(Techniques)
+| where MitreAttackTechniques != ""
+| summarize Technique_Count=count() by MitreAttackTechniques
+| sort by Technique_Count desc
+
