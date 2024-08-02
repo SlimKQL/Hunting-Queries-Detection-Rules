@@ -1,0 +1,12 @@
+// Detecting GOLDEN SAML Attack
+// https://www.linkedin.com/posts/activity-7197102964581310464-5lwT/
+
+// The AADInternals toolkit can be used to perform a Golden SAML attack. This type of attack involves an adversary gaining privileged access to a network, stealing the AD FS certificate, and then using it to impersonate any user within an organization to gain access to resources across various services that use SAML (Security Assertion Markup Language) for authentication
+// Custom Defender KQL detection for possible AADInternals toolkit usage:
+
+DeviceNetworkEvents 
+| where ActionType == @"HttpConnectionInspected"
+| extend ConnectInfo = todynamic(AdditionalFields)
+| extend HttpHost = ConnectInfo.host
+| where HttpHost contains "any.sts" or HttpHost contains "korvatunturi.fi"
+
