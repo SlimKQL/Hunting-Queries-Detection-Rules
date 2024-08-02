@@ -8,3 +8,4 @@ CloudAppEvents
 | extend AdminUPN = tostring(RawEventData.UserId)
 | extend ConsentData = tostring(RawEventData.ModifiedProperties)
 | project Timestamp, AdminUPN, ActionType, ObjectName, ConsentData, ReportId
+
