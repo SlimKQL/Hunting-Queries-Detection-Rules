@@ -1,0 +1,17 @@
+// Insider Threat - Monitor sensitive bulk download data email to external 
+// https://www.linkedin.com/posts/activity-7193119880718520320-RO72/
+
+// This scheduled hourly Sentinel analytic rule is particular useful in detecting O365/Azure/Entra admins performing bulk download of users/groups/devices information from portal and sending that piece of information out to external via email.
+
+let BulkDataFileNames =
+AuditLogs
+| where TimeGenerated > ago(90d)
+| where OperationName == "Download group members - finished (bulk)" or  OperationName == "Download devices - finished (bulk)" or  OperationName == "Download service principals - finished (bulk)" or  OperationName == "started (bulk)"
+| where ResultDescription contains "Filename"
+| extend AccountUPN = tostring(InitiatedBy.user.userPrincipalName)
+| parse ResultDescription with * "Filename:" Filename ". Activity" Blank
+| project Filename;
+EmailAttachmentInfo
+| where TimeGenerated > ago(1h)
+| where FileName has_any(BulkDataFileNames)
+| where RecipientEmailAddress !contains "contoso.com" // Corporate Domain
