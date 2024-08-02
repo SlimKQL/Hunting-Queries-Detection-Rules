@@ -1,0 +1,13 @@
+// KQL to detect if Polyfill malicious payload was loaded
+// https://www.linkedin.com/posts/activity-7211650346522173440-988L/
+
+// Polyfill supply chain attack hits 100K+ sites.The polyfill.js is a popular open source library to support older browsers. 100K+ sites embed it using the cdn.polyfill.io domain.
+
+// KQL to detect if Polyfill malicious payload was loaded.
+
+DeviceNetworkEvents 
+| where ActionType == @"HttpConnectionInspected"
+| extend ConnectInfo = todynamic(AdditionalFields)
+| extend HttpHost = ConnectInfo.host
+| where HttpHost contains "googie-anaiytics.com" or HttpHost contains "kuurza.com"
+
