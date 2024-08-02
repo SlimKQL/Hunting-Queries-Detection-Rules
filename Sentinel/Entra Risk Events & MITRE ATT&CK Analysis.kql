@@ -1,0 +1,12 @@
+// Entra Risk Events & MITRE ATT&CK Analysis
+// https://www.linkedin.com/posts/activity-7195030571205476352-a2RE/
+
+// Are you aware of which MITRE ATT&CK techniques correspond to the Entra identity protection risk events linked to your tenant? Executing the following KQL query will reveal the most prevalent technique utilized by adversaries or the risk encountered by your users upon the triggering of an identity alert. Assess the techniques that trigger most frequently in relation to your Microsoft Sentinel MITRE ATT&CK (preview) coverage to ascertain whether your analytics rules are robust enough to detect these commonly occurring techniques.
+
+AADUserRiskEvents
+| where TimeGenerated > ago(90d)
+| mv-expand AdditionalInfo
+| where AdditionalInfo contains "mitreTechniques"
+| extend MitreAttack = tostring(parse_json(tostring(AdditionalInfo)).Value)
+| summarize Count=count() by MitreAttack
+| sort by Count desc
