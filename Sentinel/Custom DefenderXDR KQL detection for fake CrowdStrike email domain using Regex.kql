@@ -1,0 +1,13 @@
+// Custom DefenderXDR KQL detection for fake CrowdStrike email domain using Regex
+// https://www.linkedin.com/posts/activity-7222081026011885568-giCs/
+
+// Configure as Detect & Purge:
+
+EmailEvents
+| where Timestamp > ago(1h)
+| where EmailDirection == "Inbound"
+| where LatestDeliveryAction == "Delivered"
+| where SenderFromDomain matches regex "^{a-z0-9\\-]{0,}cr[0oO]wdstr[i1l]ke[a-z0-9\\-]{0,}\\.[a-z]{1,}$"
+| where SenderFromDomain !endswith "crowdstrike.com" and
+SenderFromDomain !endswith "litmos.com" and
+SenderFromDomain !endswith "zoom.us"
