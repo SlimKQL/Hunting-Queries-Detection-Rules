@@ -1,0 +1,12 @@
+// KQL to detect new chromium browser extension installation on MDE endpoints by Emerald Sleet (APT43)
+// https://www.linkedin.com/posts/activity-7212205082002513922-WGt4/
+
+// Emerald Sleet (APT43) deploying faked google translate extension to exfiltrate user email, password and cookie data. Targeting users in the U.S., Europe, and South Korea.
+
+// KQL to detect new chromium browser extension installation on MDE endpoints.
+
+DeviceFileEvents
+| where ActionType == "FileCreated"
+| where FolderPath contains "Webstore Downloads" and FileName endswith ".crx"
+| extend ExtensionId = extract(@"(?i)Downloads[\\/]|Webstore Downloads[\\/](.+?)_\d+\.crx", 1, FolderPath)
+
