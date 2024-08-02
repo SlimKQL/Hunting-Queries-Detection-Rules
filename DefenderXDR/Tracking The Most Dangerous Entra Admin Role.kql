@@ -1,0 +1,15 @@
+// Tracking The Most Dangerous Entra Admin Role 
+// https://www.linkedin.com/posts/activity-7189502682628349952-Uc9z/
+
+// Custom DefenderXDR KQL detecting this dangerous role activation: 
+
+let DangerousAdmin =
+ExposureGraphNodes
+| where set_has_element(Categories, "identity")
+| extend AccountUPN = NodeProperties.rawData.accountUpn
+| extend AdminRoles = NodeProperties.rawData.assignedRoles
+| where AdminRoles contains "Partner Tier2 Support"
+| project AccountUPN;
+IdentityLogonEvents
+| where AccountUpn has_any(DangerousAdmin)
+
