@@ -1,0 +1,14 @@
+// Threat Intelligence Data from Sentinel UEBA
+// https://www.linkedin.com/posts/activity-7216452632528183298-MPGG/
+
+// Are you curious to know which ISP in the world is brute force attacking your Entra tenant the most in the past 90 days? 🤔 If you have Sentinel UEBA enabled, the below KQL query will tell you the answer. I was rather surprised to see my no. 1 brute force attacker ISP when the KQL query gave me answer. 😅
+
+BehaviorAnalytics
+| where TimeGenerated > ago(90d)
+| where DevicesInsights contains "ThreatIntelIndicatorType"
+| extend ISP = tostring(DevicesInsights.ISP)
+| extend BruteForcer = tostring(ActivityInsights.UnusualNumberOfDistinctUsersFailedSignInFromIPAddress)
+| where BruteForcer == "True"
+| where ISP != ""
+| summarize Count=count() by ISP
+| sort by Count desc
