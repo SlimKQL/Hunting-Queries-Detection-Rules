@@ -1,0 +1,23 @@
+// Perimeter Defense - Attack Surface Reduction
+// https://www.linkedin.com/posts/activity-7188046653184991232-JLS6/
+
+// In these days cyberattacks are mostly conducted through email attacks, adversary would spray your tenant and if one of your users who happened to click on the link and with vulnerable endpoint then threat actor would probably start to gain a foothold in your environment. The below KQL checks for your organization top 10 most attack email users and query their corporate endpoints for list of vulnerabilities. I believe if you addressed those critical & high vulnerabilities of these endpoints, potentially this will help you reduce your attack surface. 🫡 
+
+let Top10AttackEmailUsers=
+EmailEvents
+| where Timestamp > ago(30d)
+| where EmailDirection == "Inbound" and DeliveryAction == "Blocked"
+| summarize Count=count() by RecipientEmailAddress
+| sort by Count desc
+| take 10
+| project RecipientEmailAddress;
+let Top10AttackUserDevices=
+AADSignInEventsBeta
+| where Timestamp > ago(7d)
+| where DeviceTrustType == "Azure AD registered" or DeviceTrustType == "Hybrid Azure AD joined"
+| where AccountUpn has_any(Top10AttackEmailUsers)
+| distinct DeviceName;
+DeviceTvmSoftwareVulnerabilities
+| where DeviceName has_any(Top10AttackUserDevices)
+| sort by VulnerabilitySeverityLevel asc 
+
