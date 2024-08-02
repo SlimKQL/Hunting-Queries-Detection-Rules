@@ -1,0 +1,12 @@
+// Add Passkey device-bound MS Authenticator Windows Hello detection
+// https://www.linkedin.com/posts/activity-7191839187543728128-DQ02/
+
+// With the public preview of expanding Entra passkey options, Entra admins will now need to make sure passkeys are properly managed as part of the security key life cycle management for both privilege and non-privilege roles. Security operations will also need to have detection on *NEW* passkey added from both malicious or non-malicious perspectives so that threat can be monitor and mitigated when required.🫡 
+
+AuditLogs
+| where ActivityDisplayName contains "Add Passkey"
+| where Result == "success"
+| extend AccountUPN = TargetResources[0].userPrincipalName
+| extend AAGUID = AdditionalDetails[1].value
+| extend WebAuthnInfo = AdditionalDetails[0].value
+| project TimeGenerated, AccountUPN, ActivityDisplayName, AAGUID, WebAuthnInfo
