@@ -1,0 +1,18 @@
+Exposure Management + Defender for Office 365
+https://www.linkedin.com/posts/activity-7178261918795649024-cah8/
+
+Custom DefenderXDR detection rule for critical identities marked by exposure management clicking on malicious email link. This would triggered the isolation of the user account and devices impacted to minimize lateral movement.
+
+KQL Detection Code:
+
+let CriticalIdentities =
+ExposureGraphNodes
+| where set_has_element(Categories, "identity")
+| where isnotnull(NodeProperties.rawData.criticalityLevel) and NodeProperties.rawData.criticalityLevel.criticalityLevel < 4
+| extend AccountUPN = tostring(NodeProperties.rawData.accountUpn)
+| distinct AccountUPN;
+AlertInfo
+| where Title == "A potentially malicious URL click was detected"
+| join AlertEvidence on AlertId
+| join EmailEvents on NetworkMessageId
+| where RecipientEmailAddress has_any (CriticalIdentities)
