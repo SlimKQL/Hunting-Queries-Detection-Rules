@@ -1,0 +1,31 @@
+// DefenderXDR Advanced Hunting All-In-One UPN Search
+// https://www.linkedin.com/pulse/defenderxdr-advanced-hunting-all-in-one-upn-search-steven-lim-zdlic/
+
+// This KQL query searches across these DefenderXDR log tables for the UPN variable that is defined at the start:
+// AlertEvidence, BehaviorEntities, BehaviorInfo, AADSignInEventsBeta, IdentityInfo, IdentityLogonEvents, UrlClickEvents, DeviceEvents, DeviceFileEvents, DeviceImageLoadEvents, DeviceLogonEvents, DeviceNetworkEvents, DeviceProcessEvents, DeviceRegistryEvents, CloudAppEvents, EmailAttachmentInfo, EmailEvents, EmailPostDeliveryEvents, CloudAuditEvents, ExposureGraphNodes
+
+let upn = "John.Doe@Microsoft.com"; // Enter Your Search UPN
+search in (AlertEvidence, BehaviorEntities, BehaviorInfo, AADSignInEventsBeta,
+IdentityInfo, IdentityLogonEvents, UrlClickEvents, DeviceEvents, DeviceFileEvents,
+DeviceImageLoadEvents, DeviceLogonEvents, DeviceNetworkEvents, DeviceProcessEvents,
+DeviceRegistryEvents, CloudAppEvents, EmailAttachmentInfo, EmailEvents, 
+EmailPostDeliveryEvents, CloudAuditEvents, ExposureGraphNodes)
+Timestamp between (ago(1d) .. now())
+and (
+// AlertEvidence BehaviorEntities BehaviorInfo DeviceProcessEvents
+// AADSignInEventsBeta IdentityInfo IdentityLogonEvents UrlClickEvents 
+AccountUpn == upn
+// DeviceEvents DeviceFileEvents DeviceImageLoadEvents DeviceLogonEvents
+// DeviceNetworkEvents DeviceProcessEvents DeviceRegistryEvents 
+or InitiatingProcessAccountUpn == upn
+// CloudAppEvents
+or tostring(RawEventData.UserId) == upn
+// EmailAttachmentInfo EmailEvents EmailPostDeliveryEvents  
+or SenderFromAddress == upn
+or RecipientEmailAddress == upn
+// CloudAuditEvents 
+or RawEventData contains upn
+//ExposureGraphNodes
+or NodeProperties.rawData contains upn
+)
+
