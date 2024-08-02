@@ -1,0 +1,21 @@
+// KQL for detecting potential hashtag#RegreSSHion abuse
+// https://www.linkedin.com/posts/activity-7214588446722465792-FwFr/
+
+// ** Assumption **
+// Firewall logs stream to CommonSecurityLog 
+// 6 OpenSSH connections per min for minimum 6 hours
+// 6x60x6 = 2160 connections for past 6 hours
+// Attack source is non-distributed, triangulate by country level
+// Feel free to adjust the assumption parameters to your environment needs
+
+CommonSecurityLog
+| where TimeGenerated >= ago (6h)
+| where DestinationPort == "22"
+| extend ip_location=geo_info_from_ip_address(SourceIP)
+| extend Country=tostring(ip_location.country)
+| where Country != ""
+| summarize SSH_Connection=count() by Country 
+| sort by SSH_Connection desc
+| where SSH_Connection > 2160
+
+// If analytics rule get triggered, this probably warrant a deeper investigation
