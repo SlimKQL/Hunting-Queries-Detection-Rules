@@ -15,3 +15,4 @@ and UserId !endswith "your_corporate_domain_3"
 | distinct UserIPs
 | join ThreatIntelligenceIndicator on $left.UserIPs == $right.NetworkIP
 
+
