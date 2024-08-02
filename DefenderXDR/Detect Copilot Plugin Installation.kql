@@ -6,3 +6,4 @@ CloudAppEvents
 | extend AppName = tostring(RawEventData.AddOnName)
 | summarize by AppName , AccountType, AccountDisplayName
 | sort by AppName asc
+
