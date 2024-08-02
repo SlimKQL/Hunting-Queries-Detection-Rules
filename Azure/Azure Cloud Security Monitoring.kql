@@ -1,0 +1,79 @@
+// Azure Cloud Security Monitoring
+// https://www.linkedin.com/pulse/azure-cloud-security-monitoring-steven-lim-vf6ac/
+
+// Detect new blob with allowBlobPublicAccess enabled
+
+AzureActivity
+| where OperationNameValue startswith "MICROSOFT.STORAGE/STORAGEACCOUNTS/"
+| extend allowBlobPublicAccess = tostring(parse_json(tostring(parse_json(tostring(Properties_d.requestbody)).properties)).allowBlobPublicAccess)
+| where isnotempty(allowBlobPublicAccess)
+| where allowBlobPublicAccess == "true"
+| extend ResourceName = tostring(parse_json(Properties).resource)
+| extend CallerUPN = tostring(parse_json(Properties).caller)
+| project SubscriptionId, CallerIpAddress, CallerUPN, ResourceName, allowBlobPublicAccess
+
+// Detect new public IP address creation
+
+AzureActivity
+| where OperationNameValue startswith "Microsoft.Network/publicIPAddresses/write"
+| where ActivityStatusValue == "Succeeded" 
+
+// Detect NSG creation or deletion
+
+AzureActivity
+| where OperationNameValue =~ "Microsoft.Network/networkSecurityGroups/securityRules/delete" or 
+OperationNameValue =~ "Microsoft.Network/networkSecurityGroups/securityRules/write"
+| where ActivityStatusValue == "Accept"
+| extend NsgName = split(_ResourceId, '/')[8], NsgRule = split(_ResourceId, '/')[10]
+| project TimeGenerated, NsgName, NsgRule, ResourceGroup, Caller, CallerIpAddress, _ResourceId
+
+// Detect Azure VM password reset (Lateral movement technique)
+
+ExposureGraphEdges
+| where EdgeLabel contains "contains"
+| where TargetNodeName contains "PasswordReset"
+| join ExposureGraphNodes on $left.TargetNodeId==$right.NodeId
+| project SourceNodeName, TargetNodeName, NodeProperties, EntityIds 
+
+// Detect Privilege Escalation on Azure Service Principal
+
+let CriticalIdentities =
+ExposureGraphNodes
+| where set_has_element(Categories, "identity")
+| where isnotnull(NodeProperties.rawData.criticalityLevel) 
+and NodeProperties.rawData.criticalityLevel.criticalityLevel < 4
+| extend AccountID = tostring(NodeProperties.rawData.accountObjectId)
+| distinct AccountID;
+CloudAppEvents
+| where ActivityType == "Add"
+| where ActionType == @"Add service principal credentials."
+| where AccountId has_any(CriticalIdentities)
+
+// Detect Azure API spray attacks
+
+let threshold=5;
+ApiManagementGatewayLogs
+| where TimeGenerated > ago(1d)
+| where IsRequestSuccess == "false"
+| summarize Count=count() by CallerIpAddress
+| sort by Count desc
+| where Count > threshold
+
+// Detect Azure API Secrets Extraction
+
+CloudAuditEvents
+| where Timestamp > ago(30d)
+| where OperationName == "Microsoft.ApiManagement/service/tenant/listSecrets/action"
+| extend SubscriptionID = tostring(RawEventData.subscriptionId)
+| extend PrincipalOID = tostring(RawEventData.principalOid)
+| extend ApplicationID = tostring(RawEventData.applicationId)
+| extend HttpRequest = tostring(RawEventData.httpRequest)
+| extend Properties = tostring(RawEventData.properties)
+| project Timestamp, OperationName, PrincipalOID, SubscriptionID, ApplicationID, HttpRequest, Properties 
+
+// Detect Azure VM DNS Threat
+
+DnsEvents
+| where IPAddresses != ""
+| join ThreatIntelligenceIndicator on $left.Name == $right.DomainName
+| where ConfidenceScore > 50
