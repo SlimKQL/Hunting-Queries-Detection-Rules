@@ -1,5 +1,7 @@
 CloudApp Privilege OAuth Grant
- https://www.linkedin.com/feed/update/urn:li:activity:7167157961109303296/
+https://www.linkedin.com/feed/update/urn:li:activity:7167157961109303296/
+
+Custom KQL Defender detection rule running at continuous NRT (Near Real-Time) detecting assignments of high privileged permissions to OAuth application in seconds!
 
 CloudAppEvents
 | where ActionType == "Consent to application." and AccountType == "Admin"
