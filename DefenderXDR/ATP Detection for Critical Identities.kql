@@ -1,0 +1,17 @@
+// ATP Detection for Critical Identities
+// https://www.linkedin.com/posts/activity-7190937404625584128-hgdO/
+
+// Custom DefenderXDR detection for CloudApp Advanced Threat Protection for Tier 0 Critical Identities giving you a comprehensive all-round threat monitoring. 
+
+let HighlyPrivilegedAdmins =
+ExposureGraphNodes
+| where set_has_element(Categories, "identity")
+| where isnotnull(NodeProperties.rawData.criticalityLevel) and 
+NodeProperties.rawData.criticalityLevel.criticalityLevel==0 
+| extend EntraObjectID = NodeProperties.rawData.accountObjectId
+| project EntraObjectID;
+CloudAppEvents
+| where ActionType == "AtpDetection"
+| extend DetectionMethod = tostring(RawEventData.DetectionMethod)
+| extend AccountUpn = RawEventData.UserId
+| where AccountUpn has_any(HighlyPrivilegedAdmins)
