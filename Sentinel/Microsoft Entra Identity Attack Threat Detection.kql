@@ -1,5 +1,5 @@
-Microsoft Entra Identity Attack Threat Detection
-https://www.linkedin.com/pulse/microsoft-entra-identity-attack-threat-detection-steven-lim-tycnc/
+//Microsoft Entra Identity Attack Threat Detection
+//https://www.linkedin.com/pulse/microsoft-entra-identity-attack-threat-detection-steven-lim-tycnc/
 
 let companydomain = "@contoso.com"; //update your corporate domain
 AzureActivity
