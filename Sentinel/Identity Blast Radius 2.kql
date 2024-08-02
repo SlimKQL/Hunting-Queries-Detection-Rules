@@ -12,3 +12,4 @@ DeviceLogonEvents
 | where AccountSid has_any(HighRiskUsers)
 | summarize by AccountName, DeviceName
 | sort by AccountName
+
