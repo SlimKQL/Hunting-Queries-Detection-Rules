@@ -1,0 +1,16 @@
+// NEW Real-time Anomalous Token Detection
+// https://www.linkedin.com/posts/activity-7194744137185701889-XCcu/
+
+// With the new developments from Microsoft Entra Blog, it is now possible to perform Real-time Anomalous Token Detection automatically disrupts token replay attacks in real-time when paired with a risk-based Conditional Access for sign-ins (E.g. RiskLevel = High)
+
+let AnomalousTokenRequestId=
+SecurityAlert
+| where AlertName == "Anomalous Token"
+| mv-expand todynamic(Entities)
+| project Entities
+| extend RequestId = tostring(Entities.RequestId)
+| distinct RequestId;
+AADUserRiskEvents
+| where RequestId has_any(AnomalousTokenRequestId)
+| where DetectionTimingType == "realtime"
+| where RiskLevel == "high" and RiskState == "atRisk"
