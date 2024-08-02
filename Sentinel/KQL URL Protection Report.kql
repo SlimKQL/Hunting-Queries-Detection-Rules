@@ -1,0 +1,22 @@
+// KQL URL Protection Report
+// https://www.linkedin.com/posts/activity-7190735644749426691-SQlH/
+
+// For organization subscribed to Defender for Office 365, M365 or security admin would most of time go to DefenderXDR portal "Reports" > "Email & Collaboration" > "URL protection report" to check if a particular user has click on a malicious link and if it was blocked by Office 365 ATP.
+
+// Do you know you can access all these Threat Intelligence URL Click Data in CloudAppEvents table? 😎
+
+// Using DefenderXDR Advanced Hunting and the below KQL will provide information similar to the "URL Protection Report", you can further summarize these set of data to allow you to better understand the threats currently faced by your suite of Office 365 applications that support SafeLinks and possibly tweak your SafeLinks configuration to improve your organization Office 365 application protection.🛡️
+
+CloudAppEvents
+| where ActionType == "TIUrlClickData"
+| where RawEventData.Workload=="ThreatIntelligence"
+| extend AppName = RawEventData.AppName
+| extend AccountUpn = RawEventData.UserId
+| extend UserIP = RawEventData.UserIp
+| extend ClickURL = RawEventData.Url
+| extend UrlClickAction = RawEventData.UrlClickAction
+| extend TimeOfClick = RawEventData.TimeOfClick
+| where ActivityType=="Basic"
+| project AppName, AccountUpn, UserIP, ClickURL, UrlClickAction, TimeOfClick
+| where UrlClickAction == 2 //User blocked from navigating to the URL
+
