@@ -1,0 +1,13 @@
+// Multi-Cloud DefenderXDR KQL Threat Detection
+// https://www.linkedin.com/posts/activity-7198893996356640769-cow0/
+
+// A composite detection using MDCA threat intelligence to hunt for activities in various cloud environments and resources covered by MDC. 🤯
+
+let MaliciousIPs =
+CloudAppEvents
+| where Timestamp > ago(30d)
+| where IPTags has_any ("Brute force attacker", "Password spray attacker", "Malicious", "Tor", "Botnet", "Darknet scanning IP", "Malware C&C server") or IPCategory == "Risky"
+| distinct IPAddress;
+CloudAuditEvents
+| where Timestamp > ago(30d)
+| where IPAddress has_any(MaliciousIPs)
