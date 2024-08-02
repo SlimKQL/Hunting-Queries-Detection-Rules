@@ -1,0 +1,12 @@
+// MDE: Detecting Quick Assist Usage
+// https://www.linkedin.com/posts/activity-7196570896965287936-jut0/
+
+// SecOps can configure below custom KQL Defender detection to monitor Quick Assist usage in the organization
+
+DeviceNetworkEvents
+| where ActionType == "HttpConnectionInspected"
+| where RemotePort == "443"
+| extend ConnectInfo = todynamic(AdditionalFields)
+| extend HttpHost = ConnectInfo.host
+| where HttpHost == "remoteassistance.support.services.microsoft.com:443"
+
