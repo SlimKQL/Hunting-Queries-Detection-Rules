@@ -1,9 +1,9 @@
-Exposure Management + Defender for Office 365
-https://www.linkedin.com/posts/activity-7178261918795649024-cah8/
+//Exposure Management + Defender for Office 365
+//https://www.linkedin.com/posts/activity-7178261918795649024-cah8/
 
-Custom DefenderXDR detection rule for critical identities marked by exposure management clicking on malicious email link. This would triggered the isolation of the user account and devices impacted to minimize lateral movement.
+//Custom DefenderXDR detection rule for critical identities marked by exposure management clicking on malicious email link. This would triggered the isolation of the user account and devices impacted to minimize lateral movement.
 
-KQL Detection Code:
+//KQL Detection Code:
 
 let CriticalIdentities =
 ExposureGraphNodes
