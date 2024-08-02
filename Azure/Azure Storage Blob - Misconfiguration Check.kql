@@ -1,0 +1,10 @@
+// Azure Resource Graph
+// Azure Storage Blob - Misconfiguration Check
+// https://www.linkedin.com/posts/activity-7184079321605529600-Obcd/
+
+resources
+| where type == "Microsoft.Storage/storageAccounts"
+| extend allowBlobPublicAccess = parse_json(properties).allowBlobPublicAccess
+| project subscriptionId, resourceGroup, name, allowBlobPublicAccess
+
+
