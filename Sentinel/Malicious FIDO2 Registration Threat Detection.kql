@@ -1,0 +1,15 @@
+// Malicious FIDO2 Registration Threat Detection
+// https://www.linkedin.com/posts/activity-7219732839422992385-FHSM/
+
+// In the event of a user account being compromised, a threat actor may attempt to register a passkey for persistence. This ensures that even if the account password is reset automatically, the passkey remains intact for ongoing malicious activities. By using audit logs, one can determine the IP address used for the threat actor’s passkey registration and correlate this information with threat intelligence data from BehaviourAnalytics to identify potential malicious FIDO2 passkey registration and abuse.
+
+let PasskeyAuthenticatorIP =
+AuditLogs
+| where ResultDescription contains "User registered Fido2 Authentication Method"
+| extend AuthenticatorIP = tostring(InitiatedBy.user.ipAddress)
+| distinct AuthenticatorIP;
+BehaviorAnalytics
+| where TimeGenerated > ago(90d)
+| extend ThreatIntelIndicatorDescription = DevicesInsights.ThreatIntelIndicatorDescription
+| where isnotempty( ThreatIntelIndicatorDescription )
+| where SourceIPAddress has_any(PasskeyAuthenticatorIP)
