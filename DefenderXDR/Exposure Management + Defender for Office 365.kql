@@ -16,3 +16,4 @@ AlertInfo
 | join AlertEvidence on AlertId
 | join EmailEvents on NetworkMessageId
 | where RecipientEmailAddress has_any (CriticalIdentities)
+
