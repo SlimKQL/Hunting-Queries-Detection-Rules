@@ -1,0 +1,14 @@
+//Identity Blast Radius 2 KQL
+//https://www.linkedin.com/feed/update/urn:li:activity:7177358332662337536/
+
+//A different approach of deriving identity blast radius, instead of using DefenderXDR schema we now use Sentinel User and Entity Behavior Analytics (UEBA) IdentityInfo schema to derive the high blast radius & risk user and their associated logon devices to trace the potential attack path for remediation purposes.
+
+let HighRiskUsers =
+IdentityInfo
+| where BlastRadius == "High" and ChangeSource == "UEBA"
+| where RiskLevel == "High" and RiskState == "AtRisk"
+| distinct AccountSID;
+DeviceLogonEvents
+| where AccountSid has_any(HighRiskUsers)
+| summarize by AccountName, DeviceName
+| sort by AccountName
