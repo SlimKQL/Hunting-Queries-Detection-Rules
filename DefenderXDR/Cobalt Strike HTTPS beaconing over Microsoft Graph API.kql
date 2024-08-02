@@ -1,0 +1,9 @@
+// Cobalt Strike HTTPS beaconing over Microsoft Graph API
+// https://www.linkedin.com/posts/activity-7186027037558505472-3pMe/
+
+// Interesting observation if you have MDE or MDC enabled, running the below KQL query help me to visualize some important graph elevated traffics run by my privilege role admins. This is something worth monitoring for potential threat, e.g looking at the InitiatingProcessFileName & InitiatingProcessCommandLine 
+
+DeviceNetworkEvents
+| where RemoteUrl contains "graph.microsoft.com"
+| where InitiatingProcessTokenElevation == @"TokenElevationTypeFull"
+
