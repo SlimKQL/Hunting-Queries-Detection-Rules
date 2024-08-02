@@ -1,0 +1,10 @@
+// KQL to check Azure API spray attacks
+// https://www.linkedin.com/posts/activity-7197794002526457857-Y09J/
+
+ApiManagementGatewayLogs
+| where TimeGenerated > ago(1d)
+| where IsRequestSuccess == "false"
+| summarize Count=count() by CallerIpAddress
+| sort by Count desc
+
+// Block the attack IPs on your Azure Application Gateway WAF
