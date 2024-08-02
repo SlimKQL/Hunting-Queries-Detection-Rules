@@ -1,0 +1,16 @@
+// New Threat Actor Group Signature
+// https://www.linkedin.com/posts/activity-7193281542645768192-9ZIM/
+
+// I just discovered a new threat actor group signature that started mounting aggressive spray about 2.5 weeks back on my tenant. If you run the below KQL on your Sentinel signin logs, you should probably see some hits on your tenant. Do shared your intel in the comment for community awareness if you observe it. 🙏
+
+// This particular group are abusing the "OfficeHome" app and has the firefox 116 as their user agent. The method is similar to earlier this year February Proofpoint post when they uncovered a malicious campaign on cloud account take over (ATO). 🫡 
+
+// Ongoing Malicious Campaign Impacting Microsoft Azure Cloud Environments
+// Link: https://lnkd.in/d7A_evhi
+
+SigninLogs
+| where TimeGenerated > ago(90d)
+| where ResultType == "50053" or ResultType == "50126"
+| where AppDisplayName == "OfficeHome"
+| where UserAgent == "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0"
+
