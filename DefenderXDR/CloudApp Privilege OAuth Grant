@@ -1,0 +1,8 @@
+CloudApp Privilege OAuth Grant
+ https://www.linkedin.com/feed/update/urn:li:activity:7167157961109303296/
+
+CloudAppEvents
+| where ActionType == "Consent to application." and AccountType == "Admin"
+| extend AdminUPN = tostring(RawEventData.UserId)
+| extend ConsentData = tostring(RawEventData.ModifiedProperties)
+| project Timestamp, AdminUPN, ActionType, ObjectName, ConsentData, ReportId
