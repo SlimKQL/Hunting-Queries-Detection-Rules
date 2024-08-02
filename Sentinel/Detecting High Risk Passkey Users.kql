@@ -1,0 +1,13 @@
+// Detecting High Risk Passkey Users
+// https://www.linkedin.com/posts/activity-7193644152645959682-ylGM/
+
+// As the use of passkeys becomes more popular due to their phishing-resistant advantages and their additional security through device biometrics, it’s important to recognize that there is still a risk of device compromise or potential compromise of the password manager storing the sync-able passkey. Consequently, security operations must actively monitor passkey users who are considered high risk and be prepared to revoke their passkeys when necessary or exclude them from the FIDO sign in policy.
+
+// KQL for detecting High Risk Passkey Users: 
+
+SigninLogs
+| where RiskEventTypes_V2 != "[]"
+| where RiskLevelAggregated == "high"
+| where RiskLevelDuringSignIn == "high"
+| where RiskState == "atRisk"
+| where AuthenticationDetails contains "FIDO2 security key"
