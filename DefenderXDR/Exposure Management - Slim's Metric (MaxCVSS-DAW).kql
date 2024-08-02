@@ -9,4 +9,5 @@ ExposureGraphNodes
 | where NodeProperties.rawData.criticalityLevel contains "Domain Admin Workstations"
 | where isnotnull(NodeProperties.rawData.highRiskVulnerabilityInsights)
 | extend MaxCvssScore = toreal(NodeProperties.rawData.highRiskVulnerabilityInsights.maxCvssScore)
-| sort by MaxCvssScore desc 
+| sort by MaxCvssScore desc
+
