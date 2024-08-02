@@ -1,0 +1,16 @@
+// Critical Identities OAuth Grant
+// https://www.linkedin.com/posts/0x534c_defenderxdr-customdetection-exposuremanagement-activity-7182677630733725696-MF_U/
+
+// Custom DefenderXDR detection rule for critical identities marked by exposure management for performing an OAuth grant to an application. Bear in mind critical identites hold highly privilege roles, any OAuth grant to any rouge application would be disastrous. Therefore it is vital for SecOps to monitor organization's critical identities OAuth grant unless you have an OAuth Cloud App policy that blocks all grant by default. 🫡
+
+let CriticalIdentities =
+ExposureGraphNodes
+| where set_has_element(Categories, "identity")
+| where isnotnull(NodeProperties.rawData.criticalityLevel) 
+and NodeProperties.rawData.criticalityLevel.criticalityLevel < 4
+| extend AccountID = tostring(NodeProperties.rawData.accountObjectId)
+| distinct AccountID;
+CloudAppEvents
+| where ActivityType == "Add"
+| where ActionType == @"Consent to application."
+| where AccountId has_any(CriticalIdentities)
