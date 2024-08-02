@@ -1,0 +1,8 @@
+Azure cloud account takeover
+https://www.linkedin.com/feed/update/urn:li:activity:7163049034528481281/
+
+SigninLogs
+| where TimeGenerated > ago(90d)
+| where UserAgent == "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+| where AppDisplayName == "OfficeHome"
+
