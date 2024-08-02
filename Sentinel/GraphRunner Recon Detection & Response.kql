@@ -1,0 +1,12 @@
+// GraphRunner Recon Detection & Response
+// https://www.linkedin.com/posts/activity-7186279751127334912-zjwN/
+
+// We create a Sentinel NRT rule to detect the "Get-GraphTokens" and perform an automation rule of revoking the token. 🔥 
+
+SigninLogs
+| where AuthenticationProtocol == "deviceCode"
+| where ResourceDisplayName == "Microsoft Graph"
+| extend DeviceName = tostring(DeviceDetail.displayName)
+| extend TrustType = tostring(DeviceDetail.trustType)
+| where TrustType != "Hybrid Azure AD joined" and TrustType != "Azure AD joined"
+
