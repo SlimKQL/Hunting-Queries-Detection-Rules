@@ -8,3 +8,4 @@ SigninLogs
 | extend V2Risk = tostring(RiskEventTypes_V2)
 | where V2Risk contains "estsRiskStateP"
 
+
