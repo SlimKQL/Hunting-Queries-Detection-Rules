@@ -1,0 +1,21 @@
+// New Information Stealer - SamsStealer (By CYFIRMA)
+// https://www.linkedin.com/posts/activity-7198215669711052801-kQSk/
+
+// SamsStealer: Unveiling the Information Stealer Targeting Windows Systems
+// Link: https://lnkd.in/gF949sei
+
+let WebTelegramPC =
+DeviceNetworkEvents 
+| where ActionType == @"HttpConnectionInspected"
+| extend ConnectInfo = todynamic(AdditionalFields)
+| extend HttpHost = ConnectInfo.host
+| where HttpHost contains "web.telegram.org"
+| distinct DeviceName;
+DeviceEvents
+| where DeviceName has_any(WebTelegramPC)
+| where MD5=="83f94302ae92909bc3b2834a5342d4a5" or MD5=="824e149b9c2bdd5dbe37f472533230af"
+or MD5=="1f913f8d71f0f4d65858b5ba0ea94a9c" or MD5=="56acc1496d8e5bbc0e412c683971b809"
+or MD5=="631eacb4519fd49048491c9b5ec6bda5" or MD5=="64410e06f80e75b6503e5525c323243b"
+or MD5=="7d63047a48fa8984f11544149c2f0e70" or MD5=="da493648ca3b8fd9dbad7bbca659b796"
+or MD5=="02fe599ed41cc4bd54a1d6a3cc2d830a" or MD5=="cb95c77750732c0a4dd29c1d4feb6f69"
+or MD5=="11751f8d847764936b7bf014302da87f" or MD5=="31c73ad35b23e4d98ed974e604b85e00"
