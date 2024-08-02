@@ -41,3 +41,26 @@ EmailEvents
 QRPhish
 | extend ip_location=geo_info_from_ip_address(SenderIPv4)
 | parse ip_location with "latitude\":" latitude ",\"longitude\":" longitude "}" blank
+
+// Hunting for QR Code AiTM Phishing
+
+let AnomalousTokenRequestId=
+SecurityAlert
+| where AlertName == "Anomalous Token"
+| mv-expand todynamic(Entities)
+| project Entities
+| extend RequestId = tostring(Entities.RequestId)
+| distinct RequestId;
+let UPNAnomalousToken=
+AADUserRiskEvents
+| where RequestId has_any(AnomalousTokenRequestId)
+| where DetectionTimingType == "realtime"
+| where RiskLevel == "medium" or RiskLevel == "high"
+| where RiskState == "atRisk"
+| distinct UserPrincipalName;
+EmailUrlInfo
+| where UrlLocation == "QRCode"
+| join EmailEvents on NetworkMessageId
+| where EmailDirection == "Inbound"
+| where RecipientEmailAddress has_any(UPNAnomalousToken)
+
