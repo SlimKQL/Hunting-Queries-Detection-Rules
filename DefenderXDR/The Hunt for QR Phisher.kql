@@ -1,0 +1,43 @@
+// The Hunt for QR Phisher
+// https://www.linkedin.com/posts/0x534c_defenderxdr-qrcode-phishing-activity-7180838667928678400-72U-/
+
+// 1. Determine the most frequently used QR-Code for phishing
+
+EmailEvents
+| where Timestamp > ago(30d)
+| where EmailDirection == "Inbound"
+| join EmailUrlInfo on NetworkMessageId
+| where UrlLocation == "QRCode"
+| where LatestDeliveryAction == "Blocked"
+| where ThreatTypes contains "phish"
+| summarize Count=count() by UrlDomain
+| sort by Count desc
+
+// 2. Determine the mail domains or IP addresses associated with QR Phisher
+
+EmailEvents
+| where Timestamp > ago(30d)
+| where EmailDirection == "Inbound"
+| join EmailUrlInfo on NetworkMessageId
+| where UrlLocation == "QRCode"
+| where LatestDeliveryAction == "Blocked"
+| where ThreatTypes contains "phish"
+| where UrlDomain contains "wap.lovetothenations.org"
+| distinct SenderMailFromDomain
+
+// Visualize QR-Phishing Attack with ADX Interactive Map
+
+EmailEvents
+| where Timestamp > ago(30d)
+| where EmailDirection == "Inbound"
+| join EmailUrlInfo on NetworkMessageId
+| where UrlLocation == "QRCode"
+| where LatestDeliveryAction == "Blocked"
+| where ThreatTypes contains "phish"
+| project SenderIPv4 
+
+//From ADX (Azure Data Explorer) import the IPaddress.csv into a newly created Table called QRPhish, run the below KQL query
+
+QRPhish
+| extend ip_location=geo_info_from_ip_address(SenderIPv4)
+| parse ip_location with "latitude\":" latitude ",\"longitude\":" longitude "}" blank
