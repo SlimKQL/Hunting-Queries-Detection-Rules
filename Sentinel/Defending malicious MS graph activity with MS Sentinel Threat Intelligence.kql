@@ -14,3 +14,4 @@ SigninLogs
 | where RiskEventTypes contains "suspiciousAPITraffic"
 
 
+
