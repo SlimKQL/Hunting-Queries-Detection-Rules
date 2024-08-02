@@ -1,0 +1,24 @@
+// Sentinel All-In-One UPN ThreatHunt
+// https://www.linkedin.com/pulse/microsoft-sentinel-kql-solo-leveling-steven-lim-8hsqc/
+
+// This KQL query searches across these Sentinel log tables for the UPN variable that is defined at the start:
+// Anomalies, CloudAppEvents, CommonSecurityLog, DeviceEvents, DeviceFileEvents, DeviceLogonEvents, AzureActivity, EmailEvents, OfficeActivity, SecurityEvent, BehaviorAnalytics
+
+let upn = "FirstName.LastName@onmicrosoft.com";
+search in (Anomalies,CloudAppEvents,CommonSecurityLog,DeviceEvents,DeviceFileEvents,DeviceLogonEvents,AzureActivity,
+EmailEvents,OfficeActivity,SecurityEvent,BehaviorAnalytics)
+TimeGenerated between (ago(1d) .. now())
+and (
+// ** Events initiated by this UPN **
+UserPrincipalName == upn                        // Anomalies, BehaviorAnalytics 
+or tostring(RawEventData.UserId) == upn         // CloudAppEvents 
+or SourceUserName == upn                        // CommonSecurityLog
+or AccountName == upn                           // DeviceEvents
+or InitiatingProcessAccountUpn  == upn          // DeviceFileEvents, DeviceLogonEvents  
+or Caller == upn                                // AzureActivity
+or RecipientEmailAddress == upn                 // EmailEvents
+or SenderMailFromAddress == upn                 // EmailEvents
+or UserId == upn                                // OfficeActivity
+or Entities contains upn                        // SecurityEvent
+) 
+
