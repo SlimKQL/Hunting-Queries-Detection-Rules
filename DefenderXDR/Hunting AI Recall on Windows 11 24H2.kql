@@ -1,0 +1,13 @@
+// Hunting AI Recall on Windows 11 24H2
+// https://www.linkedin.com/posts/activity-7204333401787572226-jFYe/
+
+// The Windows 11 AI Recall feature, which has sparked considerable debate since its introduction by Microsoft on May 20th, operates on ARM CPU architecture. Despite the security community’s concerns, Microsoft has yet to provide comprehensive explanations. Meanwhile, this feature is now accessible in the Windows 11 24H2 update as a preview. For SecOps, particularly within large organizations, it’s crucial to track whether this function is being activated on corporate endpoints, considering the potential risks highlighted in the shared articles. Below is a KQL hunting query designed for security analysts to detect any activations of the Windows 11 recall function within your corporate network, assuming the use of Microsoft Defender for Endpoint. 
+
+let Windows11_24H2 =
+DeviceInfo
+| where OSPlatform == "Windows11" and OSVersionInfo == "24H2"
+| project DeviceName;
+DeviceFileEvents
+| where FolderPath contains "CoreAIPlatform"
+| where DeviceName has_any(Windows11_24H2)
+
