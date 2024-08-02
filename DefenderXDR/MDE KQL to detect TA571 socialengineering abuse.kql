@@ -1,0 +1,7 @@
+// MDE KQL to detect TA571 socialengineering abuse
+// https://www.linkedin.com/posts/activity-7208705552833478656-8xUz/
+
+DeviceEvents
+| where ActionType == "GetClipboardData"
+| where InitiatingProcessFileName == "powershell.exe"
+
