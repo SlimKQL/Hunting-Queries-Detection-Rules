@@ -12,3 +12,5 @@ ExposureGraphEdges
 | where SourceNodeName has_any (HighRiskAccounts)
 | join ExposureGraphNodes on $left.TargetNodeId==$right.NodeId
 | summarize by SourceNodeName, TargetNodeName
+
+
