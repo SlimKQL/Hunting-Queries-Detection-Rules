@@ -1,0 +1,10 @@
+// KQL query to oversee the privileged OAuth grants allocated to the Microsoft Graph Command Line Tools OAuth App
+// https://www.linkedin.com/posts/activity-7212728685601116161-qmd4/
+
+// The Microsoft Graph Command Line Tools OAuth App, which possesses a High permission level, has received verification from Microsoft. It’s crucial for Security Operations teams to monitor the usage and consent of this tool within your organization’s M365/Azure admin framework to guarantee compliance with established change control procedures. Utilize the following KQL query to oversee the privileged OAuth grants allocated to this tool.
+
+CloudAppEvents
+| where TimeGenerated > ago(90d)
+| where ActionType == "Consent to application." and AccountType == "Admin"
+| where ObjectName contains "Microsoft Graph"
+
