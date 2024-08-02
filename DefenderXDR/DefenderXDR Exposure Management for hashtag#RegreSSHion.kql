@@ -1,0 +1,23 @@
+// DefenderXDR Exposure Management for hashtag#RegreSSHion
+// https://www.linkedin.com/posts/activity-7214788756237639680-rGkW/
+
+//Use below KQL to determine your internet facing VM with OpenSSH and prioritize the following:
+// - Access Control
+// - Host-based Intrusion Prevention (E.g fail2ban)
+// - SSH Configuration Hardening
+// (E.g LoginGraceTime/MaxStartups/PerSourceMaxStartups)
+
+// Refer to Splunk Mitigation Strategies for CVE-2024-6387
+// Link: https://lnkd.in/gFPsbcaW
+
+let InternetFacingVM=
+ExposureGraphNodes
+| where NodeLabel == 'device' or (Categories has 'virtual_machine' and set_has_element(Categories, 'virtual_machine'))
+| where NodeProperties.rawData.isInternetFacing == true
+| extend InternetFacingDeviceName=tostring(NodeProperties.rawData.deviceName)
+| project InternetFacingDeviceName;
+DeviceTvmSoftwareInventory
+| where SoftwareName contains "openssh"
+| where DeviceName has_any(InternetFacingVM)
+
+ 
