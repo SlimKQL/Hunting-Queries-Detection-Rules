@@ -1,0 +1,10 @@
+//Threat Hunting Nation State Actors
+//https://www.linkedin.com/feed/update/urn:li:activity:7173156446581219328/
+
+//In view of recent security updates from Microsoft on the January breach by Midnight Blizzard, for those on Microsoft Entra ID P2 you can also use Signin log's riskEventsTypes_v2 to threat hunt for possible nation state actors involvement on your Entra tenant by using below KQL query.
+
+SigninLogs
+| where TimeGenerated > ago(90d)
+| extend V2Risk = tostring(RiskEventTypes_V2)
+| where V2Risk contains "estsRiskStateP"
+
