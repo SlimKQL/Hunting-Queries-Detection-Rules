@@ -1,0 +1,7 @@
+Detecting Nation State Actors @ Near Realtime
+https://www.linkedin.com/feed/update/urn:li:activity:7172463683351113728/
+
+In view of recent updates from Microsoft on Midnight Blizzard, for those on Microsoft Entra ID P2 running the below Sentinel KQL analytic rule at NRT (Near real-time) will give you the best detection if your tenant is impacted by any nation state actors based on Microsoft Security Intelligence (MSTIC) telemetry data. 
+
+AADUserRiskEvents
+| where RiskEventType == "nationStateIP"
