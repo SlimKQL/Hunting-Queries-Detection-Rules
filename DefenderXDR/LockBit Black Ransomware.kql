@@ -1,0 +1,16 @@
+// LockBit Black Ransomware (Phorpiex botnet) KQL Detect
+// https://www.linkedin.com/posts/activity-7196135968318353408-SN3l/
+
+// Proofpoint has observed Phorpiex botnet sending millions of phishing emails to deliver LockBit Black ransomware beginning April 24, 2024 and continuing daily for about a week. I just checked my Defender and indeed I received 81 of them but they were all stop by my antimalware policy block by file type. You may want to check if you are impacted and any slipped through your defense.
+
+// Security Brief: Millions of Messages Distribute LockBit Black Ransomware
+// https://lnkd.in/dAmupJ6n
+
+DefenderXDR KQL:
+
+EmailEvents
+| where Timestamp > ago(30d)
+| where SenderDisplayName == "Jenny Green"
+or SenderFromAddress == "Jenny@gsd.com"
+or SenderFromAddress =="JennyBrown3422@gmail.com"
+| summarize Count=count() by LatestDeliveryAction
