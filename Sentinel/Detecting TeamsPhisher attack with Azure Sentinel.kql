@@ -1,5 +1,5 @@
-Detecting TeamsPhisher attack with Azure Sentinel
-https://www.linkedin.com/pulse/detecting-teamsphisher-attack-azure-sentinel-steven-lim/
+//Detecting TeamsPhisher attack with Azure Sentinel
+//https://www.linkedin.com/pulse/detecting-teamsphisher-attack-azure-sentinel-steven-lim/
 
 OfficeActivity
 | where TimeGenerated > ago(1h)
