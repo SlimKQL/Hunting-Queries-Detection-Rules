@@ -1,0 +1,15 @@
+// Defending Cyber Threats Leveraging Microsoft Graph API 
+// https://www.linkedin.com/posts/activity-7201866283464679424-Jf-5/
+
+// Using Sentinel User and Entity Behavior Analytics (UEBA) threat intelligence data to triangulate attacker launching Graph API attacks on your Entra tenant. Prerequisites: Sentinel UEBA and MicrosoftGraphActivityLogs enabled.
+
+let AttackerIP =
+BehaviorAnalytics
+| where TimeGenerated > ago(90d)
+| where DevicesInsights contains "ThreatIntelIndicatorType" and SourceDevice == ""
+| extend ThreatIntel=tostring(DevicesInsights.ThreatIntelIndicatorDescription)
+| where InvestigationPriority > 0 and ThreatIntel contains "hashtag#AttackerIP"
+| distinct SourceIPAddress;
+MicrosoftGraphActivityLogs
+| where TimeGenerated > ago(90d)
+| where IPAddress has_any (AttackerIP)
