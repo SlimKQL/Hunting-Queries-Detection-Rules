@@ -1,5 +1,5 @@
-Detect Copilot Plugin Installation
-https://www.linkedin.com/feed/update/urn:li:activity:7176504602702356481/
+//Detect Copilot Plugin Installation
+//https://www.linkedin.com/feed/update/urn:li:activity:7176504602702356481/
 
 CloudAppEvents
 | where ActionType == "AppInstalled"
