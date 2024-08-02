@@ -1,0 +1,14 @@
+//Identity Blast Radius KQL
+//https://www.linkedin.com/feed/update/urn:li:activity:7174327431485431808/
+
+//Assessing high risk identity account blast radius by using risk data from AADSignInEventsBeta and edge/nodes data from ExposureGraphEdges and ExposureGraphNodes to determine the list of assets that can be potentially impacted in the event of account compromised.
+
+let HighRiskAccounts =
+AADSignInEventsBeta
+| where RiskLevelAggregated > 50
+| distinct AccountDisplayName;
+ExposureGraphEdges 
+| where EdgeLabel == @"can authenticate to"
+| where SourceNodeName has_any (HighRiskAccounts)
+| join ExposureGraphNodes on $left.TargetNodeId==$right.NodeId
+| summarize by SourceNodeName, TargetNodeName
