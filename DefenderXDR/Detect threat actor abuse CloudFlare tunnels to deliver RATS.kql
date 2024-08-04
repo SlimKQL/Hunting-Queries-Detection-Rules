@@ -1,0 +1,9 @@
+// Detect threat actor abuse CloudFlare tunnels to deliver RATS
+// https://www.linkedin.com/posts/activity-7225744862875152384-whO8/
+
+UrlClickEvents
+| where Timestamp > ago(30d)
+| extend domain = tostring(parse_url(Url).Host)
+| where domain endswith ".trycloudflare.com"
+| join EmailEvents on NetworkMessageId
+| project Timestamp, Url, RecipientEmailAddress, SenderMailFromAddress, SenderFromAddress, Subject, AttachmentCount, UrlCount
