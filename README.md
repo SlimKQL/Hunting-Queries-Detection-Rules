@@ -6,3 +6,6 @@ The purpose of this repository is to share KQL queries that can be used by anyon
 
 Presenting this material as your own is illegal and forbidden. A reference to Linkedin @0x534c or Github @SLimKQL is much appreciated when sharing or using the content.
 
+https://github.com/SlimKQL/Hunting-Queries-Detection-Rules
+
+
