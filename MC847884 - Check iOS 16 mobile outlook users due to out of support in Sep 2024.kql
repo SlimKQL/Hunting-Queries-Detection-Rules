@@ -1,0 +1,11 @@
+// MC847884 - Check iOS 16 mobile outlook users due to out of support in Sep 2024
+
+// With iOS 18 releasing in mid September, the minimum supported iOS version would be iOS 17 as over time, Outlook for iOS on iOS 16 devices will eventually stop synchronizing email and calendar data. Do you know how many of your organization users are impacted by this new iOS released ? Use the below KQL to determine the list of impacted users.
+
+SigninLogs
+| where TimeGenerated > ago(90d)
+| where ResultType == "0"
+| extend OS = tostring(DeviceDetail.operatingSystem)
+| where OS contains "Ios 16."
+| where AppDisplayName == "Outlook Mobile"
+| distinct UserPrincipalName, OS
