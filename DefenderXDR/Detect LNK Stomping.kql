@@ -1,0 +1,10 @@
+//Detecting LNK stomping🦶
+
+//A bug in the handling of LNK files, can help threat actors bypass Smart App Control security controls designed to block untrusted applications. The below KQL should detect the behavioral signal of LNK stomping.
+
+DeviceFileEvents
+| where ActionType == "FileModified"
+| where FileName endswith ".lnk"
+| where InitiatingProcessFileName has "explorer.exe"
+
+// #MDE #DefenderXDR #BypassSmartAppControl #MotW
