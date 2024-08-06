@@ -1,4 +1,5 @@
 //Detecting LNK stomping🦶
+// https://www.linkedin.com/posts/0x534c_windows-smart-app-control-smartscreen-bypass-activity-7226483357625282560-2kOU/
 
 //A bug in the handling of LNK files, can help threat actors bypass Smart App Control security controls designed to block untrusted applications. The below KQL should detect the behavioral signal of LNK stomping.
 
