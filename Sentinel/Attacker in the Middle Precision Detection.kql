@@ -1,0 +1,18 @@
+// Attacker in the Middle Precision Detection
+
+** A premium detection requiring Entra P2 license **
+
+// Beginning in July 2024, the ‘Attacker in the Middle’ detection is now generally available in Identity Protection. By combining this offline detection with ‘Anomalous Token’ detection, it provides high-precision detection when a malicious actor attempts to replay a token. AAD Identity Protection will raise a security alert under ‘Anomalous Token’ with the ‘attackerInTheMiddle’ risk event type, ensuring reliable detection.
+
+let AnomalousTokenRequestId=
+SecurityAlert
+| where AlertName == "Anomalous Token"
+| mv-expand todynamic(Entities)
+| project Entities
+| extend RequestId = tostring(Entities.RequestId)
+| distinct RequestId;
+AADUserRiskEvents
+| where RequestId has_any(AnomalousTokenRequestId)
+| where RiskEventType == "attackerinTheMiddle"
+
+// #Sentinel #AiTM #AnomalousToken #IdentityProtection #Entra #PremiumDetection
