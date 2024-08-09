@@ -1,5 +1,5 @@
 // Detect Privilege Admin under AiTM attack
-
+// https://www.linkedin.com/posts/0x534c_sentinel-privilegeadmin-aitm-activity-7227603649688952832--1Id/
 //Sentinel rule trigger => Run Playbook "Disable User Account"
 //A simple and effective offline detection and mitigation strategy.
 
