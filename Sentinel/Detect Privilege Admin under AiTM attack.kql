@@ -1,0 +1,14 @@
+// Detect Privilege Admin under AiTM attack
+
+//Sentinel rule trigger => Run Playbook "Disable User Account"
+//A simple and effective offline detection and mitigation strategy.
+
+let PrivilegeAdmin =
+IdentityInfo
+| where AssignedRoles != "[]"
+| distinct AccountUPN;
+AADUserRiskEvents
+| where RiskEventType == "attackerinTheMiddle"
+| where UserPrincipalName has_any(PrivilegeAdmin)
+
+// #Sentinel #PrivilegeAdmin #AiTM #IdentityProtection #Entra #PremiumDetection
