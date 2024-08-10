@@ -1,0 +1,16 @@
+// Exposure Management: Cloud or On-Prem VDI Platform Blast Radius
+// 
+// The following KQL query leverages the DefenderXDR ExposureGraphEdges schema to analyze workstations that permit multiple user logons. After identifying cloud or on-premises virtual desktop infrastructure (VDI), it scans the DeviceTvmSoftwareVulnerabilities for critical and high CVEs linked to these multi-user logons. Remember, unpatched workstations with numerous users significantly increase your attack surface. This KQL query helps you assess the associated blast radius of your attack surface if not managed properly.🎯
+
+let AVDs =
+ExposureGraphEdges
+| where EdgeLabel == "can authenticate as"
+| summarize UserLogonCount=count() by SourceNodeName
+| where UserLogonCount > 3
+| distinct SourceNodeName;
+DeviceTvmSoftwareVulnerabilities
+| where VulnerabilitySeverityLevel == "Critical" 
+or VulnerabilitySeverityLevel == "High"
+| where DeviceName has_any (AVDs)
+
+// #DefenderXDR #ExposureManagement #AttackPath #BlastRadius
