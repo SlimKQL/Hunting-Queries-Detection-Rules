@@ -1,5 +1,5 @@
 // Detect Microsoft Graph API Abuse
-
+// Linkedin Post: https://www.linkedin.com/posts/0x534c_nation-state-attackers-increasingly-abuse-activity-7227945393827815424-QMVG/
 // This offline risk detection is reported when abnormal GraphAPI traffic or directory enumeration is observed. Suspicious API traffic might suggest that a user is compromised and conducting reconnaissance in the environment.
 
 // ** A premium detection requiring Entra P2 license **
