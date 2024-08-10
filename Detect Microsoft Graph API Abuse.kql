@@ -1,0 +1,15 @@
+// Detect Microsoft Graph API Abuse
+
+// This offline risk detection is reported when abnormal GraphAPI traffic or directory enumeration is observed. Suspicious API traffic might suggest that a user is compromised and conducting reconnaissance in the environment.
+
+// ** A premium detection requiring Entra P2 license **
+
+search in (SigninLogs, AADUserRiskEvents, AADNonInteractiveUserSignInLogs)
+TimeGenerated between (ago(48h) .. now())
+and (
+RiskEventTypes == "suspiciousAPITraffic"
+)
+
+// Reference: https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-risks#suspicious-api-traffic
+
+
