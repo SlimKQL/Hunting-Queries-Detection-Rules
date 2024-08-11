@@ -5,6 +5,8 @@
 
 //The following DefenderXDR custom detection KQL utilizes Microsoft Defender Cloud Apps (MDCA) User Entity and Behavior Analytics (UEBA) capabilities to detect unusual Copilot bizchat (user prompting) sessions and correlate them with Microsoft Defender for Office 365 (MDO) email sending activities. This approach aims to identify the abused Copilot spear phishing scenario mentioned in the article and immediately quarantine the email messages. After validation by SecOps, if deemed safe, SecOps can release the emails from quarantine.
 
+// ** VERSION 1 **
+
 let UncommonCopilotPromptUpn =
 CloudAppEvents
 | where Timestamp > ago(1h)
@@ -18,6 +20,29 @@ CloudAppEvents
 | distinct UserID;
 EmailEvents
 | where SenderFromAddress has_any (UncommonCopilotPromptUpn)
+| where EmailDirection == "Outbound"
+| where AttachmentCount > 0 or UrlCount > 0
+
+// ** Version 2 - Improve detection on PowerPwn **
+
+let UncommonCopilotPromptUpn =
+CloudAppEvents
+| where Application == @"Microsoft Copilot for Microsoft 365"
+| where ActionType == @"CopilotInteraction"
+| extend UserID = tostring(RawEventData.UserId)
+| extend CopilotData = todynamic(RawEventData.CopilotEventData)
+| extend CopilotAppHost = tostring(CopilotData.AppHost)
+| where CopilotAppHost == "bizchat"
+| where UncommonForUser has "ISP" or UncommonForUser has "CountryCode"
+| distinct UserID;
+let PowerPwnUpn =
+AADSignInEventsBeta
+| where AccountUpn has_any (UncommonCopilotPromptUpn)
+| where ResourceDisplayName == "Office 365 Exchange Online"
+| where UserAgent contains "python"
+| distinct AccountUpn;
+EmailEvents
+| where SenderFromAddress has_any (PowerPwnUpn)
 | where EmailDirection == "Outbound"
 | where AttachmentCount > 0 or UrlCount > 0
 
