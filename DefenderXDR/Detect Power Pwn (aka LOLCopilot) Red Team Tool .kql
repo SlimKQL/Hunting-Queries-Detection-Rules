@@ -1,0 +1,20 @@
+// Detect Power Pwn (aka LOLCopilot) Red Team Tool 
+
+// DefenderXDR custom detection and isolation of machine if caught running LOLCopilot 😉
+
+// Running at NRT (near-realtime)
+
+DeviceNetworkEvents 
+| where InitiatingProcessVersionInfoProductName == "Node.js"
+| where RemoteUrl startswith "https://www.office.com" or 
+RemoteUrl startswith "https://teams.microsoft.com"
+
+// Sentinel detection on Entra Signin for possible LOLCopilot usage on non MDE endpoints
+
+SigninLogs
+| where TimeGenerated > ago(1h)
+| where UserAgent contains "headless"
+
+// Note: The above will no longer work if threat actor changes the Power Pwn Puppeteer script's setUserAgent value 
+
+// Reference: https://www.wired.com/story/microsoft-copilot-phishing-data-extraction/
