@@ -1,0 +1,24 @@
+// Sentinel UEBA Privilege Escalation Detection
+
+// Here is a list of interesting privilege escalation articles I read over the past weeks and my thoughts on potential solution to monitor all these escalations:
+
+// UnOAuthorized: Privilege Elevation Through Microsoft Applications
+// https://www.semperis.com/blog/unoauthorized-privilege-elevation-through-microsoft-applications/
+
+// Abusing PIM-related application permissions in Microsoft Graph - Part 1
+// https://www.emiliensocchi.io/abusing-pim-related-application-permissions-in-microsoft-graph-part-1/
+
+// Abusing PIM-related application permissions in Microsoft Graph - Part 2
+https://www.emiliensocchi.io/abusing-pim-related-application-permissions-in-microsoft-graph-part-2/
+
+// Abusing PIM-related application permissions in Microsoft Graph - Part 3
+// https://www.emiliensocchi.io/abusing-pim-related-application-permissions-in-microsoft-graph-part-3/
+
+// Sentinel UEBA Detection:
+
+Anomalies
+| where TimeGenerated > ago(1h)
+| where RuleName == "UEBA Anomalous Privilege Granted"
+| where ActivityInsights.ActionUncommonlyPerformedInTenant == "True"
+
+// #Sentinel #UEBA #PrivilegeEscalation
