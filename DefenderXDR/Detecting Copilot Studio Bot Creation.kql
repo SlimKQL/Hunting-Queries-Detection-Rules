@@ -1,0 +1,9 @@
+// Detecting Copilot Studio Bot Creation
+
+// The below KQL will detect the list of Copilot Studio bots created in your tenant and your can correlate the NodeName (id) against the AuditLogs TargetResources for more information.
+
+ExposureGraphNodes
+| where NodeLabel == @"serviceprincipal"
+| where NodeProperties.rawData.accountDisplayName contains "Microsoft Copilot Studio"
+| where NodeProperties.rawData.accountEnabled == "true"
+| where NodeProperties.rawData.tags startswith "power-virtual-agents-"
