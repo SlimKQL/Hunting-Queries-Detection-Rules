@@ -1,5 +1,5 @@
 // Detecting Copilot Studio Bot Creation
-
+// https://www.linkedin.com/posts/0x534c_copilotstudiobots-securityconfiguration-dlp-activity-7230083382682992641-dLMZ/
 // The below KQL will detect the list of Copilot Studio bots created in your tenant and your can correlate the NodeName (id) against the AuditLogs TargetResources for more information.
 
 ExposureGraphNodes
