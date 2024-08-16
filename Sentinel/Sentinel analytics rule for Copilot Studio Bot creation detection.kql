@@ -1,0 +1,7 @@
+// Sentinel analytics rule for Copilot Studio Bot creation detection
+
+AuditLogs
+| where TimeGenerated > (1h)
+| where Identity == "Power Virtual Agents Service"
+| where OperationName == "Add application"
+| where TargetResources contains "(Microsoft Copilot Studio)"
