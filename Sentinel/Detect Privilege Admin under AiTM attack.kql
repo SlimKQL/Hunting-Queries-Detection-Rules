@@ -5,7 +5,7 @@
 
 let PrivilegeAdmin =
 IdentityInfo
-| where AssignedRoles != "[]"
+| where AssignedRoles != "[]" and isnotnull(AssignedRoles)
 | distinct AccountUPN;
 AADUserRiskEvents
 | where RiskEventType == "attackerinTheMiddle"
