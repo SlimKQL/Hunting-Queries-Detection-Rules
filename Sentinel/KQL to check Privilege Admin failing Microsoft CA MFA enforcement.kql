@@ -1,0 +1,17 @@
+// KQL to check Privilege Admin failing Microsoft CA MFA enforcement
+
+let PrivilegeAdmin =
+IdentityInfo
+| where TimeGenerated > ago(14d)
+| where AssignedRoles != "[]" and isnotnull(AssignedRoles)
+| distinct AccountUPN;
+SigninLogs
+| where UserPrincipalName has_any(PrivilegeAdmin)
+| where ResultType == "0"
+| where ConditionalAccessPolicies != "[]"
+| mv-expand ConditionalAccessPolicies
+| extend CADisplayName = tostring(ConditionalAccessPolicies.displayName)
+| extend CAResult = tostring(ConditionalAccessPolicies.result)
+| where CADisplayName == "Microsoft-managed: Multifactor authentication for admins accessing Microsoft Admin Portals"
+| where CAResult == "reportOnlyFailure"
+
