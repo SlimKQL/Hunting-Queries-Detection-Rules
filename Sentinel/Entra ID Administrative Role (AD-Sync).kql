@@ -1,0 +1,11 @@
+// Entra ID Administrative Role (AD-Sync)
+
+IdentityInfo
+| where Timestamp > ago(30d)
+| where AssignedRoles != ""
+| mv-expand AssignedRoles
+| extend EntraAdminRole = tostring(AssignedRoles)
+| where OnPremSid != ""
+| distinct EntraAdminRole, AccountUpn
+| where AccountUpn != ""
+| sort by EntraAdminRole asc
