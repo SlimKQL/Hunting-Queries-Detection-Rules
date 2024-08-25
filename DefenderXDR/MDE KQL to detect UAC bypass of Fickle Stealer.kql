@@ -10,3 +10,11 @@ DeviceFileEvents
 | where ActionType == "FileCreated"
 | where FileName == "WmiMgmt.msc"
 | where FolderPath contains "\Windows\System32\en-US"
+
+// MITRE ATT&CK Mapping
+
+// Based on the query, the detection can be associated with the following MITRE ATT&CK techniques:
+
+// T1070.004: Indicator Removal on Host - File Deletion: The creation of a specific file in the System32 directory could be an attempt to replace or hide malicious files, which is a common tactic for evading detection1.
+// T1059.001: Command and Scripting Interpreter - PowerShell: The WmiMgmt.msc file is related to Windows Management Instrumentation (WMI), which can be used for executing scripts and commands2.
+// T1569.002: System Services - Service Execution: The creation of files in the System32 directory can be related to the execution of system services, which is a technique used to maintain persistence3.
