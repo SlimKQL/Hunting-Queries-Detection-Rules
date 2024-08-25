@@ -9,3 +9,16 @@ IdentityInfo
 | distinct EntraAdminRole, AccountUpn
 | where AccountUpn != ""
 | sort by EntraAdminRole asc
+
+// MITRE ATT&CK Mapping
+
+// Based on the operations and objectives of the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts:
+// The query filters and expands assigned roles, which can help identify the use of valid accounts with specific roles.
+// T1087 - Account Discovery:
+// The query retrieves distinct combinations of roles and UPNs, which aligns with discovering accounts and their associated roles.
+// T1071 - Application Layer Protocol:
+// Filtering by OnPremSid and AccountUpn can help detect unusual or unauthorized use of application layer protocols for accessing resources.
+// T1556 - Modify Authentication Process:
+// The query’s focus on assigned roles and on-premises SIDs can help detect modifications to authentication processes or roles.
