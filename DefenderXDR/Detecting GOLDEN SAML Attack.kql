@@ -10,3 +10,15 @@ DeviceNetworkEvents
 | extend HttpHost = ConnectInfo.host
 | where HttpHost contains "any.sts" or HttpHost contains "korvatunturi.fi"
 
+// MITRE ATT&CK Mapping
+
+// Based on the analysis, this query can be associated with the following MITRE ATT&CK techniques:
+
+// T1071.001 - Application Layer Protocol: Web Protocols:
+// This technique involves adversaries using web protocols to communicate with compromised systems to avoid detection/network filtering by blending in with normal traffic1.
+// T1071 - Application Layer Protocol:
+// This broader category includes the use of application layer protocols for command and control1.
+// T1040 - Network Sniffing:
+// The inspection of HTTP connections can be related to network sniffing, where adversaries capture network traffic to obtain information1.
+// T1070.004 - Indicator Removal on Host: File Deletion:
+// Although not directly related to the query, inspecting HTTP connections might be part of a broader strategy to detect and prevent adversaries from removing indicators on the host1.
