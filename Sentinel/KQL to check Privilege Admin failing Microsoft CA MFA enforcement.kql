@@ -15,3 +15,15 @@ SigninLogs
 | where CADisplayName == "Microsoft-managed: Multifactor authentication for admins accessing Microsoft Admin Portals"
 | where CAResult == "reportOnlyFailure"
 
+// MITRE ATT&CK Mapping
+
+// The KQL query can be associated with the following MITRE ATT&CK techniques:
+
+// T1078 - Valid Accounts:
+// The query identifies privileged accounts and monitors their sign-in activities, which aligns with the use of valid accounts for persistence or privilege escalation1.
+// T1078.003 - Valid Accounts: Cloud Accounts:
+// Specifically focuses on cloud accounts, as it deals with Azure AD sign-in logs and conditional access policies1.
+// T1110 - Brute Force:
+// Monitoring failed conditional access policies can help detect brute force attempts where attackers try to bypass multi-factor authentication1.
+// T1556 - Modify Authentication Process:
+// The query checks for failures in multi-factor authentication policies, which could indicate attempts to modify or bypass the authentication process1.
