@@ -11,3 +11,26 @@ CloudAppEvents
 CloudAuditEvents
 | where Timestamp > ago(30d)
 | where IPAddress has_any(MaliciousIPs)
+
+
+// MITRE ATT&CK Mapping
+
+// Based on the activities and tags mentioned, here are the relevant MITRE ATT&CK techniques:
+
+// Brute Force Attacker:
+// T1110: Brute Force - Attempting to gain access to accounts by repeatedly trying different passwords.
+// Password Spray Attacker:
+// T1110.003: Password Spraying - Trying commonly used passwords against many accounts.
+// Malicious IPs (General):
+// T1071: Application Layer Protocol - Using standard application layer protocols to communicate with command and control servers.
+// T1090: Proxy - Using proxies to obscure the origin of malicious traffic.
+// Tor:
+// T1090.003: Multi-hop Proxy - Using multiple proxies to hide the origin of traffic, often associated with Tor.
+// Botnet:
+// T1071.001: Web Protocols - Using web protocols for command and control communication.
+// T1102: Web Service - Using web services for command and control.
+// Darknet Scanning IP:
+// T1046: Network Service Scanning - Scanning for open ports and services on the network.
+// Malware C&C Server:
+// T1071: Application Layer Protocol - Communicating with command and control servers using standard protocols.
+// T1105: Ingress Tool Transfer - Transferring tools or files from an external system into a compromised environment.
