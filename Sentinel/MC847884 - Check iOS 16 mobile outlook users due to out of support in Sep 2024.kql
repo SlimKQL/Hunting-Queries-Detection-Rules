@@ -9,3 +9,16 @@ SigninLogs
 | where OS contains "Ios 16."
 | where AppDisplayName == "Outlook Mobile"
 | distinct UserPrincipalName, OS
+
+// MITRE ATT&CK Mapping
+
+// Based on the query, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts:
+// The query focuses on successful sign-ins, which involves the use of valid accounts1.
+// T1071.001 - Application Layer Protocol: Web Protocols:
+// Since the query filters for the Outlook Mobile app, it involves web protocols for communication2.
+// T1087 - Account Discovery:
+// By identifying distinct user principal names, the query aligns with account discovery techniques3.
+// T1201 - Password Policy Discovery:
+// Although not directly related, successful sign-ins can imply adherence to password policies4.
