@@ -8,3 +8,10 @@ CloudAppEvents
 | where ActionType == "Consent to application." and AccountType == "Admin"
 | where ObjectName contains "Microsoft Graph"
 
+// MITRE ATT&CK Mapping
+
+// This query is related to the following MITRE ATT&CK techniques:
+
+// T1078 - Valid Accounts: The use of valid accounts to gain access to resources. In this case, an admin account consenting to an application.
+// T1098 - Account Manipulation: The consent to an application by an admin could be seen as a form of account manipulation, especially if the consent is unauthorized.
+// T1071 - Application Layer Protocol: The use of Microsoft Graph API, which is an application layer protocol.
