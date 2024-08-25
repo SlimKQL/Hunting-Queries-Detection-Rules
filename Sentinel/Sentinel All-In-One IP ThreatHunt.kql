@@ -30,3 +30,11 @@ or ClientIPAddress == ip            // SecurityEvent
 or NetworkSourceIP == ip            // ThreatIntelligenceIndicator
 or SourceIPAddress == ip            // BehaviorAnalytics 
 )
+
+// MITRE ATT&CK Mapping
+
+// EmailEvents (SenderIPv4): Phishing (T1566)
+// UrlClickEvents (DestinationIpAddress): Drive-by Compromise (T1189) 
+// DeviceLogonEvents (RemoteIP): Remote Services (T1021)
+// DeviceFileEvents (FileOriginIP): Indicator Removal on Host (T1070)
+// DeviceNetworkEvents (LocalIP): Network Service Scanning (T1046)
