@@ -13,3 +13,17 @@ MicrosoftGraphActivityLogs
 | where IPAddress has_any(NationStateIP)
 | count
 
+// MITRE ATT&CK Mapping
+
+// The KQL query is primarily focused on detecting suspicious IP addresses and their activities, which can be mapped to several MITRE ATT&CK techniques:
+
+// T1071.001 - Application Layer Protocol: Web Protocols
+// The query looks for suspicious IP addresses in activity logs, which can be related to the use of web protocols for communication.
+// T1078 - Valid Accounts
+// The detection of nation-state IPs in sign-in logs can indicate the use of valid accounts by adversaries.
+// T1078.003 - Valid Accounts: Local Accounts
+// If the nation-state IPs are using local accounts, this technique is relevant.
+// T1078.004 - Valid Accounts: Cloud Accounts
+// If the nation-state IPs are using cloud accounts, this technique is relevant.
+// T1589.001 - Gather Victim Identity Information: Credentials
+// The query might help in identifying attempts to gather credentials through nation-state IPs.
