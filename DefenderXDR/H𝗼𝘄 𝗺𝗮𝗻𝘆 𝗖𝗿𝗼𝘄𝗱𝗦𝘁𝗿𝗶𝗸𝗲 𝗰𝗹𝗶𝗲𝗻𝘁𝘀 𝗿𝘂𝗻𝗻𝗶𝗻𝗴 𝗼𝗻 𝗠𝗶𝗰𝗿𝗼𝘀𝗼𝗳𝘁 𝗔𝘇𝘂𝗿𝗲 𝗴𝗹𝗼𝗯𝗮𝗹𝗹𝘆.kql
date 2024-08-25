@@ -1,0 +1,17 @@
+// H𝗼𝘄 𝗺𝗮𝗻𝘆 𝗖𝗿𝗼𝘄𝗱𝗦𝘁𝗿𝗶𝗸𝗲 𝗰𝗹𝗶𝗲𝗻𝘁𝘀 𝗿𝘂𝗻𝗻𝗶𝗻𝗴 𝗼𝗻 𝗠𝗶𝗰𝗿𝗼𝘀𝗼𝗳𝘁 𝗔𝘇𝘂𝗿𝗲 𝗴𝗹𝗼𝗯𝗮𝗹𝗹𝘆
+// Linkedin Post: https://www.linkedin.com/posts/0x534c_fileprofile-function-in-advanced-hunting-activity-7232990010898010112-G2Lg/
+// While brainstorming on how to KQL detect Bring Your Own Vulnerable Driver (BYOVD) exploits in recent Zero Day CVE-2024-38193 by APT North Korean Lazarus, I was exploring the recent addition of FileProfile() enrichment function that adds the following data to files found by the query.
+
+// Advance Hunting - FileProfile()
+// https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-fileprofile-function
+
+DeviceFileEvents
+| where ActionType == "FileCreated" or ActionType == "FileModified"
+| where FileName endswith ".sys"
+| where FolderPath contains "CrowdStrike"
+| invoke FileProfile(SHA1,10000)
+| project FileName, FolderPath, GlobalPrevalence, GlobalFirstSeen, GlobalLastSeen
+| sort by GlobalPrevalence desc 
+
+// Note:  GlobalPrevalence - Number of instances of the entity observed by Microsoft globally
+
