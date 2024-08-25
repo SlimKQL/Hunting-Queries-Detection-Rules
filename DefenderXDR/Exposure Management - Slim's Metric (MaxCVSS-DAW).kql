@@ -11,3 +11,19 @@ ExposureGraphNodes
 | extend MaxCvssScore = toreal(NodeProperties.rawData.highRiskVulnerabilityInsights.maxCvssScore)
 | sort by MaxCvssScore desc
 
+// MITRE ATT&CK Mapping
+
+// The KQL query focuses on identifying high-risk vulnerabilities on Domain Admin Workstations, which can be mapped to several MITRE ATT&CK techniques:
+
+// T1078 - Valid Accounts:
+// Description: Adversaries may use valid accounts to maintain access to systems.
+// Relevance: Domain Admin Workstations are critical assets, and vulnerabilities here could be exploited to gain or maintain access.
+// T1068 - Exploitation for Privilege Escalation:
+// Description: Adversaries may exploit vulnerabilities to elevate their privileges.
+// Relevance: High-risk vulnerabilities with high CVSS scores could be exploited for privilege escalation.
+// T1210 - Exploitation of Remote Services:
+// Description: Adversaries may exploit vulnerabilities in remote services to execute code.
+// Relevance: Vulnerabilities on Domain Admin Workstations could be targeted to exploit remote services.
+// T1190 - Exploit Public-Facing Application:
+// Description: Adversaries may exploit vulnerabilities in public-facing applications.
+// Relevance: If Domain Admin Workstations have public-facing applications, these vulnerabilities could be exploited.
