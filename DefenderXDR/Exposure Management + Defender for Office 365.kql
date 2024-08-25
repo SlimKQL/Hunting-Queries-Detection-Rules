@@ -17,3 +17,15 @@ AlertInfo
 | join EmailEvents on NetworkMessageId
 | where RecipientEmailAddress has_any (CriticalIdentities)
 
+// MITRE ATT&CK Mapping
+
+// Based on the analysis, the following MITRE ATT&CK techniques are relevant:
+
+// T1071.001 - Application Layer Protocol: Web Protocols
+// The detection of a potentially malicious URL click involves monitoring web protocols, which falls under this technique.
+// T1566.002 - Phishing: Spearphishing Link
+// The alert for a potentially malicious URL click is indicative of spearphishing attempts, where attackers use malicious links to compromise targets.
+// T1078 - Valid Accounts
+// The focus on critical identities and their email addresses suggests monitoring for the use of valid accounts, which is relevant to this technique.
+// T1087.002 - Account Discovery: Domain Account
+// The query’s identification of critical identities involves discovering domain accounts, aligning with this technique.
