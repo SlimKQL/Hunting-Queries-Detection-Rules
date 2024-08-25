@@ -14,3 +14,17 @@ CloudAppEvents
 | where ActivityType == "Add"
 | where ActionType == @"Add service principal credentials."
 | where AccountId has_any(CriticalIdentities)
+
+
+// MITRE ATT&CK Mapping
+
+// The KQL query can be mapped to the following MITRE ATT&CK techniques:
+
+// T1078.004 - Valid Accounts: Cloud Accounts:
+// The query is looking for the addition of service principal credentials, which can be associated with the use of valid cloud accounts to gain unauthorized access.
+
+// T1098 - Account Manipulation:
+// Adding service principal credentials can be seen as a form of account manipulation, where adversaries modify accounts to maintain access.
+
+// T1078 - Valid Accounts:
+// The use of valid accounts, especially those with elevated privileges, is a common technique for maintaining persistence and accessing resources.
