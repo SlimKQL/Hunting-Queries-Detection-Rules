@@ -15,4 +15,19 @@ and UserId !endswith "your_corporate_domain_3"
 | distinct UserIPs
 | join ThreatIntelligenceIndicator on $left.UserIPs == $right.NetworkIP
 
+// MITRE ATT&CK Mapping
 
+// Based on the operations and objectives of the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1071.001 - Application Layer Protocol: Web Protocols:
+// The query looks for messages with links, which can be used for command and control via web protocols.
+// T1071.003 - Application Layer Protocol: Mail Protocols:
+// Although this is specific to email, the concept of using communication platforms for malicious purposes is similar.
+// T1071.004 - Application Layer Protocol: Remote Services:
+// External communication via Microsoft Teams can be considered a form of remote service.
+// T1071.005 - Application Layer Protocol: Web Protocols:
+// Detecting links in messages aligns with identifying potential web-based command and control.
+// T1071.006 - Application Layer Protocol: Web Protocols:
+// The use of external IP addresses and domains can indicate external command and control.
+// T1071.007 - Application Layer Protocol: Web Protocols:
+// Correlating with threat intelligence indicators helps identify known malicious infrastructure.
