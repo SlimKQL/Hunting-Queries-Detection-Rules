@@ -28,3 +28,30 @@ BehaviorAnalytics
 | extend ThreatIntel=tostring(DevicesInsights.ThreatIntelIndicatorDescription)
 | where InvestigationPriority > 5
 | distinct ThreatIntel
+
+
+// MITRE ATT&CK Mapping
+
+// Based on the KQL code, the following MITRE ATT&CK techniques might be relevant:
+
+// Tactic: Reconnaissance
+// Technique: Gather Victim Host Information (T1592)
+// The query looks for threat intelligence indicators, which could include information about victim hosts.
+// Tactic: Initial Access
+// Technique: Drive-by Compromise (T1189)
+// Threat intelligence indicators might include information about initial access methods like drive-by compromises.
+// Tactic: Execution
+// Technique: Command and Scripting Interpreter (T1059)
+// The presence of threat intelligence indicators could suggest the use of scripting for execution.
+// Tactic: Persistence
+// Technique: Account Manipulation (T1098)
+// High investigation priority records might indicate attempts to manipulate accounts for persistence.
+// Tactic: Defense Evasion
+// Technique: Indicator Removal on Host (T1070)
+//Filtering for high-priority investigations could reveal attempts to evade detection by removing indicators.
+// Tactic: Collection
+// Technique: Data from Local System (T1005)
+// Threat intelligence indicators might include data collection activities from local systems.
+// Tactic: Exfiltration
+// Technique: Exfiltration Over C2 Channel (T1041)
+// High-priority investigations could indicate exfiltration activities over command and control channels.
