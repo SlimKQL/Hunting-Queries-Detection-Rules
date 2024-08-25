@@ -7,3 +7,12 @@ DeviceFileEvents
 | where ActionType == "FileCreated"
 | where InitiatingProcessFileName contains "WhatsApp.exe"
 | where FileName endswith ".pyz" or FileName endswith ".pyzw" or FileName endswith ".php"
+
+
+// MITRE ATT&CK Mapping
+
+// Based on the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1059.007 - Command and Scripting Interpreter: JavaScript/JScript: The detection of file extensions like .pyz and .pyzw suggests the creation of Python-related files, which can be used for scripting and automation1.
+// T1105 - Ingress Tool Transfer: The creation of .php files could indicate the transfer of web shells or other malicious scripts onto the system2.
+// T1071.001 - Application Layer Protocol: Web Protocols: WhatsApp.exe initiating these file creations might indicate the use of web protocols for communication or data transfer3.
