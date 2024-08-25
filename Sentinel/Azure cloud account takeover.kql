@@ -6,4 +6,10 @@ SigninLogs
 | where UserAgent == "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 | where AppDisplayName == "OfficeHome"
 
+// MITRE ATT&CK Mapping
 
+// Based on the KQL query, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts: The query is filtering sign-in logs, which can be used to detect the use of valid accounts, especially if the user agent is unusual or unexpected for the environment1.
+// T1071.001 - Application Layer Protocol: Web Protocols: The specific user agent string indicates web-based access, which falls under the use of web protocols2.
+// T1204.002 - User Execution: Malicious File: If the user agent is associated with a known malicious browser or script, it could indicate an attempt to execute malicious files3.
