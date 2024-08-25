@@ -9,3 +9,7 @@ DeviceFileEvents
 | where InitiatingProcessFileName has "explorer.exe"
 
 // #MDE #DefenderXDR #BypassSmartAppControl #MotW
+
+// MITRE ATT&CK Mapping
+
+// This query is related to the MITRE ATT&CK technique T1547.009 - Boot or Logon Autostart Execution: Shortcut Modification1. This technique involves adversaries creating or modifying shortcuts that can execute a program during system boot or user login. By monitoring for modifications to .lnk files initiated by explorer.exe, this query helps detect potential malicious activities where shortcuts are altered to execute unwanted programs.
