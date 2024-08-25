@@ -22,3 +22,13 @@ DeviceFileEvents
 | where ActionType == "FileCreated"
 | where FileName contains "YourPhoneAppProxy"
 | where DeviceName has_any (CriticalDevices)
+
+// MITRE ATT&CK Mapping
+
+// The KQL query is designed to identify critical identities and devices, and then monitor for specific file creation events on those devices. This approach helps in detecting potential unauthorized access and suspicious activities, aligning with several MITRE ATT&CK techniques such as Valid Accounts (T1078), Permission Groups Discovery (T1069), Ingress Tool Transfer (T1105), and Application Layer Protocol (T1071).
+
+// T1078: Valid Accounts - Identifying critical accounts that could be targeted for unauthorized access.
+// T1078: Valid Accounts - Identifying devices that critical accounts can access.
+// T1069: Permission Groups Discovery - Discovering devices and their associated permissions.
+// T1105: Ingress Tool Transfer - Detecting the creation of files that might be used for transferring tools or data.
+// T1071: Application Layer Protocol - Monitoring for suspicious file creation that could indicate data exfiltration or command and control.
