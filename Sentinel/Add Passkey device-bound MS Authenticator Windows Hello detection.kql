@@ -10,3 +10,14 @@ AuditLogs
 | extend AAGUID = AdditionalDetails[1].value
 | extend WebAuthnInfo = AdditionalDetails[0].value
 | project TimeGenerated, AccountUPN, ActivityDisplayName, AAGUID, WebAuthnInfo
+
+// MITRE ATT&CK Mapping
+
+// Based on the activities and data being extracted, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts:
+// The query is identifying successful additions of passkeys, which can be related to the use of valid accounts for authentication purposes.
+// T1556 - Modify Authentication Process:
+// Adding a passkey can be seen as modifying the authentication process, which falls under this technique.
+// T1589 - Gather Victim Identity Information:
+// Extracting user principal names and WebAuthn information can be related to gathering identity information.
