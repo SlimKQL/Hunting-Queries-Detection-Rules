@@ -10,3 +10,16 @@ DeviceNetworkEvents
 | extend HttpHost = ConnectInfo.host
 | where HttpHost == "remoteassistance.support.services.microsoft.com:443"
 
+// MITRE ATT&CK Mapping
+
+// This query can be associated with the following MITRE ATT&CK techniques:
+
+// T1071.001 - Application Layer Protocol: Web Protocols
+// Description: This technique involves adversaries using web protocols to communicate with compromised systems to avoid detection/network filtering by blending in with normal web traffic.
+// Relevance: The query inspects HTTP connections on port 443, which is commonly used for HTTPS traffic, a typical web protocol.
+// T1071.004 - Application Layer Protocol: DNS
+// Description: Adversaries may use DNS to communicate with systems under their control within a victim network.
+// Relevance: The query inspects connections to a specific host, which could be part of a DNS-based communication strategy.
+// T1071.003 - Application Layer Protocol: Mail Protocols
+// Description: Adversaries may use mail protocols to communicate with systems under their control.
+// Relevance: While this query does not directly inspect mail protocols, the concept of inspecting specific protocols for communication is similar.
