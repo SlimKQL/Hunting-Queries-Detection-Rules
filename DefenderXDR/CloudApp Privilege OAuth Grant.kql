@@ -9,3 +9,20 @@ CloudAppEvents
 | extend ConsentData = tostring(RawEventData.ModifiedProperties)
 | project Timestamp, AdminUPN, ActionType, ObjectName, ConsentData, ReportId
 
+// MITRE ATT&CK Mapping
+
+// The KQL query is primarily focused on detecting administrative consent to applications, which can be mapped to the following MITRE ATT&CK techniques:
+
+// T1078 - Valid Accounts:
+// Description: Adversaries may leverage valid accounts to gain access to and interact with systems, including using administrative accounts to consent to applications.
+// Detection: Monitoring for unusual or unauthorized use of administrative accounts, especially for actions like consenting to applications, can help detect this technique.
+
+// T1098 - Account Manipulation:
+// Description: Adversaries may manipulate accounts to maintain access to systems, including granting consent to applications that may provide additional access or capabilities.
+// Detection: Detecting changes in account permissions or consent to applications by administrative accounts can indicate potential account manipulation.
+
+// T1071 - Application Layer Protocol:
+// Description: Adversaries may use application layer protocols to communicate with systems under their control, including using OAuth tokens obtained through consent to applications.
+// Detection: Monitoring for unusual application consent activities can help identify potential misuse of application layer protocols.
+
+// By mapping the KQL query to these MITRE ATT&CK techniques, you can better understand the potential threats and improve your detection capabilities.
