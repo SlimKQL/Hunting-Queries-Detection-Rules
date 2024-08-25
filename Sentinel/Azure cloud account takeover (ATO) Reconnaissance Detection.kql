@@ -27,3 +27,10 @@ MicrosoftGraphActivityLogs
 | where IPAddress has_any (ATOIPs)
 | where RequestUri contains "tenantRelationships" or RequestUri contains "subscribedSkus"
 
+// MITRE ATT&CK Mapping
+
+// KQL code is designed to detect suspicious activities related to specific user agents and application usage, and then correlate these activities with specific Microsoft Graph API requests. The associated MITRE ATT&CK techniques primarily involve the use of valid cloud accounts and web protocols for communication and discovery activities.
+
+// T1087.004: Account Discovery: Cloud Account - Identifying cloud accounts and their roles.
+// T1078.004: Valid Accounts: Cloud Accounts - Continued use of valid credentials to access cloud services.
+// T1071.001: Application Layer Protocol: Web Protocols - The use of web protocols for communication.
