@@ -18,3 +18,15 @@ DeviceNetworkEvents
 
 // CheckPoint: New Bugsleep backdoor deployed in recent MuddyWater Campaigns
 // Link: https://lnkd.in/grK6knuU
+
+// MITRE ATT&CK Mapping
+
+// File Creation with Specific Origin and Name:
+// Technique: T1071.001 - Application Layer Protocol: Web Protocols
+// Description: The query looks for files created from a specific URL (egnyte.com) and with a specific file type (zip). This can be associated with data exfiltration or staging.
+// Scheduled Task Creation:
+// Technique: T1053.005 - Scheduled Task/Job: Scheduled Task
+// Description: The query identifies devices where a scheduled task has been created. This is a common persistence mechanism used by adversaries.
+// Network Communication with Specific IPs:
+// Technique: T1071.001 - Application Layer Protocol: Web Protocols
+// Description: The query filters network events for communication with specific IP addresses. This can be indicative of command and control (C2) communication.
