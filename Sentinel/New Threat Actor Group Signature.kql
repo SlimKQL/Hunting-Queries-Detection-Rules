@@ -14,3 +14,15 @@ SigninLogs
 | where AppDisplayName == "OfficeHome"
 | where UserAgent == "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0"
 
+// MITRE ATT&CK Mapping
+
+// Based on the filters and the context of the query, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts:
+// The query is looking for failed login attempts, which can be associated with attempts to use valid accounts with incorrect credentials.
+// T1110 - Brute Force:
+// The presence of multiple failed login attempts (ResultType 50126) suggests a brute force attack where an adversary is trying different passwords.
+// T1212 - Exploitation for Credential Access:
+// The specific user agent and application filters might indicate an attempt to exploit known vulnerabilities in the “OfficeHome” application or the browser to gain credential access.
+// T1071 - Application Layer Protocol:
+// The use of a specific user agent string can be related to the use of application layer protocols for communication, which might be part of the adversary’s tactics.
