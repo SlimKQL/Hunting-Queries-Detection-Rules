@@ -9,3 +9,8 @@ CloudAppEvents
 | where Application == "Microsoft Teams"
 | where ActionType contains "DlpRuleMatch"
 
+// The detection of DLP rule matches in Microsoft Teams can be associated with the following MITRE ATT&CK techniques:
+
+// T1070.004 - Indicator Removal on Host: File Deletion: DLP rules often trigger when sensitive data is being moved or deleted to prevent data exfiltration1.
+// T1567 - Exfiltration Over Web Service: If the DLP rule is triggered by an attempt to exfiltrate data via Teams, this technique is relevant2.
+// T1071.001 - Application Layer Protocol: Web Protocols: Microsoft Teams uses web protocols for communication, and DLP rules can help detect suspicious activities over these protocols3.
