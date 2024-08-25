@@ -13,4 +13,13 @@ ExposureGraphEdges
 | join ExposureGraphNodes on $left.TargetNodeId==$right.NodeId
 | summarize by SourceNodeName, TargetNodeName
 
+// MITRE ATT&CK Mapping
 
+// Based on the analysis, the KQL query can be associated with the following MITRE ATT&CK techniques:
+
+// T1078 - Valid Accounts:
+// The query identifies accounts that have a high risk level and can authenticate to other nodes, which aligns with the use of valid accounts for lateral movement or persistence1.
+// T1071 - Application Layer Protocol:
+// The query involves analyzing authentication events, which can be related to the use of application layer protocols for command and control2.
+// T1087 - Account Discovery:
+// The query discovers high-risk accounts and their authentication capabilities, which is related to account discovery techniques3.
