@@ -7,3 +7,16 @@ UrlClickEvents
 | where domain endswith ".trycloudflare.com"
 | join EmailEvents on NetworkMessageId
 | project Timestamp, Url, RecipientEmailAddress, SenderMailFromAddress, SenderFromAddress, Subject, AttachmentCount, UrlCount
+
+// MITRE ATT&CK Mapping
+
+// Based on the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1071.001 - Application Layer Protocol: Web Protocols:
+// The query is analyzing URL click events, which involves web protocols.
+// T1566.002 - Phishing: Spearphishing Link:
+// The query filters for specific domains and joins with email events, indicating an investigation into potential phishing attempts via malicious links.
+// T1071.003 - Application Layer Protocol: Email Protocols:
+// The join with EmailEvents suggests the use of email protocols to identify malicious activities.
+// T1204.001 - User Execution: Malicious Link:
+// The focus on URL clicks and specific domains indicates detection of user execution of potentially malicious links.
