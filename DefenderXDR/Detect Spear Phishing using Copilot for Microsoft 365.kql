@@ -48,3 +48,27 @@ EmailEvents
 
 // Reference Link:
 // https://labs.zenity.io/p/phishing-dead-long-live-spear-phishing
+
+// MITRE ATT&CK Mapping
+
+// Initial Access:
+// Technique T1078: Valid Accounts: The query looks for unusual user accounts interacting with Microsoft Copilot, which could indicate compromised accounts being used for initial access1.
+
+// Execution:
+// Technique T1059: Command and Scripting Interpreter: The use of python in the UserAgent field suggests script-based execution2.
+
+// Persistence:
+// Technique T1078: Valid Accounts: Continued use of valid accounts for maintaining access1.
+
+// Defense Evasion:
+// Technique T1078: Valid Accounts: Using legitimate credentials to avoid detection1.
+
+// Credential Access:
+// Technique T1078: Valid Accounts: Accessing accounts to gather credentials1.
+
+// Discovery:
+// Technique T1083: File and Directory Discovery: The query checks for outbound emails with attachments or URLs, which could be part of data discovery and exfiltration3.
+
+// Exfiltration:
+// Technique T1041: Exfiltration Over C2 Channel: Outbound emails with attachments or URLs could indicate data exfiltration3.
+
