@@ -11,3 +11,14 @@ EmailEvents
 | where SenderFromDomain !endswith "crowdstrike.com" and
 SenderFromDomain !endswith "litmos.com" and
 SenderFromDomain !endswith "zoom.us"
+
+// MITRE ATT&CK Mapping
+
+// The query primarily focuses on detecting phishing attempts, which can be mapped to the following MITRE ATT&CK techniques:
+
+// Phishing (T1566):
+// The query aims to identify phishing emails by detecting domains that mimic legitimate ones1.
+// Spearphishing Link (T1566.002):
+// By focusing on inbound emails with specific domain patterns, the query helps detect spearphishing attempts where attackers use lookalike domains1.
+// Spearphishing Attachment (T1566.001):
+// Although the query doesn’t explicitly check for attachments, it can be extended to do so, thereby detecting spearphishing emails with malicious attachments1.
