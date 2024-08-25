@@ -8,3 +8,7 @@ resources
 | project subscriptionId, resourceGroup, name, allowBlobPublicAccess
 
 
+// MITRE ATT&CK Mapping
+
+// The query is primarily focused on identifying misconfigurations that could lead to unauthorized access. The relevant MITRE ATT&CK techniques include:
+// T1530 - Data from Cloud Storage Object: This technique involves adversaries accessing data stored in cloud storage services. By identifying storage accounts with public blob access, you can detect potential exposure of sensitive data1.
