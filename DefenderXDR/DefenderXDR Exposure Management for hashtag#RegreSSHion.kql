@@ -21,3 +21,22 @@ DeviceTvmSoftwareInventory
 | where DeviceName has_any(InternetFacingVM)
 
  
+// MITRE ATT&CK Mapping
+
+// Based on the operations performed in the KQL code, here are the relevant MITRE ATT&CK techniques:
+
+// T1133 - External Remote Services:
+// Description: Adversaries may leverage external remote services to access and control systems over the internet.
+// Relevance: The query identifies internet-facing devices, which could be targeted for remote access via services like OpenSSH.
+
+// T1210 - Exploitation of Remote Services:
+// Description: Adversaries may exploit vulnerabilities in remote services to gain unauthorized access.
+// Relevance: By identifying devices with OpenSSH, the query highlights potential targets for exploitation.
+
+// T1078 - Valid Accounts:
+// Description: Adversaries may use valid accounts to gain access to remote services.
+// Relevance: OpenSSH is often used for secure remote access, and valid accounts could be used to log in to these services.
+
+// T1046 - Network Service Scanning:
+// Description: Adversaries may scan for network services to identify potential entry points.
+// Relevance: The query’s focus on internet-facing devices and specific software (OpenSSH) aligns with the reconnaissance phase of identifying exploitable services.
