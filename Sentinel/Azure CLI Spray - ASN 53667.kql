@@ -11,3 +11,12 @@ SigninLogs
 | where UserAgent == "node-fetch"
 | where AutonomousSystemNumber == "53667"
 | where AppDisplayName == "Microsoft Azure CLI"
+
+// MITRE ATT&CK Mapping
+
+// Based on the criteria in the KQL query, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts: The query is looking for failed sign-in attempts, which can indicate attempts to use valid accounts with incorrect credentials.
+// T1071.001 - Application Layer Protocol: Web Protocols: The use of “node-fetch” suggests web-based communication, which falls under this technique.
+// T1586.001 - Compromise Infrastructure: Botnet: The specific ASN and user agent might indicate the use of compromised infrastructure or botnets for automated sign-in attempts.
+// T1078.004 - Valid Accounts: Cloud Accounts: The use of “Microsoft Azure CLI” indicates attempts to access cloud resources, which is relevant to this technique.
