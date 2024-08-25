@@ -11,3 +11,16 @@ AuditLogs
 | extend WebAuthnInfo = AdditionalDetails[0].value
 | project TimeGenerated, AccountUPN, ActivityDisplayName, AAGUID, WebAuthnInfo
 
+// MITRE ATT&CK Mapping
+
+// Based on the operations and objectives of the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts:
+// Description: Adversaries may use valid accounts to maintain access to victim systems.
+// Relevance: Adding a passkey could be part of an adversary’s attempt to maintain access using legitimate credentials.
+// T1556.004 - Unsecured Credentials: Web Session Cookie:
+// Description: Adversaries may steal or forge web session cookies to gain access to web applications.
+// Relevance: The extraction of WebAuthn information could be related to securing or exploiting web session credentials.
+// T1556 - Modify Authentication Process:
+// Description: Adversaries may modify authentication mechanisms to bypass security controls.
+// Relevance: Adding a new passkey could be an attempt to modify the authentication process.
