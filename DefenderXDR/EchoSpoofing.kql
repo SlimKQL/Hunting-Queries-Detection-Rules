@@ -16,3 +16,11 @@ EmailEvents
 
 // https://labs.guard.io/echospoofing-a-massive-phishing-campaign-exploiting-proofpoints-email-protection-to-dispatch-3dd6b5417db6
 
+// MITRE ATT&CK Mapping
+
+// The KQL code is designed to detect potentially malicious email activities by focusing on high-risk Proofpoint email gateways and ensuring the emails pass key authentication checks. The associated MITRE ATT&CK techniques include:
+
+// T1071.001: Application Layer Protocol - Web Protocols
+// T1071.003: Application Layer Protocol - Email Protocols
+// T1589.002: Gather Victim Network Information - DNS
+// T1078.003: Valid Accounts - Cloud Accounts
