@@ -18,3 +18,11 @@ SigninLogs
 // Note: The above will no longer work if threat actor changes the Power Pwn Puppeteer script's setUserAgent value 
 
 // Reference: https://www.wired.com/story/microsoft-copilot-phishing-data-extraction/
+
+// MITRE ATT&CK Mapping
+
+// T1071.001 - Application Layer Protocol: Web Protocols: This technique involves using web protocols for command and control communication1.
+// T1105 - Ingress Tool Transfer: This technique involves transferring tools or files from an external system into a compromised environment2.
+
+// T1078 - Valid Accounts: This technique involves the use of valid accounts to gain access to systems3.
+// T1202 - Indirect Command Execution: This technique involves executing commands through a legitimate interface, such as a headless browser4.
