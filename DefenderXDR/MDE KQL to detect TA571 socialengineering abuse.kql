@@ -5,3 +5,11 @@ DeviceEvents
 | where ActionType == "GetClipboardData"
 | where InitiatingProcessFileName == "powershell.exe"
 
+// MITRE ATT&CK Mapping
+
+// Based on the query, the following MITRE ATT&CK techniques are relevant:
+
+// Technique: T1115 - Clipboard Data1
+// Description: Adversaries may collect data stored in the clipboard from users copying information within or between applications. This can include sensitive data such as passwords or other confidential information.
+// Technique: T1059.001 - Command and Scripting Interpreter: PowerShell2
+// Description: Adversaries may abuse PowerShell commands and scripts for execution. PowerShell is a powerful interactive command-line interface and scripting environment included in the Windows operating system.
