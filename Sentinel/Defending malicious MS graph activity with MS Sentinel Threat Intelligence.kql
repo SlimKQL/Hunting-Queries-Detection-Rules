@@ -13,5 +13,14 @@ MicrosoftGraphActivityLogs
 SigninLogs
 | where RiskEventTypes contains "suspiciousAPITraffic"
 
+// MITRE ATT&CK Mapping
 
+// Based on the operations and objectives of the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1071.001 - Application Layer Protocol: Web Protocols: The use of Microsoft Graph API can be associated with web protocols.
+// T1071.003 - Application Layer Protocol: Mail Protocols: If the Graph API is used for email-related activities.
+// T1595.002 - Active Scanning: Vulnerability Scanning: If the IP addresses are involved in scanning activities.
+// T1078 - Valid Accounts: Suspicious API traffic might indicate the use of compromised accounts.
+// T1587.001 - Develop Capabilities: Malware: If the suspicious traffic is related to malware activities.
+// T1589.002 - Gather Victim Network Information: DNS: If the suspicious traffic involves DNS queries.
 
