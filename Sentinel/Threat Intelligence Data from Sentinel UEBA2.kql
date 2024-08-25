@@ -12,3 +12,17 @@ BehaviorAnalytics
 | where ISP != ""
 | summarize Count=count() by ISP
 | sort by Count desc
+
+// MITRE ATT&CK Mapping
+
+// Based on the analysis, the KQL query is primarily focused on detecting brute force attacks. Here are the relevant MITRE ATT&CK techniques:
+
+// Brute Force:
+// Technique ID: T1110
+// Description: Adversaries may use brute force techniques to attempt to gain access to accounts by systematically guessing passwords.
+// Indicator of Compromise (IOC):
+// Technique ID: T1071
+// Description: This involves detecting indicators of compromise, such as unusual numbers of failed sign-ins from a single IP address.
+// Data from Information Repositories:
+// Technique ID: T1213
+// Description: This involves extracting and analyzing data from information repositories, such as threat intelligence indicators.
