@@ -11,3 +11,19 @@ DeviceFileEvents
 | where FolderPath contains "CoreAIPlatform"
 | where DeviceName has_any(Windows11_24H2)
 
+// MITRE ATT&CK Mapping
+
+// Based on the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1071.001 - Application Layer Protocol: Web Protocols:
+// Description: This technique involves using web protocols for command and control.
+// Relevance: If “CoreAIPlatform” involves web-based interactions, monitoring file events in this folder could help detect suspicious activities.
+// T1083 - File and Directory Discovery:
+// Description: Adversaries may search for files and directories to find information.
+// Relevance: Filtering file events in specific folders can help detect unauthorized access or discovery activities.
+// T1566.001 - Phishing: Spearphishing Attachment:
+// Description: Adversaries may send spearphishing emails with malicious attachments.
+// Relevance: If “CoreAIPlatform” is a target for spearphishing, monitoring file events can help detect such attempts.
+// T1078 - Valid Accounts:
+// Description: Adversaries may use valid accounts to maintain access.
+// Relevance: Monitoring file events on specific devices can help detect unauthorized use of valid accounts.
