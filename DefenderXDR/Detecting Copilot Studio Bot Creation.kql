@@ -7,3 +7,11 @@ ExposureGraphNodes
 | where NodeProperties.rawData.accountDisplayName contains "Microsoft Copilot Studio"
 | where NodeProperties.rawData.accountEnabled == "true"
 | where NodeProperties.rawData.tags startswith "power-virtual-agents-"
+
+// MITRE ATT&CK Mapping
+
+// Based on the query, here are the potential MITRE ATT&CK techniques that could be relevant:
+
+// T1078 - Valid Accounts: The query is identifying service principals (a type of account) that are enabled and have specific tags. This technique involves adversaries using valid accounts to maintain access to a network.
+// T1087 - Account Discovery: The query is discovering accounts with specific properties, which aligns with the technique where adversaries attempt to enumerate user or service accounts.
+// T1098 - Account Manipulation: If the query is used to monitor or detect changes in service principal accounts, it could relate to this technique, which involves adversaries manipulating accounts to maintain access.
