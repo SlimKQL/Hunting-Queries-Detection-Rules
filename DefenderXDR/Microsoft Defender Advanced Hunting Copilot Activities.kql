@@ -77,3 +77,26 @@ CloudAppEvents
 // Correlating copilot activities from the new ISP IP
 | where IPAddress has_any(FirstTimeUserConnectedISPIP)
 
+
+// MITRE ATT&CK Mapping
+
+// Initial Access
+// T1078: Valid Accounts - Detecting anomalous token usage and new ISP connections can indicate compromised accounts.
+// Execution
+// T1059: Command and Scripting Interpreter - Copilot interactions can be seen as automated scripting activities.
+// Persistence
+// T1078: Valid Accounts - Persistent access through stolen tokens.
+// Privilege Escalation
+// T1078: Valid Accounts - Using stolen tokens to escalate privileges.
+// Defense Evasion
+// T1078: Valid Accounts - Using valid accounts to evade detection.
+// Credential Access
+// T1550: Use Alternate Authentication Material - Token theft via AiTM phishing attacks.
+// Discovery
+// T1083: File and Directory Discovery - Accessing resources and contexts via Copilot.
+// Collection
+// T1114: Email Collection - Data summarization and extraction activities.
+// Command and Control
+// T1071: Application Layer Protocol - Copilot interactions over application protocols.
+// Exfiltration
+// T1041: Exfiltration Over C2 Channel - Data extraction via Copilot activities.
