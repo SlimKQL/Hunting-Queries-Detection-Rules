@@ -14,3 +14,17 @@ CloudAppEvents
 | where ActivityType == "Add"
 | where ActionType == @"Consent to application."
 | where AccountId has_any(CriticalIdentities)
+
+
+// MITRE ATT&CK Mapping
+
+// The KQL query can be mapped to the following MITRE ATT&CK techniques:
+
+// T1078 - Valid Accounts:
+// The query identifies critical accounts that might be used for legitimate access but could be leveraged by adversaries for malicious purposes.
+
+// T1071.001 - Application Layer Protocol: Web Protocols:
+// The detection of “Consent to application” events can be related to the use of web protocols for application consent, which might be exploited by adversaries to gain access to cloud applications.
+
+// T1098 - Account Manipulation:
+// The query looks for consent to applications, which can be a form of account manipulation if adversaries are granting permissions to malicious applications.
