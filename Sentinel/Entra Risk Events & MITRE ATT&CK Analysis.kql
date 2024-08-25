@@ -10,3 +10,6 @@ AADUserRiskEvents
 | extend MitreAttack = tostring(parse_json(tostring(AdditionalInfo)).Value)
 | summarize Count=count() by MitreAttack
 | sort by Count desc
+
+// MITRE ATT&CK Mapping
+//The query is designed to identify and count the occurrences of different MITRE ATT&CK techniques found in the AADUserRiskEvents. The MitreAttack field will contain the specific techniques, such as T1078 (Valid Accounts), T1110 (Brute Force), etc.
