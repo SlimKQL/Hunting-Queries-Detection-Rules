@@ -7,3 +7,11 @@ CloudAppEvents
 | summarize by AppName , AccountType, AccountDisplayName
 | sort by AppName asc
 
+// MITRE ATT&CK Mapping
+
+//The query focuses on detecting application installations, which can be associated with the following MITRE ATT&CK techniques:
+
+// T1078: Valid Accounts - Adversaries may use valid accounts to install applications as part of their operations.
+// T1136: Create Account - Creating new accounts might be part of the process when installing certain applications.
+// T1087: Account Discovery - Adversaries may enumerate accounts to understand which ones have the necessary permissions to install applications.
+// T1203: Exploitation for Client Execution - Exploiting vulnerabilities to install applications.
