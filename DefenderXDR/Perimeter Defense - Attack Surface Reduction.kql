@@ -21,3 +21,16 @@ DeviceTvmSoftwareVulnerabilities
 | where DeviceName has_any(Top10AttackUserDevices)
 | sort by VulnerabilitySeverityLevel asc 
 
+// MITRE ATT&CK Mapping
+
+// T1566: Phishing - The blocked emails likely contain phishing attempts.
+// Top10AttackUserDevices:
+// Purpose: Finds devices associated with the top 10 email recipients from the previous query, focusing on devices that are either Azure AD registered or Hybrid Azure AD joined, within the last 7 days.
+// MITRE ATT&CK Techniques:
+// T1078: Valid Accounts - Identifying devices that might be used by compromised accounts.
+// T1082: System Information Discovery - Gathering information about devices.
+// DeviceTvmSoftwareVulnerabilities:
+// Purpose: Lists software vulnerabilities on the identified devices, sorted by severity.
+// MITRE ATT&CK Techniques:
+// T1203: Exploitation for Client Execution - Exploiting software vulnerabilities.
+// T1190: Exploit Public-Facing Application - Potential exploitation of known vulnerabilities.
