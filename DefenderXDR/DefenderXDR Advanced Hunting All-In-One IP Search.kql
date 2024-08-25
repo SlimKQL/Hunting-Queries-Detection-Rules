@@ -28,3 +28,40 @@ or LocalIP == ip
 // ExposureGraphNodes
 or NodeProperties.rawData.publicIP == ip
 ) 
+
+
+// MITRE ATT&CK Mapping
+
+// Based on the fields and data sources used in the KQL query, here are some potential MITRE ATT&CK techniques that could be detected:
+
+// T1071.001 - Application Layer Protocol: Web Protocols
+// Data Source: CloudAppEvents, UrlClickEvents
+// Field: IPAddress, RequestSourceIP, RemoteIP
+
+// T1078 - Valid Accounts
+// Data Source: AADSignInEventsBeta, IdentityLogonEvents
+// Field: IPAddress, RequestSourceIP, RemoteIP
+
+// T1040 - Network Sniffing
+// Data Source: DeviceNetworkInfo, DeviceNetworkEvents
+// Field: IPAddress, RemoteIP, LocalIP
+
+// T1105 - Ingress Tool Transfer
+// Data Source: DeviceFileEvents, CloudAuditEvents
+// Field: FileOriginIP, RequestSourceIP
+
+// T1566.001 - Phishing: Spearphishing Attachment
+// Data Source: EmailEvents
+// Field: SenderIPv4
+
+// T1071.004 - Application Layer Protocol: DNS
+// Data Source: DeviceNetworkEvents
+// Field: DestinationIPAddress, PublicIP
+
+// T1087.001 - Account Discovery: Local Account
+// Data Source: DeviceLogonEvents
+// Field: IPAddress, RemoteIP
+
+// T1136.001 - Create Account: Local Account
+// Data Source: IdentityLogonEvents
+// Field: IPAddress, RequestSourceIP
