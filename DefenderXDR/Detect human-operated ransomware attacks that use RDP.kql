@@ -20,3 +20,17 @@ IsInitiatingProcessRemoteSession == flag
 | where RemoteActivityIP > TriggerThreshold
 
 // #MicrosoftDefender #DefenderforCloud #Security #MicrosoftSecurity #Cybersecurity #DefenderXDR #MicrosoftThreatIntelligence
+
+// MITRE ATT&CK Mapping
+// The KQL query primarily focuses on detecting suspicious remote desktop protocol (RDP) activities. Here are the relevant MITRE ATT&CK techniques:
+
+// T1076 - Remote Desktop Protocol:
+// The query detects RDP sessions, which is directly related to this technique. It identifies when RDP is used to access systems, especially from non-PAW IPs.
+// T1021 - Remote Services:
+// This technique involves using remote services like RDP to move laterally within a network. The query helps identify unusual remote access patterns.
+// T1078 - Valid Accounts:
+// The use of valid accounts for remote access is a common tactic. The query can help detect when valid accounts are used from unexpected IP addresses.
+// T1087 - Account Discovery:
+// By monitoring RDP sessions, the query can indirectly assist in identifying account discovery activities, where adversaries attempt to find valid accounts for lateral movement.
+// T1566 - Phishing:
+// Although not directly related, detecting unusual RDP activity can sometimes be a follow-up to successful phishing attacks where credentials are compromised.
