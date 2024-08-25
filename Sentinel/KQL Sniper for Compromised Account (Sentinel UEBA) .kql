@@ -12,3 +12,17 @@ BehaviorAnalytics
 | where InvestigationPriority > 0
 | project TimeGenerated, InvestigationPriority, UserPrincipalName, SourceIPAddress, SourceIPLocation, UsersInsights, DevicesInsights, ActivityInsights
 
+// MITRE ATT&CK Mapping
+
+// Based on the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts:
+// The query looks for IP addresses used for validating compromised Entra ID credentials, which aligns with the use of valid accounts by adversaries.
+// T1071 - Application Layer Protocol:
+// The use of IP addresses for validation may involve application layer protocols.
+// T1087 - Account Discovery:
+// The query involves identifying user principal names, which is related to account discovery.
+// T1057 - Process Discovery:
+// Although not directly mentioned, the investigation of devices and activities can relate to process discovery.
+// T1589 - Gather Victim Identity Information:
+// The query gathers information about user identities and their associated activities.
