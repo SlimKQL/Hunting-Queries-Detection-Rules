@@ -14,3 +14,20 @@ AADUserRiskEvents
 | where RequestId has_any(AnomalousTokenRequestId)
 | where DetectionTimingType == "realtime"
 | where RiskLevel == "high" and RiskState == "atRisk"
+
+// MITRE ATT&CK Mapping
+
+// The KQL code is designed to detect anomalous token requests and high-risk user events in Azure Active Directory (AAD). Here are the relevant MITRE ATT&CK techniques:
+
+// T1078 - Valid Accounts:
+// Description: Adversaries may use valid accounts to maintain access to victim systems.
+// Relevance: The detection of anomalous tokens can indicate the use of compromised or unauthorized accounts.
+// T1071 - Application Layer Protocol:
+// Description: Adversaries may communicate using application layer protocols to avoid detection.
+// Relevance: Anomalous token requests might involve unusual or unauthorized use of application layer protocols.
+// T1556 - Modify Authentication Process:
+// Description: Adversaries may modify authentication mechanisms to gain access.
+// Relevance: High-risk events in AAD can indicate attempts to bypass or manipulate authentication processes.
+// T1110 - Brute Force:
+// Description: Adversaries may use brute force techniques to obtain valid credentials.
+// Relevance: High-risk and real-time detection of user risk events can be indicative of brute force attempts.
