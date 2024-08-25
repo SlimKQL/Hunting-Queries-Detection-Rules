@@ -14,3 +14,26 @@ or VulnerabilitySeverityLevel == "High"
 | where DeviceName has_any (AVDs)
 
 // #DefenderXDR #ExposureManagement #AttackPath #BlastRadius
+
+// MITRE ATT&CK Mapping
+
+// T1078 - Valid Accounts:
+// The query looks for users who can authenticate as other users, which aligns with the use of valid accounts for lateral movement or persistence.
+// T1078.001 - Valid Accounts: Local Accounts:
+// If the accounts identified are local accounts, this sub-technique is relevant.
+// T1078.002 - Valid Accounts: Domain Accounts:
+// If the accounts identified are domain accounts, this sub-technique is relevant.
+// T1078.003 - Valid Accounts: Cloud Accounts:
+// If the accounts identified are cloud accounts, this sub-technique is relevant.
+// T1087 - Account Discovery:
+// The process of identifying accounts that can authenticate as other users can be seen as account discovery.
+// T1087.001 - Account Discovery: Local Account:
+// If the accounts are local, this sub-technique is relevant.
+// T1087.002 - Account Discovery: Domain Account:
+// If the accounts are domain accounts, this sub-technique is relevant.
+// T1087.003 - Account Discovery: Cloud Account:
+// If the accounts are cloud accounts, this sub-technique is relevant.
+// T1210 - Exploitation of Remote Services:
+// The query identifies devices with critical or high vulnerabilities, which could be exploited for remote access.
+// T1069 - Permission Groups Discovery:
+// Identifying users with specific permissions can be related to discovering permission groups.
