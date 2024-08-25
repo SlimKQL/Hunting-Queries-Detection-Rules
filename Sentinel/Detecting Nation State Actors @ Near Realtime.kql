@@ -7,3 +7,9 @@ AADUserRiskEvents
 | where RiskEventType == "nationStateIP"
 
 
+// MITRE ATT&CK Mapping
+
+// Based on the operations and objectives of the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// Technique ID: T1071.001 - Application Layer Protocol: Web Protocols: This technique involves adversaries using web protocols to communicate with systems under their control. Nation-state actors often use such methods to gain initial access to systems1.
+// Technique ID: T1078.004 - Valid Accounts: Cloud Accounts: This technique involves adversaries using valid cloud accounts to gain access. Nation-state actors may use compromised cloud accounts to infiltrate systems2.
