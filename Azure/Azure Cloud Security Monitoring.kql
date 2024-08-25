@@ -77,3 +77,13 @@ DnsEvents
 | where IPAddresses != ""
 | join ThreatIntelligenceIndicator on $left.Name == $right.DomainName
 | where ConfidenceScore > 50
+
+// MITRE ATT&CK Mapping
+
+// T1530 - Data from Cloud Storage Object
+// T1583.003 - Acquire Infrastructure: Cloud Account
+// T1562.004 - Impair Defenses: Disable or Modify System Firewall
+// T1078.004 - Valid Accounts: Cloud Accounts
+// T1110.003 - Brute Force: Password Spraying
+// T1530 - Data from Cloud Storage Object
+// T1071.004 - Application Layer Protocol: DNS
