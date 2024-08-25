@@ -8,3 +8,16 @@ ApiManagementGatewayLogs
 | sort by Count desc
 
 // Block the attack IPs on your Azure Application Gateway WAF
+
+// MITRE ATT&CK Mapping
+
+// Based on the query, the following MITRE ATT&CK techniques could be relevant:
+
+// T1071.001 - Application Layer Protocol: Web Protocols:
+// This technique involves adversaries using web protocols to communicate with systems under their control. Failed API requests could indicate attempts to exploit web protocols.
+// T1078 - Valid Accounts:
+// Failed requests might be due to the use of invalid or compromised accounts. This technique involves adversaries using valid accounts to gain access to systems.
+// T1190 - Exploit Public-Facing Application:
+// The query could help detect attempts to exploit vulnerabilities in public-facing applications, as failed requests might indicate unsuccessful exploitation attempts.
+// T1040 - Network Sniffing:
+// If the failed requests are part of reconnaissance activities, this technique involves adversaries capturing network traffic to gather information.
