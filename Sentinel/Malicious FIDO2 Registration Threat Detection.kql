@@ -13,3 +13,20 @@ BehaviorAnalytics
 | extend ThreatIntelIndicatorDescription = DevicesInsights.ThreatIntelIndicatorDescription
 | where isnotempty( ThreatIntelIndicatorDescription )
 | where SourceIPAddress has_any(PasskeyAuthenticatorIP)
+
+// MITRE ATT&CK Mapping
+
+// Based on the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts:
+// Description: The query identifies IP addresses associated with the registration of Fido2 authentication methods, which can be linked to the use of valid accounts for authentication.
+// Detection: Monitoring for unusual or unauthorized registration of authentication methods.
+// T1071 - Application Layer Protocol:
+// Description: The query involves network traffic analysis by examining IP addresses and their associated threat intelligence indicators.
+// Detection: Identifying suspicious network traffic patterns and correlating them with known threat indicators.
+// T1087 - Account Discovery:
+// Description: The query extends behavior analytics with threat intelligence descriptions, which can help in discovering accounts that may have been compromised.
+// Detection: Analyzing behavior analytics data to detect unusual account activities.
+// T1057 - Process Discovery:
+// Description: The query’s focus on behavior analytics and threat intelligence can also help in identifying processes or activities that are indicative of malicious behavior.
+// Detection: Correlating process activities with threat intelligence to detect malicious processes.
