@@ -5,3 +5,11 @@ AuditLogs
 | where Identity == "Power Virtual Agents Service"
 | where OperationName == "Add application"
 | where TargetResources contains "(Microsoft Copilot Studio)"
+
+// MITRE ATT&CK Mapping
+
+// Based on the operations and filters used in the KQL query, the following MITRE ATT&CK techniques are relevant:
+
+// T1078: Valid Accounts - The query is looking for specific identities performing operations, which can be related to the use of valid accounts to perform actions1.
+// T1098: Account Manipulation - The operation “Add application” could be associated with account manipulation activities, such as adding new applications or modifying existing ones2.
+// T1566: Phishing - If the “Add application” operation is part of a broader phishing campaign to gain access to resources, this technique might be relevant3.
