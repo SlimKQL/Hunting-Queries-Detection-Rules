@@ -7,3 +7,16 @@ DeviceNetworkEvents
 | where RemoteUrl contains "graph.microsoft.com"
 | where InitiatingProcessTokenElevation == @"TokenElevationTypeFull"
 
+// MITRE ATT&CK Mapping
+
+// Based on the criteria in the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1071.001 - Application Layer Protocol: Web Protocols:
+// The query filters for network events involving “graph.microsoft.com”, which is a web service. This aligns with the use of web protocols for communication1.
+
+// T1078 - Valid Accounts:
+// The filter for InitiatingProcessTokenElevation == @"TokenElevationTypeFull" suggests the use of elevated privileges. This can be associated with the use of valid accounts with higher privileges2.
+
+// T1078.003 - Valid Accounts: Local Accounts:
+
+// If the elevated token is associated with a local account, this technique is relevant2. These mappings help in identifying and categorizing the detected activities within the MITRE ATT&CK framework, aiding in better understanding and response to potential threats.
