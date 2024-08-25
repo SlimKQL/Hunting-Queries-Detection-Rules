@@ -18,3 +18,19 @@ CloudAppEvents
 | where IPAddress has_any(FirstTimeUserConnectedISPIP)
 
 
+// MITRE ATT&CK Mapping
+
+// Initial Access:
+// Technique T1078 - Valid Accounts: The detection of a new ISP connection and logon activity could indicate the use of valid accounts from an unusual location.
+
+// Persistence:
+// Technique T1078 - Valid Accounts: Repeated logon activities from a new ISP might suggest persistence using valid credentials.
+
+// Defense Evasion:
+// Technique T1078 - Valid Accounts: Using a non-corporate endpoint and a new ISP can be a method to evade detection.
+
+// Credential Access:
+// Technique T1078 - Valid Accounts: Suspicious logon activities might indicate attempts to access credentials.
+
+// Command and Control:
+// Technique T1071 - Application Layer Protocol: Correlating Copilot interactions from the new ISP IP could indicate command and control activities using legitimate services.
