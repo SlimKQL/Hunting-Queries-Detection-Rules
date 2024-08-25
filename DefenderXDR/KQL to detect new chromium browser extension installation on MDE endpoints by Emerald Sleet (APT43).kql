@@ -10,3 +10,13 @@ DeviceFileEvents
 | where FolderPath contains "Webstore Downloads" and FileName endswith ".crx"
 | extend ExtensionId = extract(@"(?i)Downloads[\\/]|Webstore Downloads[\\/](.+?)_\d+\.crx", 1, FolderPath)
 
+// MITRE ATT&CK Mapping
+
+// Based on the analysis, the KQL query can be associated with the following MITRE ATT&CK techniques:
+
+// T1071.001 - Application Layer Protocol: Web Protocols:
+// The detection of .crx files in the “Webstore Downloads” folder indicates potential use of web protocols to download and install browser extensions.
+// T1036.005 - Masquerading: Match Legitimate Name or Location:
+// The use of legitimate folder names like “Webstore Downloads” can be a technique to masquerade malicious files as legitimate downloads.
+// T1204.002 - User Execution: Malicious File:
+// The creation of .crx files could be part of a social engineering attack where users are tricked into executing malicious browser extensions.
