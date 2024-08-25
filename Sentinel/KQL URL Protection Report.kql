@@ -20,3 +20,13 @@ CloudAppEvents
 | project AppName, AccountUpn, UserIP, ClickURL, UrlClickAction, TimeOfClick
 | where UrlClickAction == 2 //User blocked from navigating to the URL
 
+// MITRE ATT&CK Mapping
+
+// Based on the analysis, the query is primarily focused on detecting events where users interact with potentially malicious URLs and are blocked from accessing them. This can be mapped to the following MITRE ATT&CK techniques:
+
+// T1071.001 - Application Layer Protocol: Web Protocols:
+// The query monitors URL clicks, which involves web protocols.
+// T1204.001 - User Execution: Malicious Link:
+// The detection of URL clicks and blocking access to malicious URLs aligns with detecting user execution of malicious links.
+// T1566.002 - Phishing: Spearphishing Link:
+// The query can help identify spearphishing attempts where users click on malicious links.
