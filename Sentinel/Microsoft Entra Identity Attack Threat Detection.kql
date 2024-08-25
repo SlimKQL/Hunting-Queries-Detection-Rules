@@ -7,3 +7,19 @@ AzureActivity
 | where CategoryValue == "Administrative"
 | where Caller contains "@" and Caller !contains companydomain
 
+// MITRE ATT&CK Mapping
+
+// This query can be associated with the following MITRE ATT&CK techniques:
+
+// T1078 - Valid Accounts:
+// Description: Adversaries may use valid accounts to gain access to and perform actions within systems, networks, and services.
+//Relevance: The query detects administrative actions by users outside the corporate domain, which could indicate the use of compromised or unauthorized accounts.
+// T1087 - Account Discovery:
+// Description: Adversaries may attempt to get a listing of local system or domain accounts.
+// Relevance: Monitoring administrative activities helps in identifying unauthorized account usage.
+// T1098 - Account Manipulation:
+// Description: Adversaries may manipulate accounts to maintain access to credentials and permissions.
+// Relevance: Detecting administrative actions by external users can help identify attempts to manipulate accounts.
+// T1110 - Brute Force:
+// Description: Adversaries may use brute force techniques to attempt access to accounts.
+// Relevance: Unusual administrative activities by external users could indicate brute force attempts.
