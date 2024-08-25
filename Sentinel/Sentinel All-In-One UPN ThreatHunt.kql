@@ -22,3 +22,14 @@ or UserId == upn                                // OfficeActivity
 or Entities contains upn                        // SecurityEvent
 ) 
 
+// MITRE ATT&CK Mapping
+
+// Based on the fields and data sources used in the KQL query, here are some potential MITRE ATT&CK techniques that could be detected:
+
+// T1078 - Valid Accounts: The query checks for events where the UPN is used, which can help identify the use of valid accounts across different services and logs.
+// T1059 - Command and Scripting Interpreter: If the DeviceEvents or DeviceFileEvents tables include script execution logs, this technique could be relevant.
+// T1071 - Application Layer Protocol: The EmailEvents table checks for email activities, which can be mapped to this technique if emails are used for command and control.
+// T1106 - Execution: The DeviceLogonEvents and DeviceFileEvents tables can help detect execution of processes or files.
+// T1110 - Brute Force: The SecurityEvent table can be used to detect brute force attempts if it includes authentication logs.
+// T1040 - Network Sniffing: If CommonSecurityLog includes network traffic logs, this technique could be relevant.
+// T1087 - Account Discovery: The AzureActivity table can help detect account discovery activities in Azure environments.
