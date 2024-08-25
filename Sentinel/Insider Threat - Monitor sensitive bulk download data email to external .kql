@@ -15,3 +15,15 @@ EmailAttachmentInfo
 | where TimeGenerated > ago(1h)
 | where FileName has_any(BulkDataFileNames)
 | where RecipientEmailAddress !contains "contoso.com" // Corporate Domain
+
+
+// MITRE ATT&CK Mapping
+
+// Based on the operations and data involved, the following MITRE ATT&CK techniques are relevant:
+
+// Data from Information Repositories (T1213):
+// The query identifies bulk downloads of group members, devices, and service principals, which aligns with adversaries accessing data from information repositories1.
+// Exfiltration Over Web Service (T1567):
+// The query checks for email attachments sent outside the corporate domain, indicating potential data exfiltration via email2.
+// Automated Collection (T1119):
+// The use of automated scripts to download bulk data suggests automated collection techniques3.
