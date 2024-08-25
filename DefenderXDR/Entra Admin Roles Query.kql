@@ -11,3 +11,14 @@ ExposureGraphNodes
 | extend NumberofRoles = array_length(AdminRoles)
 | where NumberofRoles > 0
 | summarize TotalRolesAssigned = sum(NumberofRoles)
+
+// MITRE ATT&CK Mapping
+
+// The KQL query focuses on identifying accounts with administrative roles, which can be mapped to the following MITRE ATT&CK techniques:
+
+// T1078 - Valid Accounts:
+// This technique involves the use of valid accounts to gain access to systems. The query identifies accounts with administrative roles, which could be targeted by adversaries to gain elevated privileges1.
+// T1078.004 - Valid Accounts: Cloud Accounts:
+// If the accounts are cloud-based, this sub-technique is relevant. Adversaries may target cloud accounts with administrative roles to gain access to cloud resources1.
+// T1087 - Account Discovery:
+// This technique involves discovering accounts and their roles. The query helps in identifying accounts with administrative roles, which is a form of account discovery1.
