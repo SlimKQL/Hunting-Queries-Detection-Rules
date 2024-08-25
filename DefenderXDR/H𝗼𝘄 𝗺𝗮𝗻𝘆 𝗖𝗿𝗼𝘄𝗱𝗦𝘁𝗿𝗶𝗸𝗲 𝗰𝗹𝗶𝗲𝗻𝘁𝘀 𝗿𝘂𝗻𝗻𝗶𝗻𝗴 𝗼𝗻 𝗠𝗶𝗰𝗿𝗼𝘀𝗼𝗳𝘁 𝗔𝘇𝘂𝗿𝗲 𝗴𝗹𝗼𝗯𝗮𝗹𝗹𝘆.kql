@@ -15,3 +15,15 @@ DeviceFileEvents
 
 // Note:  GlobalPrevalence - Number of instances of the entity observed by Microsoft globally
 
+// MITRE ATT&CK Mapping
+
+// Based on the actions and filters in your KQL query, the following MITRE ATT&CK techniques are relevant:
+
+// T1070.004 - Indicator Removal on Host: File Deletion:
+// Detecting file creation or modification events, especially for .sys files, can help identify attempts to delete or modify system files to evade detection.
+// T1562.001 - Impair Defenses: Disable or Modify Tools:
+// Monitoring files in the CrowdStrike folder can help detect attempts to disable or tamper with security tools.
+// T1105 - Ingress Tool Transfer:
+// The creation of new .sys files in specific directories could indicate the transfer of malicious tools or payloads.
+// T1027 - Obfuscated Files or Information:
+// .sys files are often used to hide malicious payloads. Monitoring their creation and modification can help detect obfuscation techniques.
