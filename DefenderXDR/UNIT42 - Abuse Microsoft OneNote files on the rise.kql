@@ -7,3 +7,12 @@ EmailAttachmentInfo
 | where TimeGenerated > ago(90d)
 | where FileType=="one;onenote"
 | join EmailEvents on NetworkMessageId
+
+// MITRE ATT&CK Mapping
+
+// T1566.001 - Phishing: Spearphishing Attachment:
+// This technique involves adversaries sending emails with malicious attachments to gain access to victim systems. Your query filters for specific file types in email attachments, which can be used to detect spearphishing attempts.
+// T1071.003 - Application Layer Protocol: Mail Protocols:
+// This technique involves using email protocols for command and control. By joining email events, your query can help identify suspicious email activities that might be part of a command and control operation.
+// T1114.002 - Email Collection: Remote Email Collection:
+// This technique involves adversaries collecting emails from remote servers. Your query can help detect unusual email attachment activities that might indicate email collection efforts.
