@@ -20,3 +20,11 @@ or MD5=="7d63047a48fa8984f11544149c2f0e70" or MD5=="da493648ca3b8fd9dbad7bbca659
 or MD5=="02fe599ed41cc4bd54a1d6a3cc2d830a" or MD5=="cb95c77750732c0a4dd29c1d4feb6f69"
 or MD5=="11751f8d847764936b7bf014302da87f" or MD5=="31c73ad35b23e4d98ed974e604b85e00"
 
+// MITRE ATT&CK Mapping
+
+//The KQL query is designed to detect devices connecting to Telegram Web and then filter events based on specific MD5 hashes, which could indicate the presence of known malicious files. The associated MITRE ATT&CK techniques include:
+
+// T1071.001: Application Layer Protocol - Web Protocols
+// T1027: Obfuscated Files or Information
+// T1036.005: Masquerading - Match Legitimate Name or Location
+// T1070.004: Indicator Removal on Host - File Deletion
