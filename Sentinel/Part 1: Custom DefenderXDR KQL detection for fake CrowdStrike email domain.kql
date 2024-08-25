@@ -12,3 +12,18 @@ EmailEvents
 SenderFromDomain !endswith "litmos.com" and
 SenderFromDomain !endswith "zoom.us"
 
+// MITRE ATT&CK Mapping
+
+// Based on the filtering criteria, the following MITRE ATT&CK techniques are relevant:
+
+// Phishing (T1566):
+// T1566.001: Spearphishing Attachment
+// T1566.002: Spearphishing Link
+// T1566.003: Spearphishing via Service
+// The query is looking for inbound emails that might be part of a phishing campaign, especially those masquerading as legitimate emails from known domains but with slight variations.
+// Impersonation (T1071):
+// T1071.003: Application Layer Protocol
+// The query checks for emails from domains that contain “crowdstrike” but are not from the legitimate “crowdstrike.com” domain, indicating potential impersonation attempts.
+// Command and Control (T1071):
+// T1071.001: Web Protocols
+// The query might help identify emails that could be part of a command and control communication setup, especially if the emails are from suspicious domains.
