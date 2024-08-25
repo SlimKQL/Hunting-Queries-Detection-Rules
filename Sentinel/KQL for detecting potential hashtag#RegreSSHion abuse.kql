@@ -19,3 +19,16 @@ CommonSecurityLog
 | where SSH_Connection > 2160
 
 // If analytics rule get triggered, this probably warrant a deeper investigation
+
+// MITRE ATT&CK Mapping
+
+// This query can be associated with the following MITRE ATT&CK techniques:
+
+// T1078 - Valid Accounts:
+// Detecting SSH connections can help identify the use of valid accounts for unauthorized access.
+// T1021 - Remote Services:
+// SSH is a remote service, and monitoring connections can help detect unauthorized remote access.
+// T1036 - Masquerading:
+// High volumes of SSH connections from unexpected countries might indicate attempts to masquerade as legitimate users.
+// T1040 - Network Sniffing:
+// Although not directly related, monitoring SSH connections can help identify potential network sniffing activities if attackers are trying to capture credentials.
