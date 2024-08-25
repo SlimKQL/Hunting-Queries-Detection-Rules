@@ -7,3 +7,15 @@ union isfuzzy=true SigninLogs, AADNonInteractiveUserSignInLogs
 | where ResultType != 0 and ResultDescription == "Other"
 | where ResultType == "500061"
 | distinct Category, Identity
+
+
+// MITRE ATT&CK Mapping
+
+// Based on the KQL query, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts:
+// This technique involves adversaries using valid accounts to gain access to systems. The query focuses on non-successful sign-ins, which could indicate attempts to use valid accounts with // incorrect credentials or other issues.
+// T1110 - Brute Force:
+// The query could be used to detect brute force attempts where multiple sign-in attempts fail. Filtering by ResultType != 0 and specific ResultType == "500061" can help identify such patterns.
+// T1556 - Modify Authentication Process:
+// The query looks at non-interactive user sign-ins, which could be related to attempts to modify or bypass the authentication process.
