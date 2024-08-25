@@ -10,3 +10,11 @@ SigninLogs
 | extend TrustType = tostring(DeviceDetail.trustType)
 | where TrustType != "Hybrid Azure AD joined" and TrustType != "Azure AD joined"
 
+// MITRE ATT&CK Mapping
+
+// Based on the query, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts: The query focuses on authentication logs, which can help detect the use of valid accounts for unauthorized access.
+// T1078.004 - Cloud Accounts: Specifically, the query targets Azure AD logs, which are related to cloud accounts.
+// T1078.001 - Default Accounts: By filtering out specific trust types, the query might help identify the use of default or less secure accounts.
+// T1556 - Modify Authentication Process: The use of “deviceCode” as an authentication protocol could be related to attempts to modify or bypass standard authentication processes.
