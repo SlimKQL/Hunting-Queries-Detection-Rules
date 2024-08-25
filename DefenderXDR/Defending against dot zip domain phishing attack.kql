@@ -8,3 +8,19 @@ EmailUrlInfo
 | join EmailEvents on $left.NetworkMessageId == $right.NetworkMessageId
 | project Timestamp, NetworkMessageId, SenderFromAddress, RecipientEmailAddress, Subject, Url, UrlDomain, ThreatTypes, EmailAction, ReportId
 
+
+// MITRE ATT&CK Mapping
+
+// Based on the query, the following MITRE ATT&CK techniques are relevant:
+
+// Phishing (T1566):
+// The query is designed to detect phishing attempts by identifying suspicious URLs in emails.
+// Sub-technique: Spearphishing Link (T1566.002).
+
+// Command and Control (T1071):
+// The use of URLs that end with “.zip” and contain “@” could be indicative of command and control communication attempts.
+// Sub-technique: Application Layer Protocol (T1071.001).
+
+// Exfiltration Over Web Service (T1567):
+// The presence of URLs in emails might indicate attempts to exfiltrate data via web services.
+// Sub-technique: Exfiltration Over Web Service (T1567.002).
