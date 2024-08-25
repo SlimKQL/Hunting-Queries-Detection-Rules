@@ -13,3 +13,8 @@ ExposureGraphNodes
 IdentityLogonEvents
 | where AccountUpn has_any(DangerousAdmin)
 
+// MITRE ATT&CK Mapping
+
+// T1078.004: Valid Accounts: Cloud Accounts - Identifying and monitoring privileged accounts in cloud environments.
+// T1078: Valid Accounts - Monitoring logon events for suspicious activity.
+// T1078.001: Valid Accounts: Domain Accounts - Tracking logon events for domain accounts.
