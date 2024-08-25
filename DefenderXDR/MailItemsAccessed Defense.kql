@@ -9,3 +9,14 @@ CloudAppEvents
 "Password spray attacker", "Malicious", "Tor")
 | where ActionType == "MailItemsAccessed"
 
+
+// MITRE ATT&CK Mapping
+
+// Your KQL query is effectively filtering for events that could indicate various forms of credential access and email collection attacks, which are mapped to the following MITRE ATT&CK techniques:
+
+// T1110 - Brute Force
+// T1110.003 - Password Spraying
+// T1078 - Valid Accounts
+// T1071 - Application Layer Protocol
+// T1090.003 - Proxy: Multi-hop Proxy
+// T1114 - Email Collection
