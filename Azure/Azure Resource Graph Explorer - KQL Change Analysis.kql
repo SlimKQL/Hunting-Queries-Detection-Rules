@@ -11,3 +11,18 @@ resourcechanges
 | project changeType, changedBy, changedByType, clientType
 | summarize count() by changedBy, changeType, clientType
 | order by count_ desc
+
+// MITRE ATT&CK Mapping
+
+// Based on the fields and operations in the KQL query, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts:
+// The changedBy and changedByType fields can help identify if valid accounts are being used for unauthorized changes.
+// T1098 - Account Manipulation:
+// The changeType field can indicate if there are changes related to account settings or permissions.
+// T1003 - Credential Dumping:
+// If the clientType indicates a suspicious client, it might be related to credential dumping activities.
+// T1071 - Application Layer Protocol:
+// The clientType field can also help identify if unusual protocols are being used for changes.
+// T1566 - Phishing:
+// If the changedBy field shows unexpected users making changes, it might indicate compromised accounts due to phishing.
