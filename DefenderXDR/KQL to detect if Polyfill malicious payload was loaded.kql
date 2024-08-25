@@ -11,3 +11,15 @@ DeviceNetworkEvents
 | extend HttpHost = ConnectInfo.host
 | where HttpHost contains "googie-anaiytics.com" or HttpHost contains "kuurza.com"
 
+// MITRE ATT&CK Mapping
+
+// Based on the analysis, the KQL query can be associated with the following MITRE ATT&CK techniques:
+
+// T1071.001 - Application Layer Protocol: Web Protocols:
+// The query inspects HTTP connections, which falls under the use of web protocols for communication1.
+// T1071 - Application Layer Protocol:
+// More broadly, the query is looking at network traffic using application layer protocols1.
+// T1566.002 - Phishing: Spearphishing Link:
+// The suspicious domains (“googie-anaiytics.com” and “kuurza.com”) suggest potential phishing attempts1.
+// T1071.003 - Application Layer Protocol: Mail Protocols:
+// If the suspicious domains are used in email communications, this technique might also be relevant1.
