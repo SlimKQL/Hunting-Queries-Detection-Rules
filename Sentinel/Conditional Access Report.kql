@@ -16,3 +16,19 @@ SigninLogs
 | summarize Count=count() by CADisplayName, CAResult
 | sort by CADisplayName asc 
 
+// MITRE ATT&CK Mapping
+
+// The KQL query primarily focuses on analyzing Conditional Access Policies, which can be associated with the following MITRE ATT&CK techniques:
+
+// T1078 - Valid Accounts:
+// Description: Adversaries may use valid accounts to gain initial access, persist, escalate privileges, or evade detection.
+// Relevance: The query checks for Conditional Access Policies, which are often used to enforce multi-factor authentication (MFA) and other security measures to protect valid accounts.
+// T1110 - Brute Force:
+// Description: Adversaries may use brute force techniques to attempt to gain access to accounts.
+// Relevance: The query can be adapted to filter for failed login attempts (e.g., by uncommenting the ResultType == "0" line), which can help detect brute force attempts.
+// T1190 - Exploit Public-Facing Application:
+// Description: Adversaries may exploit vulnerabilities in public-facing applications to gain access.
+// Relevance: Conditional Access Policies can help mitigate the risk of exploitation by enforcing additional authentication requirements.
+// T1071 - Application Layer Protocol:
+// Description: Adversaries may use application layer protocols to communicate with systems under their control.
+// Relevance: Monitoring Conditional Access Policies can help detect unusual or unauthorized access patterns that may indicate the use of such protocols.
