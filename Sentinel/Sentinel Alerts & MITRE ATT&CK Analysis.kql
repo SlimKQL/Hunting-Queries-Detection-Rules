@@ -13,3 +13,11 @@ SecurityAlert
 | summarize Technique_Count=count() by MitreAttackTechniques
 | sort by Technique_Count desc
 
+// MITRE ATT&CK Mapping
+
+//The KQL code is designed to map security alerts to specific MITRE ATT&CK techniques. Each technique identified in the Techniques field corresponds to a specific tactic or technique in the MITRE ATT&CK framework. Here are some common techniques that might be detected:
+
+// T1078: Valid Accounts: Detection of compromised accounts.
+// T1059: Command and Scripting Interpreter: Detection of script execution.
+// T1105: Ingress Tool Transfer: Detection of tools being transferred into the environment.
+// T1027: Obfuscated Files or Information: Detection of obfuscated files or information.
