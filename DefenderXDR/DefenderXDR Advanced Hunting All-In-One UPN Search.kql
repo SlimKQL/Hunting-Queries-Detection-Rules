@@ -29,3 +29,39 @@ or RawEventData contains upn
 or NodeProperties.rawData contains upn
 )
 
+// MITRE ATT&CK Mapping
+
+// The query can be associated with several MITRE ATT&CK techniques based on the data sources and fields being queried:
+
+// Credential Access:
+// T1078: Valid Accounts - Searching for AccountUpn and InitiatingProcessAccountUpn can help detect unauthorized use of valid accounts.
+
+// Initial Access:
+// T1071: Application Layer Protocol - UrlClickEvents and EmailEvents can be used to detect phishing attempts or malicious links.
+
+// Execution:
+// T1059: Command and Scripting Interpreter - DeviceProcessEvents can help detect suspicious script execution.
+
+// Persistence:
+// T1078: Valid Accounts - Repeated logon events (DeviceLogonEvents) can indicate persistence mechanisms.
+
+// Privilege Escalation:
+// T1055: Process Injection - DeviceProcessEvents can be used to detect process injection techniques.
+
+// Defense Evasion:
+// T1070: Indicator Removal on Host - DeviceRegistryEvents can help detect attempts to modify registry keys to evade detection.
+
+// Discovery:
+// T1083: File and Directory Discovery - DeviceFileEvents can be used to detect file and directory discovery activities.
+
+// Lateral Movement:
+// T1021: Remote Services - DeviceNetworkEvents can help detect lateral movement through remote services.
+
+// Collection:
+// T1114: Email Collection - EmailEvents and EmailAttachmentInfo can be used to detect email collection activities.
+
+// Exfiltration:
+// T1041: Exfiltration Over C2 Channel - CloudAppEvents can help detect data exfiltration over cloud applications.
+
+// Impact:
+// T1486: Data Encrypted for Impact - DeviceFileEvents can help detect ransomware activities.
