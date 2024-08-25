@@ -14,3 +14,16 @@ EmailEvents
 or SenderFromAddress == "Jenny@gsd.com"
 or SenderFromAddress =="JennyBrown3422@gmail.com"
 | summarize Count=count() by LatestDeliveryAction
+
+// MITRE ATT&CK Mapping
+
+// Based on the query, the following MITRE ATT&CK techniques are relevant:
+
+// T1566.001 - Phishing: Spearphishing Attachment:
+// The query filters emails based on specific sender details, which could be indicative of spearphishing attempts where an attacker uses a known or trusted sender to deliver malicious content.
+// T1071.003 - Application Layer Protocol: Mail Protocols:
+// The use of email as a communication channel for potential malicious activity aligns with this technique, where attackers use mail protocols to communicate with their targets.
+// T1087.002 - Account Discovery: Email Accounts:
+// Filtering by specific email addresses can be related to discovering and targeting specific email accounts within an organization.
+// T1114 - Email Collection:
+// Summarizing email events by delivery action can help in identifying patterns related to email collection activities, where attackers gather information from email communications.
