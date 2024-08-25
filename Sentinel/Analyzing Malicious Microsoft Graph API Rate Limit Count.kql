@@ -17,3 +17,15 @@ MicrosoftGraphActivityLogs
 | extend OperationResource = strcat_array(UriSegments,'/')| summarize RateLimitedCount=count() by AppId, OperationResource, RequestMethod 
 | sort by RateLimitedCount desc
 
+// MITRE ATT&CK Mapping
+
+// T1071.001 - Application Layer Protocol: Web Protocols
+// The query looks for suspicious activity in web protocols, specifically targeting proxy-related indicators.
+// T1070.004 - Indicator Removal on Host: File Deletion
+// By analyzing logs for specific IPs and paths, the query can help detect attempts to remove or hide indicators on the host.
+// T1087.001 - Account Discovery: Local Account
+// The query extends and normalizes paths to identify operations on resources, which can be related to account discovery activities.
+// T1040 - Network Sniffing
+// The use of BehaviorAnalytics to identify proxy-related activities can be linked to network sniffing techniques.
+// T1078 - Valid Accounts
+// By summarizing and sorting activities by AppId and RequestMethod, the query can help detect the use of valid accounts for malicious purposes.
