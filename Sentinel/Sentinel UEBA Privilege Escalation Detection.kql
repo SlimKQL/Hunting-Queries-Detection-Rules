@@ -22,3 +22,14 @@ Anomalies
 | where ActivityInsights.ActionUncommonlyPerformedInTenant == "True"
 
 // #Sentinel #UEBA #PrivilegeEscalation
+
+// MITRE ATT&CK Mapping
+
+// Based on the query, the following MITRE ATT&CK techniques are relevant:
+
+// Privilege Escalation (T1078):
+// The query detects anomalous privilege grants, which can be associated with unauthorized access or privilege escalation attempts.
+// Account Manipulation (T1098):
+// The detection of uncommon actions related to privilege grants can indicate account manipulation activities.
+// Credential Access (T1078):
+// Unusual privilege grants might also be related to attempts to gain access to credentials or escalate privileges.
