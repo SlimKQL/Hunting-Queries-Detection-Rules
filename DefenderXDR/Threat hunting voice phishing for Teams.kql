@@ -16,3 +16,14 @@ EmailEvents
 | project SenderFromAddress, Subject
 
 
+// MITRE ATT&CK Mapping
+
+// Based on the filtering criteria, this query is likely aimed at detecting phishing or suspicious email activities. Here are the relevant MITRE ATT&CK techniques:
+
+// Phishing (T1566):
+// T1566.001: Spearphishing Attachment - The query looks for specific patterns in email addresses that could indicate phishing attempts.
+// T1566.002: Spearphishing Link - The absence of “@” in the sender’s address and the presence of specific patterns might indicate attempts to deceive recipients.
+// Command and Control (T1071):
+// T1071.003: Application Layer Protocol - The use of email as a communication channel for malicious activities.
+// Credential Access (T1110):
+// T1110.001: Password Guessing - The query might help identify attempts to use compromised email accounts.
