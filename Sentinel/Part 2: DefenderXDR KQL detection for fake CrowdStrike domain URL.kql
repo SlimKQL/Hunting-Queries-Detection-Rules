@@ -15,3 +15,15 @@ SenderFromDomain !endswith "litmos.com" and
 SenderFromDomain !endswith "zoom.us"
 
 
+// MITRE ATT&CK Mapping
+
+// Based on the analysis, the query can be mapped to the following MITRE ATT&CK techniques:
+
+// Phishing (T1566):
+// The query is designed to detect phishing attempts by identifying suspicious URLs in inbound emails.
+// Spearphishing Link (T1566.002):
+// Specifically targets emails with links that may lead to malicious sites, excluding known legitimate domains.
+// Indicator Removal on Host (T1070):
+// By filtering out legitimate domains, the query aims to identify attempts to bypass detection mechanisms.
+// Command and Control (T1071):
+// The presence of suspicious URLs could indicate attempts to establish command and control channels.
