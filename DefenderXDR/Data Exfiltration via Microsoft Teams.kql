@@ -19,3 +19,20 @@ CloudAppEvents
 | where Count > 20
 // Whitelist External Partner Domain
 | where ExtUserDomain !contains "trusteddomain.com"
+
+
+// MITRE ATT&CK Mapping
+
+// This query can be mapped to several MITRE ATT&CK techniques:
+
+// T1071.001 - Application Layer Protocol: Web Protocols:
+// Detects the use of web protocols for communication, which in this case is Microsoft Teams1.
+
+// T1102.002 - Web Service: Application Deployment Software:
+// Identifies the use of web services for application deployment, relevant to the detection of messages sent via Teams2.
+
+// T1078 - Valid Accounts:
+// Detects the use of valid accounts, especially focusing on external tenants which might indicate compromised or unauthorized access3.
+
+// T1087.001 - Account Discovery: Local Account:
+// Involves discovering accounts, here focusing on external user domains4.
