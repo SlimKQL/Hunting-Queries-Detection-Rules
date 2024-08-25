@@ -15,3 +15,15 @@ CloudAppEvents
 | extend DetectionMethod = tostring(RawEventData.DetectionMethod)
 | extend AccountUpn = RawEventData.UserId
 | where AccountUpn has_any(HighlyPrivilegedAdmins)
+
+//MITRE ATT&CK Mapping
+//Based on the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts:
+// The query is identifying and monitoring highly privileged accounts, which aligns with the technique of using valid accounts for persistence and privilege escalation1.
+// T1071 - Application Layer Protocol:
+// The CloudAppEvents table and the AtpDetection action type suggest monitoring for suspicious activities in cloud applications, which can involve the use of application layer protocols2.
+// T1087 - Account Discovery:
+// The query involves discovering highly privileged accounts, which aligns with the technique of account discovery3.
+// T1057 - Process Discovery:
+// The detection method and user ID extensions indicate monitoring for specific processes or actions taken by privileged accounts4.
