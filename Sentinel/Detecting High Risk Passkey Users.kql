@@ -11,3 +11,14 @@ SigninLogs
 | where RiskLevelDuringSignIn == "high"
 | where RiskState == "atRisk"
 | where AuthenticationDetails contains "FIDO2 security key"
+
+// MITRE ATT&CK Mapping
+
+// Based on the operations and objectives of the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts:
+// This technique involves the use of valid accounts to gain access to systems. High-risk sign-ins with FIDO2 security keys could indicate an attempt to use compromised credentials.
+// T1556 - Modify Authentication Process:
+// This technique involves modifying the authentication process to bypass security controls. High-risk sign-ins with specific authentication methods like FIDO2 security keys could be part of an // attempt to manipulate the authentication process.
+// T1071 - Application Layer Protocol:
+// This technique involves the use of application layer protocols for command and control. High-risk sign-ins could be part of an adversary’s attempt to establish a foothold using legitimate protocols.
