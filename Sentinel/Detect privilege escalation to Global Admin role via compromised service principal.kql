@@ -14,3 +14,14 @@ AuditLogs
 | where TargetResources contains "Global Administrator"
 | extend UPN = tostring(TargetResources[0].userPrincipalName)
 | where not (UPN has_any(GA))
+
+// MITRE ATT&CK Mapping
+
+// Based on the operations and objectives of the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1078.004 - Valid Accounts: Cloud Accounts:
+// This technique involves adversaries gaining access to cloud accounts to perform actions such as adding new members to privileged roles1.
+// T1098 - Account Manipulation:
+// This technique includes actions like adding users to privileged groups or roles, which is exactly what this query is designed to detect2.
+// T1078 - Valid Accounts:
+// More generally, this technique involves the use of valid accounts to maintain access to systems, which can include adding new accounts to privileged roles3.
