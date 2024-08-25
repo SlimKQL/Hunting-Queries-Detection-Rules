@@ -23,3 +23,18 @@ ExposureGraphNodes
 | project AccountUPN;
 IdentityLogonEvents
 | where AccountUpn has_any(DangerousAdmin)
+
+// MITRE ATT&CK Mapping
+
+// T1078 - Valid Accounts:
+// Description: Adversaries may use valid accounts to gain access to and maintain persistence on systems.
+// Relevance: The query detects the addition of members to a high-privilege role, which could indicate the use of valid accounts for privilege escalation.
+// T1098 - Account Manipulation:
+// Description: Adversaries may manipulate accounts to maintain access to credentials and permissions.
+// Relevance: The detection of adding members to a role aligns with account manipulation activities.
+// T1071 - Application Layer Protocol:
+// Description: Adversaries may use application layer protocols to communicate with remote systems.
+// Relevance: The logon events detection part of the query can help identify suspicious logon activities using valid accounts.
+// T1110 - Brute Force:
+// Description: Adversaries may use brute force techniques to attempt to gain access to accounts.
+// Relevance: Although not directly related to brute force, monitoring logon events for high-privilege accounts can help detect potential brute force attempts.
