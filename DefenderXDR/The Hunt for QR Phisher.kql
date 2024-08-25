@@ -64,3 +64,12 @@ EmailUrlInfo
 | where EmailDirection == "Inbound"
 | where RecipientEmailAddress has_any(UPNAnomalousToken)
 
+// MITRE ATT&CK Mapping
+
+// T1566.002: Phishing: Spearphishing Link
+// T1204.001: User Execution: Malicious Link
+// T1590.005: Gather Victim Network Information: IP Addresses
+// T1592.001: Gather Victim Host Information: IP Address
+// T1071.001: Application Layer Protocol: Web Protocols
+// T1589.002: Gather Victim Network Information: Email Addresses
+// T1078.003: Valid Accounts: Cloud Accounts
