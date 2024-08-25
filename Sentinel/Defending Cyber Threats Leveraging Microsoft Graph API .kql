@@ -13,3 +13,19 @@ BehaviorAnalytics
 MicrosoftGraphActivityLogs
 | where TimeGenerated > ago(90d)
 | where IPAddress has_any (AttackerIP)
+
+
+// MITRE ATT&CK Mapping
+
+// Based on the operations and objectives of the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1071.001 - Application Layer Protocol: Web Protocols:
+// The query checks for IP addresses involved in suspicious activities, which could be related to the use of web protocols for command and control.
+// T1070.004 - Indicator Removal on Host: File Deletion:
+// The query looks for threat intelligence indicators, which might include attempts to remove or alter logs to evade detection.
+// T1040 - Network Sniffing:
+// By analyzing network activity logs, the query could help detect attempts to capture network traffic.
+// T1078 - Valid Accounts:
+// The query’s focus on MicrosoftGraphActivityLogs might help identify the use of compromised accounts.
+// T1020 - Automated Exfiltration:
+// The query could detect automated data exfiltration attempts by monitoring suspicious IP addresses.
