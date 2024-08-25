@@ -11,3 +11,14 @@ IdentityInfo
 | distinct EntraAdminRole, AccountUpn
 | where AccountUpn != ""
 | sort by EntraAdminRole asc
+
+// MITRE ATT&CK Mapping
+
+// Based on the analysis, the KQL query can be associated with the following MITRE ATT&CK techniques:
+
+// T1078 - Valid Accounts:
+// The query identifies accounts with assigned roles, which can help detect unauthorized or suspicious account usage.
+// T1087 - Account Discovery:
+// By listing distinct roles and associated accounts, the query aids in discovering accounts and their privileges.
+// T1098 - Account Manipulation:
+// Monitoring changes in assigned roles can help detect potential account manipulation activities.
