@@ -10,3 +10,16 @@ EmailUrlInfo
 | where EmailDirection == "Inbound"
 | where UrlDomain == "forms.microsoft.com"
 | where AuthDetail.SPF == "fail" and AuthDetail.DKIM == "fail" and AuthDetail.DMARC == "fail"
+
+// MITRE ATT&CK Mapping
+
+// The KQL query can be mapped to the following MITRE ATT&CK techniques:
+
+// T1566.001 - Phishing: Spearphishing Attachment:
+// The query is looking for inbound emails with specific characteristics that could indicate a phishing attempt, especially with failed authentication checks.
+// T1071.001 - Application Layer Protocol: Web Protocols:
+// The use of URLs in emails, particularly those pointing to forms.microsoft.com, can be indicative of attempts to use web protocols for malicious purposes.
+// T1589.002 - Gather Victim Identity Information: Email Addresses:
+// The focus on inbound emails and specific domains suggests an attempt to gather or exploit email addresses.
+// T1078 - Valid Accounts:
+// The failed authentication checks (SPF, DKIM, DMARC) could indicate attempts to use or spoof valid accounts.
