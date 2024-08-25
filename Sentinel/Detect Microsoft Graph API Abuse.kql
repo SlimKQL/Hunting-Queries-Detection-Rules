@@ -12,4 +12,11 @@ RiskEventTypes == "suspiciousAPITraffic"
 
 // Reference: https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-risks#suspicious-api-traffic
 
+// MITRE ATT&CK Mapping
 
+// Based on the operations and objectives of the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts: Attackers may use valid accounts to access and interact with systems, which can generate suspicious API traffic.
+// T1071 - Application Layer Protocol: Suspicious API traffic might indicate the use of application layer protocols for command and control.
+// T1070 - Indicator Removal on Host: Attackers might try to hide their tracks by generating suspicious API traffic to remove indicators from logs.
+// T1059 - Command and Scripting Interpreter: Suspicious API traffic could be a result of scripts or commands executed by the attacker.
