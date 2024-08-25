@@ -13,3 +13,23 @@ DeviceLogonEvents
 | summarize by AccountName, DeviceName
 | sort by AccountName
 
+// MITRE ATT&CK Mapping
+
+// Based on the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1078 - Valid Accounts:
+// The query is identifying high-risk user accounts, which could be indicative of compromised or misused valid accounts.
+// T1078.001 - Valid Accounts: Default Accounts:
+// If the high-risk users include default accounts, this technique would be relevant.
+// T1078.002 - Valid Accounts: Domain Accounts:
+// If the high-risk users include domain accounts, this technique would be relevant.
+// T1078.003 - Valid Accounts: Local Accounts:
+// If the high-risk users include local accounts, this technique would be relevant.
+// T1078.004 - Valid Accounts: Cloud Accounts:
+// If the high-risk users include cloud accounts, this technique would be relevant.
+// T1059 - Command and Scripting Interpreter:
+// The use of KQL itself can be mapped to this technique as it involves scripting and querying.
+// T1087 - Account Discovery:
+// The query is effectively performing account discovery by identifying high-risk accounts.
+// T1110 - Brute Force:
+// If the high-risk users were identified due to brute force attempts, this technique would be relevant.
