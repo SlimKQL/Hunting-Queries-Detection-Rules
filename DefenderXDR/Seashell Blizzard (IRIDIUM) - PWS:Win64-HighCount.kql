@@ -14,3 +14,9 @@ DeviceRegistryEvents
 
 DeviceFileEvents 
 | where SHA256 == "e62e418ffa87fdcfe14125ab8b429cb9d91a07088e13cd15423bd084c713564e" or FileName == "win32msa.exe"
+
+
+// MITRE ATT&CK Mapping
+
+// Registry Key Creation Detection: Maps to T1547.001.
+// File Event Detection: Maps to T1036.005.
