@@ -11,3 +11,19 @@ SigninLogs
 MicrosoftGraphActivityLogs
 | where TimeGenerated > ago(48h)
 | where IPAddress has_any (SuspiciousGraphUserIP)
+
+
+// MITRE ATT&CK Mapping
+
+// Based on the KQL code, the following MITRE ATT&CK techniques are relevant:
+
+// T1071.001 - Application Layer Protocol: Web Protocols
+// The detection of suspicious API traffic suggests the use of web protocols for communication, which falls under this technique.
+// T1078 - Valid Accounts
+// The use of valid accounts to perform suspicious activities, such as accessing Microsoft Graph, can be inferred from the logs.
+// T1087.004 - Account Discovery: Cloud Account
+// The query involves analyzing sign-in logs and activity logs, which can be related to discovering and using cloud accounts.
+// T1070.004 - Indicator Removal on Host: File Deletion
+// If the suspicious activity involves attempts to delete logs or traces, this technique might be relevant.
+// T1020 - Automated Exfiltration
+// Suspicious API traffic might indicate automated data exfiltration attempts.
