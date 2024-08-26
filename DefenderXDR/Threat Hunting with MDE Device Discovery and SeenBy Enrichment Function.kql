@@ -1,0 +1,36 @@
+// Threat Hunting with MDE Device Discovery and SeenBy() Enrichment Function
+
+// Devices discovered but not onboarded and secured by Defender for Endpoint are listed in the device inventory. You can use KQL to query these non-onboarded endpoints and leverage the SeenBy() enrichment function to identify which MDE endpoints have detected these devices in the private network. The IP addresses of non-onboarded devices are then cross-referenced against the AlertEvidence and BehaviourEntities schemas’ LocalIP fields to check for any associated security alerts. If a detection rule is triggered, SecOps should promptly locate and remove the device from the network.
+
+let SuspiciousDeviceIPs =
+DeviceInfo
+| summarize arg_max(Timestamp, *) by DeviceId
+| where isempty(MergedToDeviceId)
+| where OnboardingStatus != "Onboarded"
+| where DeviceCategory == "Endpoint" and DeviceType == "Workstation" and DeviceName == ""
+| join DeviceNetworkInfo on DeviceId
+| extend UnidentifiedDeviceIP = tostring(parse_json(IPAddresses)[0].IPAddress)
+| invoke SeenBy()
+| mv-expand parse_json(SeenBy)
+| extend SeenByDeviceID = SeenBy.DeviceId
+| project DeviceId, OSPlatform, OSBuild, OSVersion, MacAddress, UnidentifiedDeviceIP, SeenByDeviceID
+| distinct UnidentifiedDeviceIP;
+search in (AlertEvidence, BehaviorEntities)
+Timestamp between (ago(7d) .. now())
+and (
+LocalIP has_any(SuspiciousDeviceIPs)
+)
+
+// MITRE ATT&CK Mapping
+
+// Initial Access:
+// T1078.004: Valid Accounts - The query checks for devices that are not onboarded, which could indicate unauthorized access.
+// Discovery:
+// T1082: System Information Discovery - Gathering information about the device’s OS, build, version, and MAC address.
+// T1016: System Network Configuration Discovery - Extracting network information and IP addresses.
+// Lateral Movement:
+// T1021: Remote Services - The SeenBy() function indicates devices that have seen the suspicious device, which could be used for lateral movement detection.
+// Defense Evasion:
+// T1070: Indicator Removal on Host - Devices with no name and not onboarded might be trying to evade detection.
+//Command and Control:
+// T1071: Application Layer Protocol - The query looks for network activity involving suspicious IPs, which could be used for command and control.
