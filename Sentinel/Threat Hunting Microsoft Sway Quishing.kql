@@ -1,0 +1,20 @@
+// Threat Hunting Microsoft Sway Quishing
+//  Article: https://thehackernews.com/2024/08/new-qr-code-phishing-campaign-exploits.html
+// This query summarizes all inbound emails from senders whose emails contain URLs with the new sway.cloud.microsoft domain. Additionally, it identifies the URL location (e.g., body, attachment, or QR code). A quick look at the statistics will reveal whether your tenant has been affected by the recent QR code phishing campaign exploiting Microsoft Sway to steal credentials.
+// Prequiste: MDO 
+
+EmailUrlInfo
+| where TimeGenerated > ago(90d)
+| join EmailEvents on NetworkMessageId
+| where EmailDirection == "Inbound" 
+| where Url startswith "https://sway.cloud.microsoft"
+| summarize Count=count() by SenderFromAddress, UrlLocation
+| sort by Count desc 
+
+// MITRE ATT&CK Mapping
+
+// Initial Access Techniques:
+// T1078.004 (Valid Accounts - Cloud Accounts): Detection related to cloud accounts.
+// T1190 (Exploit Public-Facing Application): Detecting exploits on internet-facing devices.
+// T1566.001 (Phishing - Spearphishing Attachment): Monitoring email attachments.
+// T1566.002 (Phishing - Spearphishing Link): Analyzing safe links in emails.
