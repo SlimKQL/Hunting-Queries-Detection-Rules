@@ -6,8 +6,8 @@ let DriverwithLowPrevalence =
 DeviceFileEvents
 | where ActionType == "FileCreated"
 | where FileName endswith ".sys"
-| invoke FileProfile(SHA1,10000)
-| where GlobalPrevalence <= 150
+| invoke FileProfile(SHA1,1000)
+| where GlobalPrevalence <= 150 or isempty(GlobalPrevalence)
 | join kind=leftouter DeviceFileCertificateInfo on SHA1
 | project FileName;
 DeviceEvents
