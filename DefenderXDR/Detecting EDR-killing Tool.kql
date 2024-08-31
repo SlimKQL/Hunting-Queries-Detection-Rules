@@ -1,0 +1,53 @@
+// Detecting EDR-killing Tool
+
+// Recent reports indicate that a cybercrime group associated with the RansomHub ransomware has been utilizing a new tool designed to disable endpoint detection and response (EDR) software on compromised systems. This tool, known as EDRKillShifter, functions as a loader executable and serves as a delivery mechanism for a legitimate driver that is vulnerable to exploitation. This technique is commonly referred to as a ‘bring your own vulnerable driver’ (BYOVD) attack.
+// The following KQL script is an enhancement of my previous threat hunting efforts to detect BYOVD scenarios. It is important to note that threat actors may modify your driver system files for malicious purposes. This modification can trigger low prevalence detections. If further analysis confirms that the driver is being loaded and tampered with, it is highly likely that an EDR-Killing tool is present in your environment.
+
+// RansomHub Group Deploys New EDR-Killing Tool in Latest Cyber Attacks
+// https://thehackernews.com/2024/08/ransomhub-group-deploys-new-edr-killing.html
+
+// Ransomware attackers introduce new EDR killer to their arsenal
+// https://news.sophos.com/en-us/2024/08/14/edr-kill-shifter/
+
+// It’ll be back: Attackers still abusing Terminator tool and variants
+// https://news.sophos.com/en-us/2024/03/04/itll-be-back-attackers-still-abusing-terminator-tool-and-variants/
+
+let DriverwithLowPrevalence =
+DeviceFileEvents
+| where ActionType == "FileCreated"
+| where FileName endswith ".sys"
+| invoke FileProfile(SHA1,10000)
+| where GlobalPrevalence <= 150
+| invoke FileProfile(SHA1,1000)
+| where GlobalPrevalence <= 150 or isempty(GlobalPrevalence)
+| join kind=leftouter DeviceFileCertificateInfo on SHA1
+| project FileName;
+let DevicewithLPDriverActivated =
+DeviceEvents
+// Event ID 3004 — Kernel-mode Driver Validation
+| where ReportId == "3004"
+| where ActionType == @"DriverLoad"
+| where FileName has_any(DriverwithLowPrevalence)
+| distinct DeviceName;
+DeviceEvents
+| where ReportId == "5013"
+| where ActionType == @"TamperingAttempt"
+| where DeviceName has_any(DevicewithLPDriverActivated)
+
+
+// MITRE ATT&CK Mapping
+
+// File Creation and Prevalence Check:
+// Tactic: Defense Evasion
+// Technique: T1036.005 - Masquerading: Match Legitimate Name or Location
+// Description: The query identifies newly created .sys files (drivers) and checks their global prevalence to detect potentially rare or suspicious drivers.
+
+// Driver Load Event:
+// Tactic: Execution
+// Technique: T1547.001 - Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder
+// Description: The query monitors for driver load events (Event ID 3004) to detect the activation of low-prevalence drivers, which could indicate malicious activity.
+
+// Tampering Attempt Detection:
+// Tactic: Defense Evasion
+// Technique: T1562.001 - Impair Defenses: Disable or Modify Tools
+// Description: The query looks for tampering attempts (Event ID 5013) on devices where low-prevalence drivers have been activated, indicating potential attempts to disable security tools or modify system
