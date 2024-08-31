@@ -25,12 +25,12 @@ DeviceFileEvents
 let DevicewithLPDriverActivated =
 DeviceEvents
 // Event ID 3004 — Kernel-mode Driver Validation
-| where ReportId == "3004"
+//| where ReportId == "3004"
 | where ActionType == @"DriverLoad"
 | where FileName has_any(DriverwithLowPrevalence)
 | distinct DeviceName;
 DeviceEvents
-| where ReportId == "5013"
+//| where ReportId == "5013"
 | where ActionType == @"TamperingAttempt"
 | where DeviceName has_any(DevicewithLPDriverActivated)
 
