@@ -1,0 +1,28 @@
+// Monitor Privilege User SSPR
+
+// In today’s post by Merill, he explains how to use Maester to monitor SSPR settings for admin accounts. I agree that administrators with sensitive roles should exclusively use phishing-resistant authentication methods, which would prevent them from resetting their passwords. However, not all organizations have the cyber maturity to transition all admins to phishing-resistant authentication. Therefore, SecOps should continue to monitor SSPR for privileged users in the Entra tenant. The KQL below provides the necessary monitoring 
+
+let queryperiod = 30d;
+let queryfrequency = 1h;
+let PrivilegeUsers = (
+    IdentityInfo
+    | where TimeGenerated > ago(queryperiod)
+    | mv-expand AssignedRoles
+    | where AssignedRoles matches regex 'Admin'
+    | summarize by tolower(AccountUPN));
+AuditLogs
+| where TimeGenerated > ago(queryfrequency)
+| where ResultDescription == "User started self-service password reset operation."
+| extend AccountUPN = tolower(InitiatedBy.user.userPrincipalName)
+| extend IPAdress = InitiatedBy.user.ipAddress
+| where AccountUPN in (PrivilegeUsers)
+
+// MITRE ATT&CK Mapping
+// Privilege Escalation (T1078.004 - Valid Accounts: Cloud Accounts):
+// The query identifies privileged users by checking for roles that match ‘Admin’. This is related to the use of valid accounts with elevated privileges.
+// Credential Access (T1110.001 - Brute Force):
+// Monitoring self-service password reset operations can help detect potential brute force attempts or misuse of password reset functionalities.
+// Defense Evasion (T1078 - Valid Accounts):
+// By focusing on privileged accounts, the query helps in identifying if legitimate accounts are being used to evade detection mechanisms.
+// Initial Access (T1078.004 - Valid Accounts: Cloud Accounts):
+// The detection of self-service password reset operations by privileged users can indicate an initial access attempt using valid credentials.
