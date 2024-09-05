@@ -1,0 +1,36 @@
+// M365 Copilot Plugins Inventory Analysis
+
+//Is your organization overseeing who can use Copilot with installed apps and plugins from Microsoft or other providers? If so, are you aware of the plugins your Copilot users are utilizing and their usage frequency from a security risk perspective? The following KQL query offers the Security Operations team an inventory of Copilot users’ plugins and their usage frequency for analysis:
+
+CloudAppEvents
+| where TimeGenerated > ago(90d)
+| where ActionType == @"CopilotInteraction"
+| extend UserID = tostring(RawEventData.UserId)
+| extend CopilotData = todynamic(RawEventData.CopilotEventData)
+| extend CopilotAccessResources = (CopilotData.AccessedResources)
+| extend CopilotAppHost = tostring(CopilotData.AppHost)
+| extend CopilotContexts = tostring(CopilotData.Contexts)
+| extend CopilotType = tostring(CopilotData.Type)
+| extend CopilotMessageIds = tostring(CopilotData.MessageIds)
+| extend CopilotThreadId = tostring(CopilotData.ThreadId)
+| extend CopilotPlugin = tostring(CopilotData.AISystemPlugin)
+| where CopilotPlugin != "[]"
+| summarize Plugin_Usage=count() by CopilotPlugin
+
+// MITRE ATT&CK Mapping
+
+// Tactic: Collection (TA0009)
+// Technique: Data from Information Repositories (T1213)
+// The query extracts data from CloudAppEvents related to CopilotInteraction, which can be considered as collecting data from information repositories.
+// Tactic: Discovery (TA0007)
+// Technique: Account Discovery (T1087)
+// The extend UserID = tostring(RawEventData.UserId) line is used to identify user accounts involved in the interactions.
+// Tactic: Credential Access (TA0006)
+// Technique: Unsecured Credentials (T1552)
+// The query extends and processes various fields like CopilotData, CopilotAccessResources, and CopilotAppHost, which could potentially include sensitive information.
+// Tactic: Execution (TA0002)
+// Technique: Command and Scripting Interpreter (T1059)
+// The use of KQL itself falls under scripting and command-line interpretation for executing queries.
+// Tactic: Exfiltration (TA0010)
+// Technique: Exfiltration Over Web Service (T1567)
+// The CopilotPlugin data could be used to understand interactions with external services, which might be relevant for exfiltration activities.
