@@ -1,0 +1,31 @@
+// Detecting BYOVDLL Abuse
+// https://blog.scrt.ch/2024/08/09/ghost-in-the-ppl-part-1-byovdll/
+// Today, I discovered an intriguing blog post from Orange CyberDefense titled “Ghost in the PPL Part 1: BYOVDLL.” The article presents a proof-of-concept and explores innovative techniques for loading arbitrary DLLs into LSASS and even dumping its memory. Previously, I developed several KQL queries to detect BYOVD abuse. By incorporating similar behavioral detection methods and tweaking digital signatures detection, the following KQL query could potentially detect BYOVDLL abuse if the attack methods align with those described in the proof-of-concept.
+
+let NewLPUnsignedDLL =
+DeviceFileEvents
+| where ActionType == "FileCreated"
+| where FileName endswith ".dll"
+| invoke FileProfile(SHA1,10000)
+| where GlobalPrevalence <= 150
+| join kind=leftouter DeviceFileCertificateInfo on SHA1
+| where SignatureState == "Unsigned"
+| distinct FileName;
+DeviceEvents
+| where ActionType == @"DriverLoad"
+| where FileName endswith ".dll"
+| join kind=leftouter DeviceFileCertificateInfo on SHA1
+| where IsSigned == "1"
+| where FileName has_any(NewLPUnsignedDLL)
+
+// MITRE ATT&CK Mapping
+// T1036.005 - Masquerading: Match Legitimate Name or Location:
+// The query looks for DLL files that are unsigned and have low global prevalence, which could indicate masquerading as legitimate files.
+// T1070.004 - Indicator Removal on Host: File Deletion:
+// The detection of newly created DLL files and their profiling can help identify attempts to remove or replace legitimate files with malicious ones.
+// T1218.011 - Signed Binary Proxy Execution: Rundll32:
+// The query checks for driver load events involving DLLs, which could be used in proxy execution techniques.
+// T1547.001 - Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder:
+// Unsigned DLLs being loaded as drivers could indicate persistence mechanisms via autostart execution.
+// T1027 - Obfuscated Files or Information:
+// The use of unsigned DLLs with low prevalence might indicate attempts to obfuscate malicious activity.
