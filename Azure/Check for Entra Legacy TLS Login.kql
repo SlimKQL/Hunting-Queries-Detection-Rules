@@ -1,0 +1,13 @@
+// Check for Entra Legacy TLS Login
+
+SigninLogs
+| where TimeGenerated > ago(90d)
+| where ResultType == "0"
+| mv-expand todynamic(AuthenticationProcessingDetails)
+| where AuthenticationProcessingDetails.key has "Legacy TLS (TLS 1.0, 1.1, 3DES)"
+| where AuthenticationProcessingDetails.value has "True"
+| summarize LegacyLogin=count() by UserPrincipalName
+| sort by LegacyLogin desc 
+
+// Retirement: Migrating to TLS 1.2+ with the Deprecation of Outdated Security Protocols
+// https://azure.microsoft.com/en-us/updates/v2/migrating-to-tls-12-with-deprecation-of-outdated-security-protocols
