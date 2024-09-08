@@ -7,3 +7,6 @@ AlertEvidence
 | summarize TechniqueCount=count() by tostring(AttackTechniques)
 | sort by TechniqueCount
 
+// Export the result as a CSV
+// Copilot Prompt:
+// Can you help me generate MITRE ATT&CK Techniques heatmap using standard MITRE ATT&CK Enterprise framework with the attached CSV data?
