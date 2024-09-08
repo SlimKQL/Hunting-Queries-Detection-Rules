@@ -1,0 +1,19 @@
+// Azure: Deprecation of Outdated Security Protocols
+
+// On October 31 2024, Azure Resource Manager will be retiring support for TLS 1.0 and TLS 1.1. After that date, any incoming calls to Azure using TLS 1.0/1.1 will fail. This is part of an Azure-wide initiative to enhance security. Do you know any of Azure cloud native services are still running the outdated security protocols ? You still have time to remediate by running the below KQL to tell you which services is still running the outdated protocols 😉
+
+//Azure: Depreciation of outdated security protocol by 31 Oct 2024
+
+let TLSVersion = "1.0"; 
+search in (ApiManagementGatewayLogs, AzureDiagnostics, SQLSecurityAuditEvents,
+StorageBlobLogs, StorageFileLogs, StorageQueueLogs, StorageTableLogs)
+TimeGenerated between (ago(30d) .. now())
+and (
+ClientTlsVersion has TLSVersion
+or tlsVersion_s has TLSVersion
+or client_tls_version_name_s has TLSVersion
+or TlsVersion has TLSVersion
+)
+
+// Retirement: Migrating to TLS 1.2+ with the Deprecation of Outdated Security Protocols
+// Link: https://azure.microsoft.com/en-us/updates/v2/migrating-to-tls-12-with-deprecation-of-outdated-security-protocols
