@@ -1,0 +1,9 @@
+// DefenderXDR MITRE ATT&CK Technique Analysis
+
+AlertEvidence
+|where Timestamp > ago(30d)
+| mv-expand parse_json(AttackTechniques)
+| where isnotempty(AttackTechniques)
+| summarize TechniqueCount=count() by tostring(AttackTechniques)
+| sort by TechniqueCount
+
