@@ -1,0 +1,25 @@
+// Detecting Windows Downdate Abuse
+// https://www.blackhat.com/us-24/briefings/schedule/#windows-downdate-downgrade-attacks-using-windows-updates-38963
+// https://www.bleepingcomputer.com/news/microsoft/windows-downdate-tool-lets-you-unpatch-windows-systems/
+
+// Detect the cloning of Windows Downdate python with Python PSUtil & Git presence
+let EndpointwithPythonPSUtilGit =
+DeviceTvmSoftwareInventory 
+| where SoftwareName contains "psutil" and SoftwareName contains "python"
+| where SoftwareName contains "git" and SoftwareVendor == "github"
+| project DeviceName;
+DeviceFileEvents 
+| where ActionType=="FileCreated"
+| where FolderPath contains "downdate"
+| where DeviceName has_any(EndpointwithPythonPSUtilGit)
+
+// Detected Windows Downdate Binary
+DeviceFileEvents 
+| where ActionType=="FileCreated"
+| where SHA256 == "a34e71ededf334d3d6a480e3738c91fccbb4d2c1fbeec7192db9793a2541e8ca"
+
+// The Windows Downdate tool primarily maps to the following MITRE ATT&CK techniques:
+// T1078 - Valid Accounts: By downgrading components, attackers can exploit older vulnerabilities to gain unauthorized access using valid accounts1.
+// T1543 - Create or Modify System Process: Downgrading critical OS components can involve creating or modifying system processes to reintroduce vulnerabilities1.
+// T1562 - Impair Defenses: Downgrading security components like Credential Guard can impair defenses, making it easier for attackers to bypass security measures1.
+// T1218 - Signed Binary Proxy Execution: Using legitimate tools and binaries to execute malicious actions, which can be facilitated by downgrading to vulnerable versions1.
