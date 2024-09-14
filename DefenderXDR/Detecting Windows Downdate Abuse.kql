@@ -5,9 +5,9 @@
 // Detect the cloning of Windows Downdate python with Python PSUtil & Git presence
 let EndpointwithPythonPSUtilGit =
 DeviceTvmSoftwareInventory 
-| where SoftwareName contains "psutil" and SoftwareName contains "python"
-| where SoftwareName contains "git" and SoftwareVendor == "github"
-| project DeviceName;
+| where (SoftwareName contains "psutil" and SoftwareName contains "python")
+or (SoftwareName contains "git" and SoftwareVendor == "github")
+| distinct DeviceName;
 DeviceFileEvents 
 | where ActionType=="FileCreated"
 | where FolderPath contains "downdate"
