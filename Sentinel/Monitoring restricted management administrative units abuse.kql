@@ -1,0 +1,34 @@
+// Monitoring restricted management administrative units abuse
+// https://securitylabs.datadoghq.com/articles/abusing-entra-id-administrative-units/
+
+// Yesterday, I read an insightful article by Katie Knowles on the potential abuse of the new Entra Restricted Management Units (currently in preview) for sticky persistence if a global administrator or privileged role administrator is compromised. Although exploiting this feature requires a high-privileged role, it remains a significant risk for organizations that do not implement privileged role access management using PIM. The possibility of high-privileged roles being compromised through AiTM attacks, even with MFA enforced, makes this a critical issue.
+// Therefore, it is crucial for SecOps to monitor the creation of restricted AUs to detect potential sticky persistence abuses. This is particularly important due to the lack of visibility of the members and the inability of regular privileged role admins to reset user credentials within these restricted AUs. In my SlimKQL GitHub repository, I have shared a Sentinel KQL rule to monitor the creation of Restricted AUs, enabling SecOps to take necessary mitigation actions.
+
+// Hourly Sentinel Monitoring Rule
+
+AuditLogs
+| where TimeGenerated > (1h)
+| where OperationName == "Add administrative unit"
+| where parse_json(tostring(TargetResources[0].modifiedProperties))[2].displayName == "IsMemberManagementRestricted"
+| where parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[2].newValue))[0] == true
+| extend RestrictedAUs = TargetResources[0].displayName
+| extend UPN = parse_json(tostring(InitiatedBy.user)).userPrincipalName
+| extend IPAddress = parse_json(tostring(InitiatedBy.user)).ipAddress
+| project TimeGenerated, RestrictedAUs, UPN, IPAddress, AdditionalDetails
+
+// MITRE ATT&CK Technique Mapping
+
+// Tactic: Initial Access
+// Technique: Valid Accounts (T1078)
+// Sub-technique: Domain Accounts (T1078.002)
+// Description: The query identifies actions performed by specific user accounts, which could indicate the use of valid accounts to gain initial access.
+
+// Tactic: Persistence
+// Technique: Account Manipulation (T1098)
+// Sub-technique: Additional Cloud Credentials (T1098.001)
+// Description: Adding administrative units and modifying properties can be a form of account manipulation to maintain persistence within the environment.
+
+// Tactic: Privilege Escalation
+// Technique: Abuse Elevation Control Mechanism (T1548)
+// Sub-technique: Bypass User Account Control (T1548.002)
+// Description: The operation of adding administrative units with restricted member management could be an attempt to escalate privileges
