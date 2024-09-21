@@ -8,13 +8,14 @@
 
 AuditLogs
 | where TimeGenerated > (1h)
-| where OperationName == "Add administrative unit"
-| where parse_json(tostring(TargetResources[0].modifiedProperties))[2].displayName == "IsMemberManagementRestricted"
-| where parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[2].newValue))[0] == true
+| where (OperationName == "Add administrative unit" and 
+parse_json(tostring(TargetResources[0].modifiedProperties))[2].displayName == "IsMemberManagementRestricted" and
+parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[2].newValue))[0] == true) or
+OperationName == "Add member to restricted management administrative unit"
 | extend RestrictedAUs = TargetResources[0].displayName
 | extend UPN = parse_json(tostring(InitiatedBy.user)).userPrincipalName
 | extend IPAddress = parse_json(tostring(InitiatedBy.user)).ipAddress
-| project TimeGenerated, RestrictedAUs, UPN, IPAddress, AdditionalDetails
+| project TimeGenerated, OperationName, RestrictedAUs, UPN, IPAddress, AdditionalDetails
 
 // MITRE ATT&CK Technique Mapping
 
