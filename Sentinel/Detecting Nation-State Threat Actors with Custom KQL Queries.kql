@@ -1,0 +1,17 @@
+// Detecting Nation-State Threat Actors with Custom KQL Queries
+
+// If you are using the default Sentinel setup, you will not receive notifications in the event of an attack by nation-state threat actors, as there are no built-in analytic rules to detect such threats. I am sharing a Sentinel detection KQL query that can identify nation-state attacks and provide detailed information about the threat actor using Behavior Analytics threat intelligence. By enabling this KQL query, you will be notified when a nation-state threat actor targets your environment and receive additional information about the specific threat actor (e.g., Storm-XXXX)
+
+let NationStateIP = 
+SigninLogs
+| where TimeGenerated > ago(1h)
+| where RiskEventTypes_V2 has "estsNationStateIP"
+| project IPAddress;
+BehaviorAnalytics
+| where SourceIPAddress has_any(NationStateIP)
+| project TimeGenerated, UserPrincipalName, ActivityType, 
+SourceIPAddress, SourceIPLocation, DevicesInsights.ThreatIntelIndicatorDescription
+
+// MITRE ATT&CK Mapping
+// T1078 - Valid Accounts
+// T1049 - System Network Connections Discovery
