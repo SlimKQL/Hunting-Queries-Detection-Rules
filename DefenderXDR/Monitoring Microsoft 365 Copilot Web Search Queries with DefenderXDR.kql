@@ -1,0 +1,23 @@
+// Monitoring Microsoft 365 Copilot Web Search Queries with DefenderXDR
+
+// What happens if your Microsoft 365 Copilot user account is compromised and used to exfiltrate data via web search queries? Can you check the queries performed through the compromised Copilot interaction?
+// Microsoft has introduced web search query transparency for Microsoft 365 Copilot, allowing users to see the exact web search queries generated from their prompts. This feature enhances user understanding and prompt improvement by providing visibility into how queries are formed and used. Additionally, admins will gain capabilities for search, audit, and eDiscovery on these web queries.
+// However, you don’t need to use eDiscovery. Instead, you can leverage DefenderXDR Advanced Hunting with the KQL I will share to extract all associated BingWebSearch URLs related to Copilot interactions for forensic investigation.
+
+CloudAppEvents
+| where Timestamp > ago(30d)
+| where ActionType == @"CopilotInteraction"
+| extend UserID = tostring(RawEventData.UserId)
+| extend CopilotData = todynamic(RawEventData.CopilotEventData)
+| extend CopilotAccessResources = (CopilotData.AccessedResources)
+| extend CopilotAppHost = tostring(CopilotData.AppHost)
+| extend CopilotContexts = tostring(CopilotData.Contexts)
+| extend CopilotType = tostring(CopilotData.Type)
+| extend CopilotMessageIds = tostring(CopilotData.MessageIds)
+| extend CopilotThreadId = tostring(CopilotData.ThreadId)
+| extend CopilotPlugin = tostring(CopilotData.AISystemPlugin)
+| where CopilotPlugin has "BingWebSearch" and RawEventData contains "http://"
+// Copilot Web Search Url located in CopilotAccessResources
+
+// MITRE ATT&CK Mapping
+// Technique: Exfiltration Over Web Service (T1567)
