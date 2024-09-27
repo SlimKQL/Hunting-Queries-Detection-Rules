@@ -17,3 +17,5 @@ DeviceTvmSoftwareInventory
 | where DeviceName has_any (InternetFacingDevices)
 | where SoftwareName has "cups"
 
+// Mitre ATT&CK
+Technique: T1518.001 - Software Discovery: Security Software Discovery
