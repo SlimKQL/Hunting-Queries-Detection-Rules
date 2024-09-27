@@ -1,0 +1,19 @@
+// Custom Detection Rule for CUPS Installation in DefenderXDR
+
+// I’ve come up with an exciting idea! 😅 How about a custom detection rule in DefenderXDR that identifies CUPS installations and automatically isolates the device if it detects an inbound UDP packet on port 631? This could serve as an auto-defense mechanism. What do you think—could it work? 🤔
+
+
+// Custom DefenderXDR Rule for CUPS Installation Detection and Isolation
+
+let EndpointwithCUPS =
+DeviceTvmSoftwareInventory
+| where SoftwareName has "cups"
+| project DeviceName;
+DeviceNetworkEvents
+| where DeviceName has_any(EndpointwithCUPS)
+| where Protocol has "Udp" 
+| where LocalPort in (631)
+| where ActionType == "InboundConnectionAttempt"
+or ActionType == "ConnectionFailed"
+
+//
