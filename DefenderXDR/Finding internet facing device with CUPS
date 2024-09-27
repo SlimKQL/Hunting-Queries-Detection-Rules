@@ -1,0 +1,19 @@
+// Finding internet facing device with CUPS
+
+// My feed was buzzing with CUPS disclosures (CVSS 9.9) this morning, and it’s only Friday! Time to bring out my DefenderXDR Exposure Management toolkit and cast this magical KQL spell to identify all internet-connected devices with CUPS for a swift search and rescue operation.
+
+// Attacking UNIX Systems via CUPS, Part I
+// Link: https://www.evilsocket.net/2024/09/26/Attacking-UNIX-systems-via-CUPS-Part-I/
+
+// DefenderXDR Exposure Management
+
+let InternetFacingDevices =
+ExposureGraphNodes
+| where NodeLabel == 'device' or 
+(Categories has 'virtual_machine' and set_has_element(Categories, 'virtual_machine'))
+| where NodeProperties.rawData.isInternetFacing == true
+| project NodeName;
+DeviceTvmSoftwareInventory
+| where DeviceName has_any (InternetFacingDevices)
+| where SoftwareName has "cups"
+
