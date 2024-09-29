@@ -1,0 +1,16 @@
+// Measuring Sentinel WatchList Effectiveness using Behaviour Analytics
+
+// Watchlists in Microsoft Sentinel enable you to correlate data from your provided sources with events in your Sentinel environment. For instance, you can create a watchlist containing high-value assets, terminated employees, or service accounts. These watchlists can be utilized in searches, detection rules, threat hunting, and response playbooks. If Sentinel UEBA is enabled, running the following KQL will generate a dashboard chart showing the number of watchlist triggers over the past three months. Notable spikes in watchlist hits can offer valuable insights and may indicate the need for further action.
+
+BehaviorAnalytics
+| where TimeGenerated > ago(90d)
+| where ActivityType == "FailedLogOn" and EventSource == "Azure AD"
+| where DevicesInsights has "ThreatIntelIndicatorType"
+| extend ThreatType = tostring(DevicesInsights.ThreatIntelIndicatorType)
+| where ThreatType has "WatchList"
+| summarize WatchListHits=count() by bin(TimeGenerated,1d)
+
+// Mitre ATT&CK Mapping
+// Cloud Service Provider (T1078.004)
+// Brute Force (T1110)
+// Threat Intelligence (T1595)
