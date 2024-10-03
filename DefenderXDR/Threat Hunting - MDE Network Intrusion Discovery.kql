@@ -1,0 +1,17 @@
+// Threat Hunting - MDE Network Intrusion Discovery
+
+// Did you know that if your Microsoft Defender for Endpoint (MDE) endpoints have the endpoint firewall enabled, you can use its telemetry data to identify potential rogue hosts in your network? During the WannaCry outbreak, I used to deploy honeypots to detect infected machines via port 445 connectivity, allowing me to trace back to the source of infection.
+// With the MDE endpoint firewall enabled, any inbound firewall connection block is logged as ActionType == "FirewallInboundConnectionBlocked" in the DeviceEvents schema. Using this data, you can create a query to summarize the number of TargetDevices and local TargetPorts that blocked each RemoteIP. By sorting the TargetDevices and TargetPorts in descending order, you can identify the top RemoteIPs with the highest number of blocks. These RemoteIPs likely indicate port scanning activity, which warrants further investigation by your SecOps team to determine the function of the host at the RemoteIP.
+
+DeviceEvents
+| where Timestamp > ago(30d)
+| where ActionType == @"FirewallInboundConnectionBlocked"
+| summarize TargetDevice=dcount(DeviceName), TargetPort=dcount(LocalPort) by RemoteIP
+| where TargetDevice > 20
+| where TargetPort > 10
+| sort by TargetDevice, TargetPort desc 
+
+// MITRE ATT&CK MAPPING
+// T1049 - System Network Connections Discovery
+// T1071 - Application Layer Protocol
+// T1133 - External Remote Services
