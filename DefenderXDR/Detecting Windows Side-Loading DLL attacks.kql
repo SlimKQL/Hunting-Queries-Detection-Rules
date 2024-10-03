@@ -1,0 +1,18 @@
+// Detecting Windows Side-Loading DLL attacks
+// https://x.com/0gtweet/status/1827991604918890968
+// Grzegorz Tworek recently highlighted on X that the Windows command line tool licensingdiag.exe poses a potential security risk. This tool, categorized as a “living off the land” utility, can be exploited for side-loading DLL attacks. If a threat actor gains local administrative rights, they can modify the registry under HKLM to side-load DLLs using licensingdiag.exe. To address this, I have developed a KQL detection rule to identify such side-loading DLL attacks. You can find this rule in my GitHub repository.
+
+let DLLLoaded =
+DeviceEvents
+| where Timestamp > ago(1h)
+| where ActionType == @"DriverLoad"
+| where FileName endswith ".dll"
+| distinct FileName;
+DeviceRegistryEvents
+| where ActionType == @"RegistryKeyCreated" or ActionType == @"RegistryValueSet"
+| where RegistryKey has_any(DLLLoaded)
+
+// MITRE ATT&CK MAPPING
+// Technique: T1547.006 - Boot or Logon Autostart Execution: Kernel Modules and Extensions
+// Technique: T1112 - Modify Registry
+// Technique: T1055.001 - Process Injection: Dynamic-link Library Injection
