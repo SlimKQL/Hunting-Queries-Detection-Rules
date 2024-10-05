@@ -1,0 +1,31 @@
+// Threat Hunting DNS Tunneling 
+
+// DNS tunneling is a method used by threat actors to encode non-DNS traffic within DNS packets. This technique allows data to bypass traditional network firewalls, creating covert channels for data exfiltration and infiltration. By centralizing your enterprise DNS logging and utilizing Microsoft Sentinel SIEM, you can leverage my Sentinel KQL (DnsEvents Schema) to hunt for DNS tunneling activities. Additionally, I’ve provided a DefenderXDR KQL for Microsoft Defender for Endpoint, which uses the DeviceEvents schema for DNS tunneling threat hunting. For further context, I’m sharing an article by Palo Alto Networks Unit42 that details a DNS tunneling campaign using DNS queries for tracking and data exfiltration, highlighting the importance of the threat hunting KQL I’ve shared.
+
+// DNS tunneling use either A records or TXT records for an infected host to receive data
+// To exfiltrate data to a C2 server, the DNS queries for infected host will spike with long queried hostname
+
+// Query 1 - Locate suspicious DNS tunneling host (ClientIP)
+let DNSHostnameLengthCheck = 40;
+DnsEvents
+| where TimeGenerated > ago(90d) 
+| where SubType == "LookupQuery"
+| where QueryType=="A" or QueryType=="TXT"
+| where strlen(Name) > DNSHostnameLengthCheck
+| summarize DNSQueriedHost=dcount(Name), TotalQueryType=dcount(QueryType) by ClientIP
+| sort by TotalQueryType, DNSQueriedHost desc
+
+// Query 2 - Analyze suspected DNS tunneling top host from Query 1 by examining the DNS query in detail
+// Look for sample generated DNS request like below:
+// 0018786966.96428380.04.5E43287B03114C04A64F68C0C23E44F4.n.156.887.empty.6_1._t_i.3000.explorer_exe.156.rc2.a4h9uploading[.]com
+
+// let DNSHostnameLengthCheck = 40;
+// DnsEvents
+// | where TimeGenerated > ago(90d) 
+// | where SubType == "LookupQuery"
+// | where ClientIP == "10.10.10.10" // Replace top ClientIP from Query 1
+// | where strlen(Name) > DNSHostnameLengthCheck
+// | distinct Name
+
+// MITRE ATT&CK MAPPING
+// Application Layer Protocol: DNS (T1071.004)
