@@ -19,13 +19,13 @@ DnsEvents
 // Look for sample generated DNS request like below:
 // 0018786966.96428380.04.5E43287B03114C04A64F68C0C23E44F4.n.156.887.empty.6_1._t_i.3000.explorer_exe.156.rc2.a4h9uploading[.]com
 
-// let DNSHostnameLengthCheck = 40;
-// DnsEvents
-// | where TimeGenerated > ago(90d) 
-// | where SubType == "LookupQuery"
-// | where ClientIP == "10.10.10.10" // Replace top ClientIP from Query 1
-// | where strlen(Name) > DNSHostnameLengthCheck
-// | distinct Name
+let DNSHostnameLengthCheck = 40;
+DnsEvents
+| where TimeGenerated > ago(90d) 
+| where SubType == "LookupQuery"
+| where ClientIP == "10.10.10.10" // Replace top ClientIP from Query 1
+| where strlen(Name) > DNSHostnameLengthCheck
+| distinct Name
 
 // MITRE ATT&CK MAPPING
 // Application Layer Protocol: DNS (T1071.004)
