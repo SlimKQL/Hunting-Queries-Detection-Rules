@@ -1,0 +1,17 @@
+// DefenderXDR - Threat Hunting DNS Tunneling
+
+// DNS tunneling use either A records or TXT records for an infected host to receive data
+// To exfiltrate data to a C2 server, the DNS queries for infected host will spike with long queried hostname
+
+let DNSHostnameLengthCheck = 40;
+DeviceEvents
+| where Timestamp > ago(30d)
+| where ActionType == @"DnsQueryResponse"
+| extend DNSHostQuery = tostring(parse_json(AdditionalFields).DnsQueryString)
+| where strlen(DNSHostQuery) > DNSHostnameLengthCheck
+| summarize DNSQueriedHost=dcount(DNSHostQuery) by DeviceName
+| sort by DNSQueriedHost desc
+
+// Query 2 - Analyze suspected DNS tunneling top host
+// Look for sample generated DNS request like below:
+// 0018786966.96428380.04.5E43287B03114C04A64F68C0C23E44F4.n.156.887.empty.6_1._t_i.3000.explorer_exe.156.rc2.a4h9uploading[.]com
