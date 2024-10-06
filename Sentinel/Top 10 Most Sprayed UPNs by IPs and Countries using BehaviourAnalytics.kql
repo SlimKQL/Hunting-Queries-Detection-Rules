@@ -1,0 +1,15 @@
+// Top 10 Most Sprayed UPNs by IPs and Countries using BehaviourAnalytics
+
+// In the past week, my Entra tenant password spray attacks have spiked, originating from IPs marked as “Bruteforce”, “Botnet”, and “Watchlist” in BehaviourAnalytics. This observation can be easily seen from the Entra - Overview blade - Monitoring (Sign-ins) graph. Out of curiosity, I constructed the below KQL query to examine the top 10 most attacked UPNs, and the results for these top 10 UPN attacks are always consistent from approximately 96 unique IP addresses from around 66 countries. 💡 Now, associating these IPs with a new named location, create a CA to enforce grant access with conditions: Require Microsoft Entra hybrid joined device, Require multifactor authentication, and Require authentication strength (passwordless MFA) to mitigate the sign-in risk and ensure business as usual for Entra users’ login while lowering the risk.
+
+BehaviorAnalytics
+| where TimeGenerated > ago(7d)
+| where ActivityType == "FailedLogOn" and EventSource == "Azure AD"
+| where DevicesInsights has "ThreatIntelIndicatorType"
+| extend ThreatType = tostring(DevicesInsights.ThreatIntelIndicatorType)
+| where InvestigationPriority > 0
+| where ThreatType has "Bruteforce" or ThreatType has "Botnet" or ThreatType has "Watchlist"
+| summarize NumofIPAttack=dcount(SourceIPAddress), NumofCountryAttack=dcount(SourceIPLocation) by UserPrincipalName
+| top 10 by NumofIPAttack desc
+
+//The MITRE ATT&CK technique for password spray attacks is T1110.0031
