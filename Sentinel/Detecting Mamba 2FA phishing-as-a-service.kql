@@ -1,0 +1,25 @@
+// Detecting Mamba 2FA phishing-as-a-service
+
+// Mamba 2FA is an adversary-in-the-middle (AiTM) phishing kit sold as phishing-as-a-service (PhaaS) and was discovered by Sekoia's Threat Detection & Research (TDR) team in late May 2024. Mamba 2FA mimics Microsoft 365 login pages and uses HTML attachments to trick users into entering their credentials. Once the credentials are captured, the attackers can bypass two-factor authentication (2FA) and gain access to the victim's accounts.
+
+// The article also details the architecture and capabilities of Mamba 2FA, including its use of Base64-encoded parameters, Socket.IO protocol, and relay servers to manage the stolen data. The phishing pages are designed to be highly convincing, making it difficult for users to identify them as fake.
+
+// Query 1 - User accessing from Mamba 2FA proxy IPs
+
+let IPv4IOC = dynamic(['23.26.35.67','23.26.206.99','45.86.54.206','45.9.153.102','45.61.130.11','45.61.169.4','172.86.64.212','172.86.96.84','172.86.96.128','172.86.97.78', '172.86.97.165','172.86.104.33','172.86.104.64','172.86.104.178','172.86.105.59','172.86.105.72','172.86.106.94']);
+let IPv6IOC = dynamic(['2607:5500:3000:1cab::2','2607:5500:3000:7bc::2','2607:5500:3000:312::2','2607:5500:3000:7a5::2','2607:5500:3000:a8c::2','2607:5500:3000:fea::2','2607:5500:3000:b16::2']);
+SigninLogs
+| where TimeGenerated > ago(90d)
+| where IPAddress has_any (IPv4IOC) or IPAddress has_any (IPv6IOC)
+
+// Query 2 - User endpoint communicating with Mamba 2FA
+
+let DomainsIOC = dynamic(['ccokies1cakes.com','ccokies2mangoes.com','ccokies3tomatoes.com','m1tis-apicookies.com','m2fes-apicookies.com','m3mas-apicookies.com','winss0conect.click','winstnet80nss.cfd','tenetur.top','tenetur.xyz','hypexfinancial.com','voltampereactive.com','planchereserver.com','thirdmandomavis.com','fourthmanservice.com','sithchibb.com','copelustration.xyz','copefood.xyz','seven-oranges.com','onemanforest.com','twomancake.com','threemanshop.com','fourmanchurch.com','fivemanchool.com','sixmanteams.com','sevenmanjungle.com','88mansession.com','fiveradio-newbam.com','nine9manforest.com','10decadesmen.com','11cyclesforest.com','1messisnfarm.com','2moniunesson.com','3alphabetjay.com','4sessionmoon.com','5poleanalhy.com','6treesmangle.com','7motionmansa.com','8boomandool.com','9cantronnfit.com','10trioneyue8ss.com','11beamgools.com']);
+DeviceNetworkEvents
+| where TimeGenerated > ago(90d)
+| where ActionType == "HttpConnectionInspected"
+| extend WWWHost = AdditionalFields.host
+| where WWWHost has_any (DomainsIOC)
+
+// MITRE ATT&CK
+// T1557
