@@ -1,0 +1,19 @@
+// Detecting New Copilot Extensions
+// https://www.linkedin.com/posts/0x534c_cybersecurity-generativeai-m365-activity-7250789113249837056-D6rZ/
+
+// I refuse to accept Message Center MC908119, which states that “Admins will lose tenant-level control over who can use Copilot agents” 😤. To counter this, I’ve developed a custom KQL detection in DefenderXDR. This detection identifies any newly installed, non-whitelisted Copilot extensions and alerts the M365 Admin for review. The M365 Admin can then block these extensions in the Integrated Apps section of the admin portal, reclaiming some control.💪
+
+// Added your whitelisted extensions or plugins to WLExtensions
+let WLExtensions = dynamic(["BingWebSearch"]);
+CloudAppEvents
+| where Timestamp > ago(1h)
+| where ActionType == @"CopilotInteraction"
+| extend UserID = tostring(RawEventData.UserId)
+| extend CopilotData = todynamic(RawEventData.CopilotEventData)
+| extend CopilotPlugin = tostring(CopilotData.AISystemPlugin[0].Id)
+| where isnotempty(CopilotPlugin)
+| where not (CopilotPlugin has_any (WLExtensions))
+| project Timestamp, AccountObjectId, UserID, CopilotPlugin, ReportId
+
+// MITRE ATT&CK
+// T1116 Browser Extensions
