@@ -1,0 +1,21 @@
+// Chrome extension stealth persistence detection
+
+// Published article from @Syntax-Err0r at https://github.com/Syntax-Err0r
+// https://syntax-err0r.github.io/Silently_Install_Chrome_Extension.html
+
+// I’ve just come across an intriguing method to silently install Chrome extensions for persistence, avoiding common IOCs. This technique doesn’t require command line parameters or registry edits, making it stealthier than traditional methods. To help detect this type of persistence, I’ve also crafted a KQL query. Stay ahead of the curve and ensure your defenses are up to date!
+
+let EPNewChromeConfig =
+DeviceFileEvents
+| where ActionType == "FileCreated"
+| where FileName has "Secure Preferences" and FolderPath has "Chrome"
+| distinct DeviceName;
+DeviceFileEvents
+| where ActionType == "FileCreated" and FileName endswith ".crx"
+| where DeviceName has_any(EPNewChromeConfig)
+| summarize arg_max(Timestamp, *) by SHA1
+| where isnotempty(SHA1)
+| invoke FileProfile(SHA1,10000)
+| where GlobalPrevalence <= 100
+
+// The MITRE ATT&CK technique for malicious Chrome extensions is categorized under T1176: Browser Extensions
