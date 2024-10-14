@@ -1,0 +1,13 @@
+// 𝗧𝗵𝗲 𝗛𝘂𝗻𝘁 𝗳𝗼𝗿 𝗕𝗹𝗼𝗯 𝗣𝗵𝗶𝘀𝗵𝗶𝗻𝗴 𝗠𝗮𝗶𝗹 𝗗𝗼𝗺𝗮𝗶𝗻
+
+// In some phishing kit, the attacker generated the landing page in a blob to remain stealthy and all of these emails usually passes the SPF/DKIM/DMNARC/CompAuth. However the blob URL has a URL detonation reputation. Using the below KQL to reverse find all the malicious mail domains that are sending blob phishing URLs and block these mail domains at the Tenant Block List.
+
+EmailUrlInfo
+| where TimeGenerated > ago(90d)
+| where Url contains "web.core.windows.net/"
+| join EmailEvents on NetworkMessageId
+| where EmailDirection == "Inbound"
+| where DeliveryAction == "Blocked"
+| summarize Count=count() by SenderFromDomain
+| sort by Count desc 
+
