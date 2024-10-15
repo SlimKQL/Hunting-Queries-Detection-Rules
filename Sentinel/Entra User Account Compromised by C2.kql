@@ -1,0 +1,13 @@
+// Entra User Account Compromised by C2
+
+// A high precision detection using Sentinel Behaviour Analytics threat intelligence information to gathered successful Entra account login from C2 IP address from a unidentified source device. You should link this analytic rule trigger to a logic app playbook to mark this account as compromised.
+
+BehaviorAnalytics
+| where TimeGenerated > ago(1h)
+| where DevicesInsights.ThreatIntelIndicatorType == "C2"
+| where ActionType == "Sign-in"
+| where isempty(SourceDevice)
+| where ActivityInsights.CountryUncommonlyConnectedFromAmongPeers == "True"
+
+// MITRE ATT&CK
+// T1078.003 - Valid Accounts: Cloud Accounts
