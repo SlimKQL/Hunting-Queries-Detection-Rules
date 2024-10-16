@@ -9,9 +9,6 @@
 // M365 Copilot Extensions Threat Monitoring (Sentinel)
 // https://www.linkedin.com/posts/0x534c_cybersecurity-generativeai-copilot-activity-7251091656249090048-GfSg/
 
-// Malicious Domain Feed
-// https://github.com/romainmarcoux/malicious-domains
-
 CloudAppEvents
 | where TimeGenerated > ago(1h)
 | where ActionType == @"CopilotInteraction"
