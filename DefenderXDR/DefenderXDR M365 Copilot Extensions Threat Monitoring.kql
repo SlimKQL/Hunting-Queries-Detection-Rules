@@ -1,0 +1,23 @@
+// DefenderXDR M365 Copilot Extensions Threat Monitoring
+
+// This morning, I posted on LinkedIn about the ConfusedPilot attack vector and shared a Sentinel analytic rule to monitor Copilot extensions’ external data access for potential malicious data poisoning. A community member mentioned they don’t have Sentinel and asked if this can be done in DefenderXDR. The short answer is yes. You just need to access an external data feed of malicious domains. In my KQL code example, I used Romain Marcoux’s feed of malicious domains, but you can replace the URL with your preferred external data feed.
+
+let MaliciousDomainTable=externaldata(RawData:string)[h'https://raw.githubusercontent.com/romainmarcoux/malicious-domains/main/full-domains-aa.txt']
+| parse RawData with MaliciousDomain:string;
+CloudAppEvents
+| where Timestamp > ago(1h)
+| where ActionType == @"CopilotInteraction"
+| extend UserID = tostring(RawEventData.UserId)
+| extend CopilotData = todynamic(RawEventData.CopilotEventData)
+| extend CopilotPlugin = tostring(CopilotData.AISystemPlugin[0].Id)
+| where isnotempty(CopilotPlugin)
+| extend PluginAccessURL = tostring(CopilotData.AccessedResources)
+| mv-expand todynamic(PluginAccessURL)
+| where PluginAccessURL has "SiteUrl"
+| extend Url = tostring(PluginAccessURL.SiteUrl)
+| extend Domain = tostring(parse_url(Url).Host)
+| extend Action = tostring(PluginAccessURL.Action)
+| join MaliciousDomainTable on $left.Domain == $right.MaliciousDomain
+
+// MITRE ATT&CK
+// T1116 Browser Extensions
