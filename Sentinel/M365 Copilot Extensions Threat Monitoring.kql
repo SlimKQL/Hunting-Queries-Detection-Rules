@@ -3,6 +3,15 @@
 // https://www.linkedin.com/posts/0x534c_cybersecurity-generativeai-m365-activity-7250789113249837056-D6rZ/
 // This just keeps getting better and better! 😂 I absolutely refuse to accept Message Center MC908119, which claims that ‘Admins will lose tenant-level control over who can use Copilot agents.’ 😤 As a countermeasure, I’ve developed a Sentinel analytics rule that monitors all external URLs accessed by M365 Copilot extensions against my Threat Intelligence database for potential malicious activities. This rule is linked with a logic playbook automation to mark the user as compromised and isolate their access. 💯😘
 
+// ConfusedPilot Attack Vector:
+// https://www.linkedin.com/posts/0x534c_confusedpilot-activity-7252113628470943744-BgxN/
+
+// M365 Copilot Extensions Threat Monitoring (Sentinel)
+// https://www.linkedin.com/posts/0x534c_cybersecurity-generativeai-copilot-activity-7251091656249090048-GfSg/
+
+// Malicious Domain Feed
+// https://github.com/romainmarcoux/malicious-domains
+
 CloudAppEvents
 | where TimeGenerated > ago(1h)
 | where ActionType == @"CopilotInteraction"
