@@ -1,0 +1,22 @@
+// Detecting Port Scanning on Internet-Facing Devices
+
+// Are you aware of when your endpoints or servers are exposed to the internet? Whether intentional or accidental, it’s crucial to have the capability to detect port scans or attacks and take necessary defensive actions. I’ve developed a custom DefenderXDR detection KQL that provides this visibility for your fleet of MDE devices.
+// When this custom detection is triggered, you should verify if the device firewall is enabled, check for any critical or high vulnerabilities that could be exploited, and identify the hostile country performing the scan (e.g., Russia - something might be off!). This is an enhanced version of the KQL function InboundExternalNetworkEvents(X), where X is the DeviceID.
+
+let InternetFacingDevice=
+DeviceInfo
+| where Timestamp > ago(1h)
+| where IsInternetFacing
+| summarize arg_max(Timestamp, *) by DeviceId
+| project DeviceId;
+DeviceNetworkEvents
+| where DeviceId has_any(InternetFacingDevice)
+| where ActionType == @"InboundConnectionAttempt"
+| where not(ipv4_is_private(RemoteIP))
+| extend IPLocation = geo_info_from_ip_address(RemoteIP)
+| summarize Connections=count() by RemoteIP, tostring(IPLocation.country)
+| sort by Connections desc
+| where Connections >= 3
+
+// MITRE ATT&CK
+// T1049: System Network Connections Discovery
