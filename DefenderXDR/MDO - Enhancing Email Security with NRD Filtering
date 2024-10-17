@@ -1,0 +1,15 @@
+// DefenderXDR Custom Detection Rule
+// Newly Registered Domains (NRD) A daily updated list of newly registered domains from the past 14 and 30 days
+// All inbound email URL domains scanned against NRD, if found move to junk first wait for analyst further triage
+
+let NRDTable=externaldata(RawData:string)
+[h'https://raw.githubusercontent.com/xRuffKez/NRD/refs/heads/main/lists/30-day_phishing/domains-only/nrd-phishing-30day.txt']
+| parse RawData with NRD:string;
+EmailUrlInfo
+| where Timestamp > ago(1h)
+| join EmailEvents on NetworkMessageId
+| where EmailDirection == "Inbound" and DeliveryAction != "Blocked"
+| join NRDTable on $left.UrlDomain == $right.NRD
+
+// MITRE ATT&CK Technique
+// Acquire Infrastructure: Domains technique, specifically T1583.0011
