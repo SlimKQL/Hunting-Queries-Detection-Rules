@@ -1,0 +1,12 @@
+// Hunting VEILDrive C2
+
+// The analysis of ROMServer.exe using SHA256 FileProfile() revealed that the binary was first detected on September 30 and last observed on October 17, affecting 7 MDE organizations globally. According to DefendeXDR data, 22 out of 72 security vendors (approximately 30%) have identified this binary. If you are using Sentinel, the following Hunting KQL query can help determine if your organization’s endpoints are impacted by VEILDrive.
+
+DeviceNetworkEvents
+| where TimeGenerated > ago(90d)  // 30 Sep First Seen and Oct 17 Last Seen
+| where ActionType == @"HttpConnectionInspected"
+| extend Host = parse_json(AdditionalFields)["host"]
+| extend Direction = parse_json(AdditionalFields)["direction"]
+| where Direction == "Out" and Host == "safeshift390-my.sharepoint.com"
+
+// MITRE ATT&CK technique T1071.001: Application Layer Protocol: Web Protocols
