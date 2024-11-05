@@ -1,5 +1,5 @@
 // Hunting VEILDrive C2
-
+// https://www.hunters.security/en/blog/veildrive-microsoft-services-malware-c2
 // The analysis of ROMServer.exe using SHA256 FileProfile() revealed that the binary was first detected on September 30 and last observed on October 17, affecting 7 MDE organizations globally. According to DefendeXDR data, 22 out of 72 security vendors (approximately 30%) have identified this binary. If you are using Sentinel, the following Hunting KQL query can help determine if your organization’s endpoints are impacted by VEILDrive.
 
 DeviceNetworkEvents
