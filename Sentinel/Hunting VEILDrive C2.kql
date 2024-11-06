@@ -7,6 +7,6 @@ DeviceNetworkEvents
 | where ActionType == @"HttpConnectionInspected"
 | extend Host = parse_json(AdditionalFields)["host"]
 | extend Direction = parse_json(AdditionalFields)["direction"]
-| where Direction == "Out" and Host == "safeshift390-my.sharepoint.com"
+| where Direction == "Out" and Host has "safeshift390-my.sharepoint.com"
 
 // MITRE ATT&CK technique T1071.001: Application Layer Protocol: Web Protocols
