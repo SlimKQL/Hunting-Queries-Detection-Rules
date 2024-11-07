@@ -1,0 +1,16 @@
+// Monitor Abusing Intune Permissions for Lateral Movement 🔛
+// https://cloud.google.com/blog/topics/threat-intelligence/abusing-intune-permissions-entra-id-environments
+// The Mandiant blog discusses how attackers can exploit Intune permissions to move laterally and escalate privileges within Microsoft Entra ID environments. The Mandiant Red Team demonstrated this by abusing the DeviceManagementConfiguration.ReadWrite.All permission granted to Entra ID service principals. This permission allows the creation and modification of Intune management scripts, which can run with administrative privileges on devices. The blog also provides recommendations for preventing and detecting such attacks.
+
+AuditLogs
+| where TimeGenerated > ago(1h)
+| where OperationName has "Add app role assignment to service principal"
+| extend InitiatedByUPN = parse_json(tostring(InitiatedBy.user)).userPrincipalName
+| extend AppRole = parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].newValue))
+| extend ServicePrincipalName = parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[6].newValue))
+| extend ServicePrincipalObjectID = parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[5].newValue))
+| where AppRole has "DeviceManagementConfiguration.ReadWrite.All" or AppRole has "RoleManagement.ReadWrite.Directory" or AppRole has "AppRoleAssignment.ReadWrite.All" or AppRole has "Application.ReadWrite.All"
+| project TimeGenerated, OperationName, InitiatedByUPN, AppRole, ServicePrincipalName, ServicePrincipalObjectID
+
+// MITRE ATT&CK Technique
+// T1098.003 - Account Manipulation: Additional Cloud Roles
