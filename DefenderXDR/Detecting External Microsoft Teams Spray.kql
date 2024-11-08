@@ -1,0 +1,20 @@
+// Detecting External Microsoft Teams Spray
+
+// In late October, the ransomware group Black Basta introduced a new social engineering technique. Initially, they bombarded users with email spam, leading them to create help-desk tickets. The attackers then impersonated help-desk staff to gain access. Recently, they have shifted to using Microsoft Teams chat messages and malicious QR codes to communicate with targets. These tactics are designed to convince users to download remote monitoring tools, ultimately resulting in ransomware deployment. This campaign is particularly notable for its intensity and high volume of activity, posing a significant threat to organizations that do not restrict Teams communications with external entities.
+
+// The KQL code below helps defenders detect anomalous external inbound Teams chats to your Entra tenant, allowing them to take immediate action to block the external tenant if necessary. The KQL code can be downloaded from my SlimKQL GitHub Repository, which is featured on my LinkedIn profile. (Search for “Detecting External Microsoft Teams Spray”)
+
+// External Tenant Teams Spray Threshold
+let SprayCounter = 3;
+
+CloudAppEvents
+| where Timestamp > ago(1h)
+| where Application == "Microsoft Teams"
+| where ActionType == "ChatCreated"
+| where tostring(RawEventData.CommunicationType)=="OneOnOne" // Inbound 1:1 Chat
+| where AccountId has "@"                                    // External Tenant Teams User
+| extend ExtUserDomain = tostring(split(AccountId, '@')[1])
+| where UncommonForUser != "[]"                              // Behaviour Analytics to improve detection accuracy
+| summarize InboundChat=count() by ExtUserDomain
+| where InboundChat > SprayCounter or ExtUserDomain contains ".onmicrosoft.com"
+
