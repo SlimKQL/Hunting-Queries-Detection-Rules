@@ -1,0 +1,19 @@
+// Detecting FIDO2 Passkey Abuse🔥
+
+// Max Rozendaal from Secura has penned an insightful blog titled “Abusing FIDO2 Passkeys to Take Over Global Administrators in Entra ID.” In this post, he delves into a critical attack vector, demonstrating how Microsoft’s Graph API for provisioning FIDO2 passkeys could be exploited to gain control over accounts with high-level privileges. (Blog link will be shared in the comments.)
+// To address this issue, I’ve developed a Sentinel Graph API KQL threat detection script inspired by Max’s findings. You can download the KQL code from my SlimKQL GitHub Repository, which is highlighted on my LinkedIn profile. Just search for “Detecting FIDO2 Passkey Abuse.”
+
+let AbusedRoleMonitor = dynamic(["Privileged Role Administrator", "Global Administrator"]);
+let FIDOAccountObjID =
+MicrosoftGraphActivityLogs
+| where RequestUri has "/authentication/fido2Methods/creationOptions"
+| where RequestMethod == "GET" and ResponseStatusCode == 200
+| parse RequestUri with "https://graph.microsoft.com/beta/users/" 
+UserObjectID "/authentication/fido2Methods/creationOptions"
+| distinct UserObjectID;
+IdentityInfo
+| where AccountObjectId has_any(FIDOAccountObjID)
+| summarize arg_max(TimeGenerated, *) by AccountObjectId
+| where AssignedRoles has_any(AbusedRoleMonitor)
+
+//  T1111: Multi-Factor Authentication Interception
