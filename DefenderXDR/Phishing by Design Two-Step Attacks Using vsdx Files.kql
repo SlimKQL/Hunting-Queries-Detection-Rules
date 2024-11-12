@@ -1,0 +1,26 @@
+// Phishing by Design: Two-Step Attacks Using .vsdx Files
+
+// A recent blog from Perception Point details a sophisticated phishing attack using Microsoft Visio files hosted on SharePoint. Attackers embed malicious URLs in these files, which are sent via compromised email accounts with attached .eml files. Victims are tricked into clicking these links, leading to fake Microsoft login pages designed to steal credentials. This method leverages trusted platforms to evade detection, highlighting the need for advanced security measures. The Perception Point blog link has been shared in the comment section for awareness.
+// I have crafted a precise KQL using Microsoft Defender for Office 365 and Endpoint to detect such abuse scenarios, helping defenders mitigate the risk of these two-step attacks that leverage trusted platforms to evade detection.  The KQL code can be downloaded from my SlimKQL GitHub Repository, which is featured on my LinkedIn profile. (Search for “Phishing by Design Two-Step Attacks Using vsdx Files”)
+
+let WhiteListSharepointDomain = dynamic(["XXX.sharepoint.com"]);
+let EMLSharepointDomain =
+EmailAttachmentInfo 
+| where FileName endswith ".eml" or FileName endswith ".msg"
+| join EmailEvents on NetworkMessageId
+| where EmailDirection == "Inbound"
+| join EmailUrlInfo on NetworkMessageId
+| where UrlLocation == "Attachment"
+| extend URLDomain = tostring(parse_url(Url).Host)
+| where URLDomain has ".sharepoint.com"
+| where not (URLDomain has_any (WhiteListSharepointDomain))
+| distinct URLDomain;
+//Consolidated all external sharepoint domains from all .eml .msg attachment
+DeviceNetworkEvents
+| where ActionType == @"HttpConnectionInspected"
+| extend Host = parse_json(AdditionalFields)["host"]
+| extend Direction = parse_json(AdditionalFields)["direction"]
+| where Direction == "Out" and Host has_any(EMLSharepointDomain)
+// MDE Endpoint click on external sharepoint links that was embedded in .eml .msg attachment
+
+// T1566.001 - Phishing: Spearphishing Attachment:
