@@ -1,0 +1,15 @@
+// Monitoring Cross-Tenant Abuse by Threat Actors
+
+// Lina Lau’s blog post on Xintra.org provides an insightful look into how attackers can misuse Microsoft Entra ID’s cross-tenant synchronization feature to move laterally between tenants with P1 and P2 licenses. By exploiting this feature, attackers can create new accounts in a victim’s tenant, enabling them to persist or move laterally even if their initial access is revoked. (The blog post link will be shared in the comment section.)
+
+// Defenders with P1 or P2 licenses should use the Sentinel KQL provided below to monitor for any changes to their Entra Cross-Tenant settings, helping to detect potential abuse of the cross-tenant synchronization. The KQL code can be downloaded from my SlimKQL GitHub Repository, which is featured on my LinkedIn profile (search for “Monitoring Cross-Tenant Abuse by Threat Actors”).
+
+// https://www.xintra.org/blog/lateral-movement-entraid-cross-tenant-synchronization
+
+AuditLogs
+| where TimeGenerated > ago(1h)
+| where Category == "CrossTenantAccessSettings"
+| where OperationName == "Update the company default cross-tenant access setting" or 
+OperationName == "Add a partner to cross-tenant access setting" or
+OperationName == "Update a partner cross-tenant access setting"
+
