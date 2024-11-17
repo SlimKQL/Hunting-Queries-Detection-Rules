@@ -1,0 +1,19 @@
+// Unmasking New Malware Threats: Innovative Detection Techniques Against ZIP Concatenation Attacks
+// https://perception-point.io/blog/evasive-concatenated-zip-trojan-targets-windows-users/
+// A new malware technique using ZIP file concatenation has been identified, targeting Windows users. Attackers exploit the differences in how various ZIP readers process these concatenated files, allowing them to hide malicious payloads and evade detection by security solutions. This method has been observed in recent phishing attacks, underscoring the need for more advanced detection tools. Credit to Perception Point for uncovering this critical information. (Blog to be shared in the comment section)
+// I developed a custom KQL detection to identify such potential abuse by gathering all ZIP file names received from inbound emails and using MDE DeviceFileEvents to check for ZIP file decompression that creates new additional .exe files, which might evade detection at the mail gateway level. Devices can be isolated for further action if required.
+
+let EmailZipFile =
+EmailEvents
+| where Timestamp > ago(30d)
+| join EmailAttachmentInfo on NetworkMessageId
+| where EmailDirection == "Inbound" and AttachmentCount == 1
+| where FileType == @"rar" or FileType == @"zip"
+| where DeliveryAction == "Delivered"
+| distinct FileName;
+let UncompressTools = dynamic(["7z.exe", "7za.exe", "7zfm.exe", "winzip64.exe", "winrar.exe", "unzip.exe"]);
+DeviceFileEvents
+| where ActionType == @"FileCreated"
+| where InitiatingProcessFileName has_any(UncompressTools)
+| where InitiatingProcessCommandLine has_any(EmailZipFile)
+| where FileName endswith ".exe"
