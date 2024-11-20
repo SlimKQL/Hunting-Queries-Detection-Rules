@@ -1,0 +1,8 @@
+// ClickFix social engineering attack detection
+// https://www.proofpoint.com/us/blog/threat-insight/security-brief-clickfix-social-engineering-technique-floods-threat-landscape
+// Threat actors are increasingly using 'ClickFix' social engineering attacks to deploy malware. Proofpoint's latest analysis reveals multiple campaigns since March 2024, targeting popular software like Microsoft Word and Google Chrome. Malware such as AsyncRAT, Danabot, DarkGate, Lumma Stealer, and NetSupport have been identified.
+
+DeviceEvents
+| where (ActionType == "GetClipboardData" and InitiatingProcessFileName has "powershell.exe") or
+(InitiatingProcessCommandLine has "powershell" and InitiatingProcessCommandLine has "-enc")
+
