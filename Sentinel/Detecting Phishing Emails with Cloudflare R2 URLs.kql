@@ -1,0 +1,31 @@
+// Detecting Phishing Emails with Cloudflare R2 URLs ☁️🧨
+// https://medium.com/trac-labs/aitm-phishing-hold-the-gabagool-analyzing-the-gabagool-phishing-kit-531f5bbaf0e4
+// The TRAC Labs team has uncovered a phishing campaign called "Gabagool" that targets corporate and government employees. This campaign leverages Cloudflare R2 buckets to host malicious content and uses compromised email accounts to distribute phishing emails. These emails contain links that lead to credential harvesting pages. The phishing kit employs various evasion techniques, including bot detection and obfuscated JavaScript. (TRAC Labs Case Study link can be found at the comment section)
+
+//I have created two threat hunting KQLs to identify the following:
+
+// Micrososft Defender for Office KQL - Malicious Cloudflare R2 URLs not blocked
+
+let MaliciousDomainTable=externaldata(RawData:string)
+[h'https://raw.githubusercontent.com/romainmarcoux/malicious-domains/main/full-domains-aa.txt']
+| parse RawData with MaliciousDomain:string;
+EmailUrlInfo
+| where TimeGenerated > ago(90d)
+| where Url matches regex "pub-[0-9a-fA-F]{32}\\.r2\\.dev\\/[a-zA-Z0-9_-]+\\.html"
+| join MaliciousDomainTable on $left.UrlDomain == $right.MaliciousDomain
+| join EmailEvents on NetworkMessageId
+| where DeliveryAction != "Blocked"
+
+// Microsoft Defender for Endpoint KQL - Malicious Cloudflare R2 Outbound Connection
+
+let MaliciousDomainTable=externaldata(RawData:string)
+[h'https://raw.githubusercontent.com/romainmarcoux/malicious-domains/main/full-domains-aa.txt']
+| parse RawData with MaliciousDomain:string;
+DeviceNetworkEvents
+| where TimeGenerated > ago(90d)
+| where ActionType == @"HttpConnectionInspected"
+| extend Host = parse_json(AdditionalFields)["host"]
+| parse Host with R2Host ":" Port
+| extend Direction = parse_json(AdditionalFields)["direction"]
+| where Direction == "Out" and Host has ".r2.dev"
+| join MaliciousDomainTable on $left.R2Host == $right.MaliciousDomain
