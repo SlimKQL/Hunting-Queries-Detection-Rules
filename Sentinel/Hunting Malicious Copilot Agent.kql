@@ -1,0 +1,20 @@
+// Hunting Malicious Copilot Agent
+
+// The "Copilot Agent" was a highlight at the recent Microsoft Ignite event. This AI-powered assistant is designed to help with a variety of tasks, such as answering questions, providing information, assisting with productivity tasks, and engaging in meaningful conversations.
+
+// Consider a scenario where a user account is compromised, and a threat actor uses this account to create a Copilot Agent on a highly sensitive SharePoint site that the compromised user has access to. The threat actor could then exfiltrate data by accessing the private link created by the Copilot Agent, slowly extracting information as needed by providing the relevant prompts.
+
+// To address such threats, I have created a KQL detection using Sentinel Behaviour Analytics and Power Platform solutions to monitor any potential malicious Copilot Agent creation.
+
+let HighRiskUsers =
+BehaviorAnalytics
+| where TimeGenerated > ago(1h)
+| where InvestigationPriority > 0
+| where UsersInsights.BlastRadius == "High"
+| where ActivityType == "LogOn"
+| where ActionType == "ResourceAccess"
+| distinct UserPrincipalName;
+PowerPlatformAdminActivity
+| where EventOriginalType in ("BotCreate", "BotComponentCreate", "BotUpdateOperation-BotPublish")
+| where ActorName has_any(HighRiskUsers)
+
