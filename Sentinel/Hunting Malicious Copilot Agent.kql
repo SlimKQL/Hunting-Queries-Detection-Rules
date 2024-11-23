@@ -18,3 +18,7 @@ PowerPlatformAdminActivity
 | where EventOriginalType in ("BotCreate", "BotComponentCreate", "BotUpdateOperation-BotPublish")
 | where ActorName has_any(HighRiskUsers)
 
+
+
+
+// MITRE ATT&CK
