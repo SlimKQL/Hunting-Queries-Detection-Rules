@@ -8,7 +8,6 @@
 
 let HighRiskUsers =
 BehaviorAnalytics
-| where TimeGenerated > ago(1h)
 | where InvestigationPriority > 0
 | where UsersInsights.BlastRadius == "High"
 | where ActivityType == "LogOn"
