@@ -1,0 +1,9 @@
+// CloudApp Suspicious Copilot Agent Detection
+
+CloudAppEvents
+| where Timestamp > ago(1h)
+| where Application == @"Microsoft 365"
+| where ActionType in ("BotCreate", "BotUpdateOperation-BotPublish")
+| where UncommonForUser has "ISP" or UncommonForUser has "CountryCode"
+
+// MITRE ATT&CK
