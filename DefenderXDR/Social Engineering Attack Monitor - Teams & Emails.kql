@@ -1,0 +1,29 @@
+// Social Engineering Attack Monitor - Teams & Emails
+
+// Yesterday, Kevin Beaumont (known as the "Cyber Weatherman") shared his experience assisting several organizations in recovering from successful ransomware attacks. A common thread in these incidents was the use of social engineering tactics. Attackers conducted initial reconnaissance over the phone to gather contact details, then bombarded users with a flood of emails and Teams messages—sometimes thousands per hour. The custom KQL detection script below for DefenderXDR can provide early warnings of this type of social engineering attack.
+
+// External Teams Tenant Spray Monitor
+
+let TeamsTriggerThreshold = 5;
+CloudAppEvents
+| where Timestamp > ago(1h)
+| where Application == @"Microsoft Teams"
+| where ActionType == @"MessageSent"
+| where AccountDisplayName has "@"
+| where tostring(UncommonForUser) != "[]"
+| extend ExternalTeamsTenantID = tostring(parse_json(RawEventData)["UserTenantId"])
+| where isnotempty(ExternalTeamsTenantID)
+| summarize Count=count() by ExternalTeamsTenantID
+| where Count > TeamsTriggerThreshold
+
+// External Inbound Email Spray Monitor
+
+let EmailTriggerThreshold = 150;
+EmailEvents
+| where Timestamp > ago(1h)
+| where EmailDirection == "Inbound"
+| where DeliveryAction == "Delivered"
+| summarize Count=count() by SenderFromAddress
+| where Count > EmailTriggerThreshold
+
+// Mitre ATT&CK
