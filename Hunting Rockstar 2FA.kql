@@ -1,0 +1,17 @@
+// Hunting Rockstar 2FA: A Key Player in Phishing-as-a-Service (PaaS)
+
+// Trustwave SpiderLabs highlights the rise of Phishing-as-a-Service (PaaS) platforms, focusing on the Rockstar 2FA phishing kit. This kit uses adversary-in-the-middle (AiTM) attacks to bypass MFA, targeting Microsoft 365 credentials. The blog (link provided at comment section) provides insights into the attack flow and techniques used in the phishing campaign.
+//  I've crafted a Sentinel KQL to check if your Entra tenant is impacted by Rockstar 2FA.
+
+let NationStateIP = 
+SigninLogs
+| where TimeGenerated > ago(90d)
+| where RiskEventTypes_V2 has "estsNationStateIP"
+| project IPAddress;
+BehaviorAnalytics
+| where SourceIPAddress has_any(NationStateIP)
+| where DevicesInsights.ThreatIntelIndicatorDescription has "Storm-1575"
+| project TimeGenerated, UserPrincipalName, ActivityType, 
+SourceIPAddress, SourceIPLocation, DevicesInsights.ThreatIntelIndicatorDescription
+
+// MITRE ATT&CK
