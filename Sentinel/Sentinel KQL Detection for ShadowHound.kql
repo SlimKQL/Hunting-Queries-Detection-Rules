@@ -1,0 +1,32 @@
+// 🚨 New Sentinel KQL Detection for ShadowHound 🚨
+// https://blog.fndsec.net/2024/11/25/shadowhound/
+
+// I'm excited to share that I've developed a Sentinel KQL detection specifically for identifying the use of ShadowHound, a powerful tool developed by Friends-Security. While ShadowHound offers advanced enumeration capabilities for Active Directory environments, it's crucial to be aware of its potential misuse by threat actors and red teamers for reconnaissance purposes.
+// 🔍 Key Features of ShadowHound:
+
+// - Comprehensive enumeration of Active Directory objects
+// - Utilizes both ADWS and LDAP for versatile data gathering
+// - Designed to enhance security assessments and audits
+
+// 🚨 Potential Risks:
+// - Reconnaissance by Threat Actors: ShadowHound can be exploited by malicious actors to gather detailed information about your network, potentially leading to targeted attacks.
+// - Red Team Operations: While useful for security assessments, red teamers can use this tool to simulate attacks, highlighting vulnerabilities that need immediate attention.
+
+// 🔐 My Sentinel KQL Detection: To help mitigate these risks, I've created a Sentinel KQL detection rule that identifies ShadowHound activity within your network. This detection rule enhances your ability to monitor and respond to potential threats effectively.
+
+// Sentinel detection for ShadowHound
+
+// The effective method to detect ShadowHound is to 
+// track identities that read an exceptionally high number
+// of LDAP records within a specific time frame similar to SharpHound
+
+SecurityEvent
+| where TimeGenerated > ago(1h)
+| where EventID == 4662
+| where not (SubjectUserSid contains "S-1-5-18")
+| where AccessMask == "0x10"
+| where strlen(Properties) >= 2000
+
+// MITRE ATT&CK
+// Technique: T1069 Permission Groups Discovery
+// Tactic: TA0007 Discovery
