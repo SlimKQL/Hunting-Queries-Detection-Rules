@@ -1,0 +1,13 @@
+// Any.Run Corrupt File Zero Day Attack
+
+// https://www.linkedin.com/posts/0x534c_httpsxcomanyrunappstatus1861024272463909018-activity-7269357711639633920-4xZK/
+
+// 𝗖𝘂𝘀𝘁𝗼𝗺 𝗠𝗗𝗢 𝗞𝗤𝗟 𝗗𝗲𝘁𝗲𝗰𝘁𝗶𝗼𝗻 𝗳𝗼𝗿 𝗽𝗼𝘁𝗲𝗻𝘁𝗶𝗮𝗹 𝗭𝗘𝗥𝗢-𝗗𝗔𝗬 𝗔𝘁𝘁𝗮𝗰𝗸:
+
+EmailAttachmentInfo
+| where Timestamp> ago(1h)
+| where FileName endswith ".docx"
+| where FileType == "zip" or FileType == "unknown;"
+| join EmailEvents on NetworkMessageId
+| where EmailDirection == "Inbound"
+| where DeliveryAction == "Delivered"
