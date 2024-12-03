@@ -1,0 +1,12 @@
+// Detecting Abuse of Wevtutil.exe in LOLBAS Attacks
+
+// https://denwp.com/unexplored-lolbas-technique-wevtutil-exe/
+// The article discusses how attackers exploit the Windows event log utility, wevtutil.exe, in Living Off the Land Binaries and Scripts (LOLBAS) attacks. This tool, typically used for managing event logs, can be misused to export, query, or clear logs, aiding in data exfiltration and evasion of detection. By leveraging wevtutil.exe, attackers can hide their tracks and extract sensitive information, making it a potent tool for post-exploitation activities. Enhanced monitoring and audit policies are recommended to mitigate these risks. I will be sharing a KQL to detect this type of abuse.
+
+DeviceProcessEvents 
+| where TimeGenerated > ago(1h)
+| where FileName == "wevtutil.exe"
+| where ProcessTokenElevation == "TokenElevationTypeFull" or 
+InitiatingProcessCommandLine in ("cl", "qe")
+
+// MITRE ATT&CK
