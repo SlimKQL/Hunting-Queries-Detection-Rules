@@ -1,0 +1,20 @@
+// 'Tis the season – Hunting Season!😂
+
+// With the rise in phishing campaigns 📈, threat actors are stealing tokens from phished users to deploy malicious OAuth applications on compromised cloud tenants. These applications are then used to control Exchange Online settings and spread spam. Can you swiftly detect and lock down the compromised user and OAuth app? The following KQL query leverages Sentinel UEBA identity risk information and cloudapp events to check for OAuth grants for high-risk users.
+
+let OauthRiskLevel = dynamic(["High", "Medium"]);
+let OauthBlastRadius = dynamic(["High","Medium"]);
+let RiskUsers =
+IdentityInfo
+| where RiskLevel has_any(OauthRiskLevel)
+| where BlastRadius has_any(OauthBlastRadius)
+| where RiskState == "AtRisk"
+| summarize arg_max(TimeGenerated, *) by AccountUPN
+| distinct AccountUPN;
+CloudAppEvents
+| where ActionType == @"Add app role assignment grant to user."
+| extend OauthApp = parse_json(RawEventData)["Target"][3]["ID"]
+| extend UPN = parse_json(RawEventData)["UserId"]
+| where UPN has_any(RiskUsers)
+
+// MITRE ATT&CK
