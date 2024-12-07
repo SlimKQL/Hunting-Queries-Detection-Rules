@@ -1,0 +1,22 @@
+// BlueAlpha GammaDrop Detection
+// https://www.recordedfuture.com/research/bluealpha-abuses-cloudflare-tunneling-service
+
+// BlueAlpha, a state-sponsored cyber threat group linked to the Russian FSB, has been active since 2014. Insikt Group has observed, via recent malware sample submissions to Recorded Future Public Sandbox, BlueAlpha abusing Cloudflare Tunnels for GammaDrop staging infrastructure. These tunnels have been leveraged by malicious .lnk files to download and execute GammaDrop.
+
+let DeviceLNKCreation =
+DeviceFileEvents
+| where ActionType == @"FileCreated"
+| where FileName endswith ".lnk"
+| invoke FileProfile(SHA1,100)
+| where GlobalPrevalence < 10
+// Detect low prevalence LNK file extracted from archive
+| distinct DeviceName;
+DeviceNetworkEvents
+| where ActionType == "HttpConnectionInspected"
+| extend ConnectInfo = todynamic(AdditionalFields)
+| extend HttpHost = ConnectInfo.host
+| where HttpHost endswith ".trycloudflare.com"
+| where DeviceName has_any(DeviceLNKCreation)
+// Endpoint with new low prevalence LNK created connecting to trycloudflare
+
+// MITRE ATT&CK
