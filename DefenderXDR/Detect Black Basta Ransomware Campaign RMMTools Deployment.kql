@@ -1,0 +1,16 @@
+// Detect Black Basta Ransomware Campaign
+// Social Engineering Attack via Teams
+
+// https://www.rapid7.com/blog/post/2024/12/04/black-basta-ransomware-campaign-drops-zbot-darkgate-and-custom-malware/
+
+// Exclude Corporate Sharepoint
+let CorporateSharepoint = "xxx.sharepoint.com";
+CloudAppEvents
+| where Application == @"Microsoft Teams"
+| where ActionType == @"MessageSent"
+| where AccountId contains "@"
+| where parse_json(RawEventData)["CommunicationType"] == 'OneOnOne'
+| where isnotempty(parse_json(RawEventData)["MessageURLs"])
+| where (parse_json(RawEventData)["MessageURLs"]) contains ".sharepoint.com"
+// External Teams Tenant sending a sharepoint link to download RMM tools to evade detections
+| where (parse_json(RawEventData)["MessageURLs"]) !contains CorporateSharepoint
