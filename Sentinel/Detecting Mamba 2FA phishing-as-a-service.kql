@@ -18,7 +18,8 @@ let DomainsIOC = dynamic(['ccokies1cakes.com','ccokies2mangoes.com','ccokies3tom
 DeviceNetworkEvents
 | where TimeGenerated > ago(90d)
 | where ActionType == "HttpConnectionInspected"
-| extend WWWHost = AdditionalFields.host
+| extend parsedAdditionalFields = parse_json(AdditionalFields)
+| extend WWWHost = parsedAdditionalFields.host
 | where WWWHost has_any (DomainsIOC)
 
 // MITRE ATT&CK
