@@ -1,0 +1,21 @@
+// Enhanced Cloudflare Phishing Email Detections
+// https://www.fortra.com/blog/cloudflare-pages-workers-domains-increasingly-abused-for-phishing
+// Fortra has observed a rising trend in legitimate service abuse, with a significant volume of attacks targeting Cloudflare Pages. Workers.dev is a domain used by Cloudflare Workers’ deployment services, while Pages.dev is used by Cloudflare’s Pages platform that facilitates the development of web pages and sites. Fortra’s SEA team has observed a 198% increase in phishing attacks on Cloudflare Pages, rising from 460 incidents in 2023 to 1,370 incidents as of mid-October 2024. With an average of approximately 137 incidents per month, the total volume of attacks is expected to surpass 1,600 by year-end, representing a projected year-over-year increase of 257%.
+
+// The below KQL is a second layer detection on top of existing MDO detection for abused Cloudflare pages.dev and workers.dev Domains.
+
+// Custom DefenderXDR Detection - Moved to deleted/junk
+// Detect Cloudflare pages.dev and workers.dev Domains Abused for Phishing
+
+let MaliciousDomainTable=externaldata(RawData:string)
+[h'https://raw.githubusercontent.com/romainmarcoux/malicious-domains/main/full-domains-aa.txt']
+| parse RawData with MaliciousDomain:string;
+EmailUrlInfo
+| where Timestamp > ago(1h)
+| where UrlDomain endswith ".pages.dev" or UrlDomain endswith ".workers.dev"
+| join EmailEvents on NetworkMessageId
+| where EmailDirection == "Inbound"
+| where DeliveryAction != "Blocked"
+| join MaliciousDomainTable on $left.UrlDomain == $right.MaliciousDomain
+
+// MITRE ATTACK
