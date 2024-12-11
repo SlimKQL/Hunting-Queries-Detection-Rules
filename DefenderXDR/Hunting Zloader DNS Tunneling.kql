@@ -1,0 +1,7 @@
+// Hunting Zloader DNS Tunneling
+// https://www.zscaler.com/blogs/security-research/inside-zloader-s-latest-trick-dns-tunneling
+
+DeviceNetworkEvents
+| where TimeGenerated > ago(90d)
+| where ActionType == "DnsConnectionInspected"
+| where AdditionalFields.query contains "bigdealcenter.world" or AdditionalFields.query contains "unitedcommunity.world" or AdditionalFields.query contains "ns1.brownswer.com"
