@@ -1,0 +1,11 @@
+// Detecting Teams Red Team Tool ConvoC2
+
+// https://cybersecuritynews.com/red-team-tool-to-executes-commands-via-ms-teams/amp/
+
+// DefendXDR Detection
+
+CloudAppEvents
+| where Timestamp > ago(1h)
+| where Application == @"Microsoft Teams"
+| where ActionType == @"AppInstalled"
+| where parse_json(RawEventData)["AddOnName"] == 'Workflows'
