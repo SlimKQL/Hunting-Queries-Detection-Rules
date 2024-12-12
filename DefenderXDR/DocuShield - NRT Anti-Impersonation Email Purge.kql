@@ -1,0 +1,9 @@
+// DocuShield: NRT’s Anti-Impersonation Email Purge! 🤣
+
+// Christmas comes early! Here’s my near real-time custom detection for DocuSign impersonation emails ➡️ 🗑️ A simple and effective filter.
+
+EmailEvents
+| where Subject startswith "Complete with Docusign"
+| where SenderFromDomain !endswith "docusign.net"
+| where DeliveryAction != "Blocked"
+
