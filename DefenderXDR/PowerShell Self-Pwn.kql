@@ -1,0 +1,23 @@
+// PowerShell Self-Pwn
+
+// https://www.proofpoint.com/us/blog/threat-insight/clipboard-compromise-powershell-self-pwn
+// The Proofpoint blog outlines a social engineering tactic where threat actors deceive users into copying and pasting malicious PowerShell scripts, causing malware infections. Groups like TA571 use fake error messages to prompt script execution, delivering malware such as DarkGate and NetSupport. Despite needing significant user interaction, the attack's success hinges on sophisticated social engineering. I have developed a custom detection PowerShell Self-Pwn KQL to identify such scenarios and assist SecOps in isolating affected devices.
+
+let NaiveUser =
+IdentityInfo
+| where isempty(AssignedRoles) // Non Technical Naive Users ;P
+| summarize arg_max(Timestamp, *) by AccountUpn
+| distinct AccountUpn;
+let UserEPPSExec =
+DeviceEvents 
+| where ActionType == @"GetClipboardData" // Execute PowerShell command from clipboard paste
+| where InitiatingProcessFileName == @"powershell.exe"
+| join NaiveUser on $left.InitiatingProcessAccountUpn == $right.AccountUpn
+| distinct DeviceName;
+DeviceProcessEvents
+| where InitiatingProcessFileName has "powershell.exe" and InitiatingProcessCommandLine has "-EncodedCommand"
+| where AccountName != "system" and AccountName !="local service" and AccountName !="administrator"
+| where DeviceName has_any(UserEPPSExec) // User execute a encoded powershell command to evade detection
+
+
+//
