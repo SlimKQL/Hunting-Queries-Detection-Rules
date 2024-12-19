@@ -1,0 +1,18 @@
+// Advanced Vishing KQL Detection
+
+// https://www.linkedin.com/posts/0x534c_cybersecurity-teams-vishing-activity-7275032953850597377-bCT1?utm_source=share&utm_medium=member_desktop
+// https://www.trendmicro.com/en_us/research/24/l/darkgate-malware.html
+
+// This post follows up on my previous discussion, "Vishing via Microsoft Teams Facilitates DarkGate Malware Intrusion." In just two clicks, you can download the PSTN usage log from the Teams admin portal and upload it to Azure Data Explorer (ADX). By running the KQL query below, you can identify potential indicators of a Vishing attack.🎯
+
+TeamsCallLog
+| where ['Call Direction'] == "Inbound"
+
+// Corporate users with high inbound calls and low call duration - Vishing Attacks Indicator (1)
+// Identify receiver UPN and check against inbound email flow for the UPN
+| summarize Callers=dcount(['Caller ID']), CallDuration=dcount(['Duration Seconds']) by UPN
+
+// External Caller IDs with high inbound calls and low call duration - Vishing Attacks Indicator (2)
+| summarize Receivers=dcount(UPN), CallDuration=dcount(['Duration Seconds']) by ['Caller ID']
+
+//
