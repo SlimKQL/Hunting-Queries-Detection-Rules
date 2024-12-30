@@ -1,0 +1,15 @@
+// Hunting Malicious Chrome Extension
+
+// A new attack campaign has targeted known Chrome browser extensions, leading to at least 16 extensions being compromised and exposing over 600,000 users to data exposure and credential theft.
+// https://thehackernews.com/2024/12/16-chrome-extensions-hacked-exposing.html
+
+let MaliciousChromeExtensionID = dynamic(["bibjgkidgpfbblifamdlkdlhgihmfohh","pkgciiiancapdlpcbppfkmeaieppikkk",
+"epdjhgbipjpbbhoccdeipghoihibnfja","bbdnohkpnbkdkmnkddobeafboooinpla","befflofjcniongenjmbkgkoljhgliihe",
+"cedgndijpacnfbdggppddacngjfdkaca","nnpnnpemnckcfdebeekibpiijlicmpom","dpggmcodlahmljkhlmpgpdcffdaoccni",
+"cplhlgabfijoiabgkigdafklbhhdkahj","egmennebgadmncfjafcemlecimkepcle","acmfnomgphggonodopogfbmkneepfgnh",
+"mnhffkhmpnefgklngfmlndmkimimbphc","oaikpkmjciadfpddlpjjdapglcihgdle","fbmlcbhdmilaggedifpihjgkkmdgeljh",
+"kkodiihpgodmdankclfibbiphjkfdenh","oeiomhmbaapihbilkfkhmlajkeegnjhe"]);
+DeviceFileEvents
+| where ActionType == "FileCreated" and FileName endswith ".crx"
+| where FileName has_any(MaliciousChromeExtensionID)
+
