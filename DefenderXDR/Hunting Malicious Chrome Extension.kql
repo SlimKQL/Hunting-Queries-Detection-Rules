@@ -29,4 +29,5 @@ let MaliciousChromeExtensionID = dynamic(["bibjgkidgpfbblifamdlkdlhgihmfohh","pk
 DeviceFileEvents
 | where ActionType == "FileCreated" and FileName endswith ".crx"
 | where FileName has_any(MaliciousChromeExtensionID)
+| where isnotempty(SHA1)
 
