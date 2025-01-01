@@ -9,13 +9,23 @@
 // Proxy SwitchyOmega (V3)
 // GraphQL Network Inspector
 
+//https://www.extensiontotal.com/cyberhaven-incident-live
+// 13:12 UTC December 31th, 2024 - ExtensionTotal detected 5 new malicious extensions. I have added these new IDs to KQL detection code:
+// Web Mirror
+// ChatGPT App
+// Hi AI
+// Web3Password Manager
+// Where is Cookie?
+
 let MaliciousChromeExtensionID = dynamic(["bibjgkidgpfbblifamdlkdlhgihmfohh","pkgciiiancapdlpcbppfkmeaieppikkk",
 "epdjhgbipjpbbhoccdeipghoihibnfja","bbdnohkpnbkdkmnkddobeafboooinpla","befflofjcniongenjmbkgkoljhgliihe",
 "cedgndijpacnfbdggppddacngjfdkaca","nnpnnpemnckcfdebeekibpiijlicmpom","dpggmcodlahmljkhlmpgpdcffdaoccni",
 "cplhlgabfijoiabgkigdafklbhhdkahj","egmennebgadmncfjafcemlecimkepcle","acmfnomgphggonodopogfbmkneepfgnh",
 "mnhffkhmpnefgklngfmlndmkimimbphc","oaikpkmjciadfpddlpjjdapglcihgdle","fbmlcbhdmilaggedifpihjgkkmdgeljh",
 "kkodiihpgodmdankclfibbiphjkfdenh","oeiomhmbaapihbilkfkhmlajkeegnjhe","jiofmdifioeejeilfkpegipdjiopiekl", 
-"hihblcmlaaademjlakdpicchbjnnnkbo", "ndlbedplllcgconngcnfmkadhokfaaln"]);
+"hihblcmlaaademjlakdpicchbjnnnkbo", "ndlbedplllcgconngcnfmkadhokfaaln""eaijffijbobmnonfhilihbejadplhddo",
+"lbneaaedflankmgmfbmaplggbmjjmbae","hmiaoahjllhfgebflooeeefeiafpkfde","pdkmmfdfggfpibdjbbghggcllhhainjo",
+"emedckhdnioeieppmeojgegjfkhdlaeo"]);
 DeviceFileEvents
 | where ActionType == "FileCreated" and FileName endswith ".crx"
 | where FileName has_any(MaliciousChromeExtensionID)
