@@ -4,28 +4,29 @@
 // https://thehackernews.com/2024/12/16-chrome-extensions-hacked-exposing.html
 
 // https://www.extensiontotal.com/cyberhaven-incident-live
-// 13:00 UTC December 30th, 2024 - Added 3 new malicious extensions
-// YesCaptcha assistant
-// Proxy SwitchyOmega (V3)
-// GraphQL Network Inspector
+// 11:08 UTC January 1st, 2025 - Total 36 malicious extensions
 
-//https://www.extensiontotal.com/cyberhaven-incident-live
-// 13:12 UTC December 31th, 2024 - ExtensionTotal detected 5 new malicious extensions. I have added these new IDs to KQL detection code:
-// Web Mirror
-// ChatGPT App
-// Hi AI
-// Web3Password Manager
-// Where is Cookie?
-
-let MaliciousChromeExtensionID = dynamic(["bibjgkidgpfbblifamdlkdlhgihmfohh","pkgciiiancapdlpcbppfkmeaieppikkk",
-"epdjhgbipjpbbhoccdeipghoihibnfja","bbdnohkpnbkdkmnkddobeafboooinpla","befflofjcniongenjmbkgkoljhgliihe",
-"cedgndijpacnfbdggppddacngjfdkaca","nnpnnpemnckcfdebeekibpiijlicmpom","dpggmcodlahmljkhlmpgpdcffdaoccni",
-"cplhlgabfijoiabgkigdafklbhhdkahj","egmennebgadmncfjafcemlecimkepcle","acmfnomgphggonodopogfbmkneepfgnh",
-"mnhffkhmpnefgklngfmlndmkimimbphc","oaikpkmjciadfpddlpjjdapglcihgdle","fbmlcbhdmilaggedifpihjgkkmdgeljh",
-"kkodiihpgodmdankclfibbiphjkfdenh","oeiomhmbaapihbilkfkhmlajkeegnjhe","jiofmdifioeejeilfkpegipdjiopiekl", 
-"hihblcmlaaademjlakdpicchbjnnnkbo", "ndlbedplllcgconngcnfmkadhokfaaln""eaijffijbobmnonfhilihbejadplhddo",
-"lbneaaedflankmgmfbmaplggbmjjmbae","hmiaoahjllhfgebflooeeefeiafpkfde","pdkmmfdfggfpibdjbbghggcllhhainjo",
-"emedckhdnioeieppmeojgegjfkhdlaeo"]);
+let MaliciousChromeExtensionID = dynamic(["emedckhdnioeieppmeojgegjfkhdlaeo","eaijffijbobmnonfhilihbejadplhddo","lbneaaedflankmgmfbmaplggbmjjmbae",
+"hmiaoahjllhfgebflooeeefeiafpkfde","pdkmmfdfggfpibdjbbghggcllhhainjo","jiofmdifioeejeilfkpegipdjiopiekl",
+"acmfnomgphggonodopogfbmkneepfgnh","hihblcmlaaademjlakdpicchbjnnnkbo","ndlbedplllcgconngcnfmkadhokfaaln",
+"bibjgkidgpfbblifamdlkdlhgihmfohh","pkgciiiancapdlpcbppfkmeaieppikkk","epdjhgbipjpbbhoccdeipghoihibnfja",
+"bbdnohkpnbkdkmnkddobeafboooinpla","befflofjcniongenjmbkgkoljhgliihe","cedgndijpacnfbdggppddacngjfdkaca",
+"nnpnnpemnckcfdebeekibpiijlicmpom","dpggmcodlahmljkhlmpgpdcffdaoccni","cplhlgabfijoiabgkigdafklbhhdkahj",
+"egmennebgadmncfjafcemlecimkepcle","mnhffkhmpnefgklngfmlndmkimimbphc","oaikpkmjciadfpddlpjjdapglcihgdle",
+"fbmlcbhdmilaggedifpihjgkkmdgeljh","kkodiihpgodmdankclfibbiphjkfdenh","oeiomhmbaapihbilkfkhmlajkeegnjhe",
+"igbodamhgjohafcenbcljfegbipdfjpk","bgejafhieobnfpjlpcjjggoboebonfcg","llimhhconnjiflfimocjggfjdlmlhblm",
+"hodiladlefdpcbemnbbcpclbmknkiaem","epikoohpebngmakjinphfiagogjcnddm","pajkjnmeojmbapicmbpliphjmcekeaac",
+"ogbhbgkiojdollpjbhbamafmedkeockb","eanofdhdfbcalhflpbdipkjjkoimeeod","ekpkdmohpdnebfedjjfklhpefgpgaaji",
+"miglaibdlgminlepgeifekifakochlka","mbindhfolmpijhodmgkloeeppmkhpmhc","didhgeamncokiaegffipckhhcpnmlcbl",
+"bibjgkidgpfbblifamdlkdlhgihmfohh","pkgciiiancapdlpcbppfkmeaieppikkk","epdjhgbipjpbbhoccdeipghoihibnfja",
+"bbdnohkpnbkdkmnkddobeafboooinpla","befflofjcniongenjmbkgkoljhgliihe","cedgndijpacnfbdggppddacngjfdkaca",
+"nnpnnpemnckcfdebeekibpiijlicmpom","dpggmcodlahmljkhlmpgpdcffdaoccni","cplhlgabfijoiabgkigdafklbhhdkahj",
+"egmennebgadmncfjafcemlecimkepcle","mnhffkhmpnefgklngfmlndmkimimbphc","oaikpkmjciadfpddlpjjdapglcihgdle",
+"fbmlcbhdmilaggedifpihjgkkmdgeljh","kkodiihpgodmdankclfibbiphjkfdenh","oeiomhmbaapihbilkfkhmlajkeegnjhe",
+"igbodamhgjohafcenbcljfegbipdfjpk","bgejafhieobnfpjlpcjjggoboebonfcg","llimhhconnjiflfimocjggfjdlmlhblm",
+"hodiladlefdpcbemnbbcpclbmknkiaem","epikoohpebngmakjinphfiagogjcnddm","pajkjnmeojmbapicmbpliphjmcekeaac",
+"ogbhbgkiojdollpjbhbamafmedkeockb","eanofdhdfbcalhflpbdipkjjkoimeeod","ekpkdmohpdnebfedjjfklhpefgpgaaji",
+"miglaibdlgminlepgeifekifakochlka","mbindhfolmpijhodmgkloeeppmkhpmhc"]);
 DeviceFileEvents
 | where ActionType == "FileCreated" and FileName endswith ".crx"
 | where FileName has_any(MaliciousChromeExtensionID)
