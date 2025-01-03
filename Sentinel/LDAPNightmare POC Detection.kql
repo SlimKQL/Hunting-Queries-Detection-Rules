@@ -15,3 +15,5 @@ tostring(split(Name, "_ldap._tcp.Default-First-Site-Name._sites.dc._msdcs.", 1))
 | where QueryType == "33"
 | where ResultCode == 0
 
+
+// MITRE ATT&CK 
