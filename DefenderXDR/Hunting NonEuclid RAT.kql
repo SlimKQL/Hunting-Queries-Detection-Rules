@@ -1,0 +1,22 @@
+// 𝗡𝗼𝗻𝗘𝘂𝗰𝗹𝗶𝗱 𝗥𝗔𝗧
+// https://www.cyfirma.com/research/noneuclid-rat/
+// NonEuclid Remote Access Trojan (RAT) is a powerful malware designed for unauthorized remote access and control of computers. Developed using C# for the .NET Framework 4.8, it employs advanced evasion techniques such as antivirus bypass, privilege escalation, anti-detection, and ransomware encryption. Its stealth, dynamic DLL loading, anti-VM checks, and AES encryption have made it popular among cybercriminals.
+
+// Currently, the IOC hash for NonEuclid.exe and Client.exe shows zero detections on VirusTotal and no global prevalence. Defenders should begin searching for the file hash and use KQL to detect file renames to the “.NonEuclid” extension. (Threat intelligence report in comment section)
+
+// You may need to do a one time exclusion of your corporate developed exe running as a task, after that you should catch the 🐀 🤣
+
+// KQL Code:
+
+let WhitelistExe = dynamic(["Iamclean.exe"]);
+let MaliciousLPExe =
+DeviceFileEvents
+| where isnotempty(SHA1)
+| where ActionType == @"FileCreated" and FileName endswith ".exe"
+| invoke FileProfile("SHA1",1000)
+| where GlobalPrevalence < 50
+| distinct FileName;
+DeviceEvents
+| where ActionType == @"ScheduledTaskCreated"
+| where AdditionalFields has_any(MaliciousLPExe)
+| where not (AdditionalFields has_any(WhitelistExe))
