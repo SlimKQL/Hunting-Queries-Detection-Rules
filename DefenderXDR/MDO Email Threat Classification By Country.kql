@@ -1,0 +1,12 @@
+// MDO Email Threat Classification By Country
+
+// https://admin.microsoft.com/AdminPortal/Home?#/MessageCenter/:/messages/MC973503
+
+EmailEvents 
+| where isnotempty(ThreatClassification)
+| extend IPInfo = iff(isnotempty(SenderIPv4),
+geo_info_from_ip_address(SenderIPv4),
+geo_info_from_ip_address(SenderIPv6))
+| summarize Count=count() by ThreatClassification, tostring(IPInfo.country)
+| sort by Count desc 
+
