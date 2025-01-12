@@ -10,4 +10,4 @@ CloudAppEvents
 | join EmailEvents on $left.CAInternetMessageId == $right.InternetMessageId
 | where isnotempty(ThreatClassification)
 | summarize Count=count() by ThreatClassification, ISP
-
+| sort by Count desc
