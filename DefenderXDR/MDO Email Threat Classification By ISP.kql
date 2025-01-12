@@ -1,0 +1,13 @@
+// MDO Email Threat Classification By ISP
+
+// Microsoft announce the new integration of threat classification through advanced large language models (LLMs) and machine learning (ML) models in the EmailEvents schema. By leveraging this crucial data along with CloudAppEvents Exchange workload, you can now pinpoint the origin of various email threats by ISP!🤯 This enhancement provides a clearer understanding of email threats categorized by ISP.🫡
+
+CloudAppEvents
+| where Application == "Microsoft Exchange Online"
+| where ActionType == "TIMailData-Inline"
+| where ActivityType == "Securityevent"
+| extend CAInternetMessageId = tostring(parse_json(RawEventData)["InternetMessageId"])
+| join EmailEvents on $left.CAInternetMessageId == $right.InternetMessageId
+| where isnotempty(ThreatClassification)
+| summarize Count=count() by ThreatClassification, ISP
+
