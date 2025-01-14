@@ -1,0 +1,10 @@
+//During my routine threat hunting, I observed that the ISP "kuroit limited," which operates in the USA, London, and Amsterdam, is sending a significant number of malicious emails from gmail.com domains. This is something defenders should monitor and filter as necessary.🤝
+
+CloudAppEvents
+| where Application == "Microsoft Exchange Online"
+| where ActionType == "TIMailData-Inline"
+| where ActivityType == "Securityevent"
+| where ISP == "kuroit limited"
+| extend CAInternetMessageId = tostring(parse_json(RawEventData)["InternetMessageId"])
+| join EmailEvents on $left.CAInternetMessageId == $right.InternetMessageId
+| where EmailDirection == "Inbound"
