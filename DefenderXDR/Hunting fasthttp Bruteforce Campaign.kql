@@ -1,0 +1,18 @@
+// Hunting fasthttp Bruteforce Campaign
+// https://www.speartip.com/fasthttp-used-in-new-bruteforce-campaign/
+
+// A new brute-force campaign identified by SpearTip Security Operations Center, which leverages the fasthttp library. This high-performance HTTP server and client library for the Go programming language is being used to gain unauthorized access to accounts through brute-force login attempts and spamming multi-factor authentication (MFA) requests. The attacks primarily target the Azure Active Directory Graph API and have been observed originating mainly from Brazil, with other sources including Turkey, Argentina, Uzbekistan, Pakistan, and Iraq.
+
+// I ran similar KQL queries on both Sentinel and DefenderXDR but only detected this brute force campaign in the AADSignInEventsBeta schema of DefenderXDR. The below KQL will help detect if the brute force campaign has attack your tenant using the long IOCs provided by SpearTip. Happy Hunting 🫡
+
+let FastHttpIOCTable=externaldata(RawData:string)
+[h'https://raw.githubusercontent.com/SlimKQL/Hunting-Queries-Detection-Rules/refs/heads/main/IOC/fasthttpIOCs.txt']
+| parse RawData with FastHttpIPs:string;
+let IOCs =
+FastHttpIOCTable
+| distinct FastHttpIPs;
+AADSignInEventsBeta 
+| where Timestamp > ago(30d)
+| where ApplicationId == "00000002-0000-0000-c000-000000000000" and UserAgent == "fasthttp"
+| where IPAddress has_any(IOCs)
+
