@@ -1,0 +1,9 @@
+// KQLWiz PDF NTLM Leak Detector
+// https://cybersecuritynews.com/zero-day-vulnerability-in-pdf-files-leaking-ntlm-data-in-adobe-foxit-reader/
+
+DeviceFileEvents 
+| where ActionType == "FileCreated" and FileName endswith ".pdf"
+| where parse_json(AdditionalFields)["FileType"] == 'PDF'
+| where InitiatingProcessUniqueId != 0
+| join DeviceNetworkEvents on InitiatingProcessUniqueId
+| where RemotePort == "445" and Protocol == "Tcp"
