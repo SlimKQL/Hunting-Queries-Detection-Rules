@@ -1,0 +1,25 @@
+// Sneaky 2FA MDO Detection
+// https://blog.sekoia.io/sneaky-2fa-exposing-a-new-aitm-phishing-as-a-service/
+
+let Sneaky2FATable=externaldata(RawData:string)
+[h'https://raw.githubusercontent.com/SlimKQL/Hunting-Queries-Detection-Rules/refs/heads/main/IOC/Sneaky2FA.txt']
+| parse RawData with Sneaky2FADomains:string;
+let IOCs =
+Sneaky2FATable
+| distinct Sneaky2FADomains;
+let InboundEmailReceipient =
+EmailUrlInfo
+| join EmailEvents on NetworkMessageId
+| where EmailDirection == "Inbound"
+| distinct RecipientEmailAddress;
+let InboundEncodedEmailReceipient =
+EmailUrlInfo
+| join EmailEvents on NetworkMessageId
+| where EmailDirection == "Inbound"
+| extend EncodeEmail = base64_encode_tostring(RecipientEmailAddress)
+| distinct EncodeEmail;
+EmailUrlInfo
+| join EmailEvents on NetworkMessageId
+| where EmailDirection == "Inbound"
+| where DeliveryAction == "Delivered"
+| where Url has_any(IOCs) and (Url has_any(InboundEmailReceipient) or Url has_any(InboundEncodedEmailReceipient))
