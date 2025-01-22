@@ -1,0 +1,19 @@
+// Fortigate Belsen Leak KQL Check
+
+// In 2022, Fortinet revealed a critical authentication bypass vulnerability (CVE-2022-40684) impacting FortiOS, FortiProxy, and FortiSwitchManager. By January 2025, the Belsen Group had publicly released configurations from around 15,000 affected devices. The following KQL query scans your Fortinet firewall's Destination and Source IP logs within the CommonSecurityLog schema, matching them against the 15K+ leaked IPs from the Belsen Group.
+
+let FortiBelsenLeakTable=externaldata(RawData:string)
+[h'https://raw.githubusercontent.com/SlimKQL/Hunting-Queries-Detection-Rules/refs/heads/main/IOC/fortigate-belsen-leak-15K-IPs.txt']
+| parse RawData with LeakIP:string;
+let MatchedDestinationIP =
+CommonSecurityLog
+| where TimeGenerated > ago(7d)
+| where DeviceVendor has "fortinet"
+| summarize arg_max(TimeGenerated, *) by DestinationIP
+| join FortiBelsenLeakTable on $left.DestinationIP == $right.LeakIP;
+CommonSecurityLog
+| where TimeGenerated > ago(7d)
+| where DeviceVendor has "fortinet"
+| summarize arg_max(TimeGenerated, *) by SourceIP
+| join FortiBelsenLeakTable on $left.SourceIP == $right.LeakIP
+| union MatchedDestinationIP
