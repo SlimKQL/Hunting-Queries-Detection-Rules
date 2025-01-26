@@ -1,0 +1,13 @@
+// RID Hijacking Technique and Detection
+
+// https://asec.ahnlab.com/en/85942/
+
+let EPwithNewLocalAccount =
+DeviceEvents
+| where Timestamp > ago(1h)
+| where ActionType == "UserAccountCreated" and AccountName has "$"
+| distinct DeviceName;
+DeviceRegistryEvents
+| where RegistryKey has "HKEY_LOCAL_MACHINE\\SAM\\SAM\\Domains\\Account\\Users"
+| where DeviceName has_any(EPwithNewLocalAccount)
+
