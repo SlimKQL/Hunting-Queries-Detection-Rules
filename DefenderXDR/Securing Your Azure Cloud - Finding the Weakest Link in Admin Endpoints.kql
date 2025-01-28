@@ -1,0 +1,23 @@
+// Securing Your Azure Cloud: Finding the Weakest Link in Admin Endpoints
+
+// Who holds the key vault secrets to your Azure cloud? Are you aware of any critical vulnerabilities in these cloud admin endpoints? By running the DefenderXDR Exposure Management KQL below, you can identify your Azure Admin's weakest link, highlighting the most critical vulnerabilities and their susceptibility to external attacks and compromises.
+
+let AzureAdminWithKeyVaultAccess =
+ExposureGraphEdges
+| where SourceNodeLabel == "user" 
+| where EdgeLabel == "has permissions to"
+| where TargetNodeLabel == "microsoft.keyvault/vaults"
+| where parse_json(TargetNodeCategories)[0] == 'secret'
+| distinct SourceNodeName;
+let AzureAdminEP=
+ExposureGraphEdges
+| where EdgeLabel == "frequently logged in by"
+| where TargetNodeName has_any(AzureAdminWithKeyVaultAccess)
+| distinct SourceNodeName;
+ExposureGraphNodes  
+| where NodeLabel == "Cve"
+| extend Severity = tostring(NodeProperties.rawData.severity)
+| where Severity == "Critical"
+| join ExposureGraphEdges on $left.NodeId == $right.SourceNodeId
+| where TargetNodeName has_any(AzureAdminEP)
+
