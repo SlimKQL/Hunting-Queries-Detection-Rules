@@ -3,8 +3,7 @@
 // Utilize this straightforward KQL tool for inbound email URL analysis to identify domains potentially impersonating Deepseek for malicious purposes. This empowers SecOps to verify domain authenticity and block threats at the tenant level.
 
 EmailUrlInfo
-| where UrlDomain has "deepseek" and UrlDomain !endswith "deepseek.com"
-| where SenderFromDomain !endswith "deepseek.com"
+| where UrlDomain has "deepseek" and UrlDomain !endswith "deepseek.com" and SenderFromDomain !endswith "deepseek.com"
 | join EmailEvents on NetworkMessageId
 | where EmailDirection == "Inbound" and LatestDeliveryAction != "Blocked"
 | summarize Count=count() by UrlDomain
