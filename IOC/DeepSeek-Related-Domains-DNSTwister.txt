@@ -104,7 +104,6 @@ deepseek.buzz
 deepseek.cf
 deepseek.cn
 deepseek.co
-deepseek.com
 deepseek.de
 deepseek.fit
 deepseek.ga
