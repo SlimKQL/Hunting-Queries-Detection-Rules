@@ -4,7 +4,7 @@
 
 EmailUrlInfo
 | join EmailEvents on NetworkMessageId
-| where UrlDomain has "deepseek" and (UrlDomain !endswith "deepseek.com" or SenderFromDomain !endswith "deepseek.com")
+| where UrlDomain has "deepseek" and (UrlDomain !endswith "deepseek.com" or SenderFromDomain != "deepseek.com")
 | where EmailDirection == "Inbound" and LatestDeliveryAction != "Blocked"
 | summarize Count=count() by UrlDomain
 | where Count >= 3
