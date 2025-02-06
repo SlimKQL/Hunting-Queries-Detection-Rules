@@ -1,0 +1,8 @@
+// Entra QR Code Sign-In KQL Detection
+
+AuditLogs
+| where TimeGenerated > ago(1h)
+| where Category == "UserManagement"
+| where ActivityDisplayName == "Admin updated security info"
+| where ResultDescription == "Admin changed QRcode Pin Authentication Method for user"
+
