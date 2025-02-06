@@ -1,0 +1,10 @@
+// AWS NoSuchBucket Check
+
+// https://labs.watchtowr.com/8-million-requests-later-we-made-the-solarwinds-supply-chain-attack-look-amateur/
+
+AWSCloudTrail
+| where TimeGenerated > ago(90d)
+| where ErrorCode == "NoSuchBucketPolicy"
+| extend BucketName = tostring(parse_json(RequestParameters).bucketName)
+| extend Host = tostring(parse_json(RequestParameters).Host)
+| project TimeGenerated, BucketName, Host
