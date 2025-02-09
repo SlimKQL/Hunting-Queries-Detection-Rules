@@ -39,7 +39,6 @@ nltest.exe
 nslookup.exe
 ping.exe
 pnputil.exe
-powershell.exe
 procdump.exe
 psexec.exe
 query.exe
