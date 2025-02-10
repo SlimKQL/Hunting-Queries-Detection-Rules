@@ -1,0 +1,11 @@
+// Using GraphPreConsentExplorer data for Microsoft Graph Threat Hunting
+
+let GraphPreConsent=externaldata(Name:string, Client_Id:string, Enabled:string, Graph_api_permissions:string, 
+Auth_code:string, Device_code:string, Brk_refresh:string, Foci:string, Reply_addresses:string)
+[h'https://raw.githubusercontent.com/SlimKQL/Hunting-Queries-Detection-Rules/refs/heads/main/IOC/GraphPreConsent.csv'];
+//
+// Microsoft Graph Threat Hunting
+// 
+MicrosoftGraphActivityLogs
+| join GraphPreConsent on $left.AppId == $right.Client_Id
+// Threat hunting Query
