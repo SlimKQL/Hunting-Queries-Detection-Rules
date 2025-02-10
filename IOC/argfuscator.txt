@@ -41,6 +41,7 @@ ping.exe
 pnputil.exe
 procdump.exe
 psexec.exe
+powershell.exe
 query.exe
 reg.exe
 regedit.exe
