@@ -1,0 +1,7 @@
+// Monitoring Copilot Data Exfiltration via Graph API
+
+let CopilotGraphExfilCmds = dynamic(["interactionHistory","getAllEnterpriseInteractions"]);
+MicrosoftGraphActivityLogs
+| where TimeGenerated > ago(1h)
+| extend ParseData = parse_url(RequestUri)
+| where ParseData has_any (CopilotGraphExfilCmds)
