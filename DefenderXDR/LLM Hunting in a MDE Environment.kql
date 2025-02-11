@@ -1,0 +1,11 @@
+// LLM Hunting in a MDE Environment
+
+let LLM_ModelName =
+ExposureGraphNodes
+| where NodeLabel == "baseModel"
+| project parse_json(NodeProperties)["rawData"]["aiModelMetadata"]["modelName"];
+DeviceFileEvents
+| where Timestamp > ago (30d)
+| where InitiatingProcessVersionInfoFileDescription has_any (LLM_ModelName) 
+or InitiatingProcessFolderPath has_any (LLM_ModelName)
+or InitiatingProcessFileName has_any (LLM_ModelName)
