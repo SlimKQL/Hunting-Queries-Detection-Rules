@@ -1,0 +1,21 @@
+// The Hunt for Top 10 Self Hosted AI
+
+// https://www.wiz.io/state-of-ai-in-the-cloud
+
+let Top10AIModels = dynamic(["BERT","DistilBERT","RoBERTa","T5","Llama","MPNet","GPT-2",
+"XLM-RoBERTa","CLIP","BART","Mistral","DeBERTa-v2","Qwen2"]);
+let LLM_ModelName =
+ExposureGraphNodes
+| where NodeLabel == "baseModel"
+| extend ModelName = parse_json(NodeProperties)["rawData"]["aiModelMetadata"]["modelName"]
+| where ModelName has_any(Top10AIModels)
+| project ModelName;
+DeviceFileEvents
+| where Timestamp > ago (30d)
+| where InitiatingProcessVersionInfoFileDescription has_any (LLM_ModelName) 
+or InitiatingProcessFolderPath has_any (LLM_ModelName)
+or InitiatingProcessFileName has_any (LLM_ModelName)
+or InitiatingProcessVersionInfoFileDescription has_any (Top10AIModels) 
+or InitiatingProcessFolderPath has_any (Top10AIModels)
+or InitiatingProcessFileName has_any (Top10AIModels)
+
