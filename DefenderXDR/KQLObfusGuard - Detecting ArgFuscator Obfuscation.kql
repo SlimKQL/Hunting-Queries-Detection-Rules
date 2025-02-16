@@ -1,0 +1,15 @@
+// KQLObfusGuard - Detecting ArgFuscator Obfuscation
+// https://argfuscator.net/
+
+let KQLObfusGuard=externaldata(RawData:string)
+[h'https://raw.githubusercontent.com/SlimKQL/Hunting-Queries-Detection-Rules/refs/heads/main/IOC/argfuscator.txt']
+| parse RawData with ArgfuscatorCommand :string;
+let ArgfuscatorCmds =
+KQLObfusGuard
+| project ArgfuscatorCommand;
+DeviceEvents
+| where Timestamp > ago(1h)
+| extend ParsedCommandLine = parse_command_line(tolower(InitiatingProcessCommandLine), "windows")
+| extend IPCL_Length = strlen(InitiatingProcessCommandLine)
+| extend PCL_Length = strlen(tostring(ParsedCommandLine))-2-(2*array_length(ParsedCommandLine))+(array_length(ParsedCommandLine)-1)
+| where (IPCL_Length - PCL_Length > 1) and ParsedCommandLine has_any(ArgfuscatorCmds)
