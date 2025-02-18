@@ -1,0 +1,16 @@
+// Critical OpenSSH Vulnerabilities – Patch Prioritization
+
+// The following KQL identified all your internet facing OpenSSH servers vulnerable to CVE-2025-26466 and CVE-2025-26465. You should get your IT infra engineers to prioritize patching these servers to version 9.9p2 that is released on 18th Feb 2025. Let's Go ! 🛡️
+
+// https://www.openwall.com/lists/oss-security/2025/02/18/1
+// https://www.openssh.com/releasenotes.html
+
+let InternetFacingEP =
+DeviceInfo
+| where IsInternetFacing == true and isnotempty(PublicIP)
+| distinct DeviceId;
+let OpenSSHFixedVersion = dynamic(["9.9p2"]); // https://www.openssh.com/releasenotes.html
+DeviceTvmSoftwareInventory
+| where SoftwareName has "openssh"
+| where not (SoftwareVersion has_any(OpenSSHFixedVersion))
+| where DeviceId has_any(InternetFacingEP)
