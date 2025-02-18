@@ -1,0 +1,20 @@
+// EDR Evasion - Inject Shellcode via MSSQL CLR Assembly Detection
+
+// Blog: https://blog.pyn3rd.com/2024/11/22/How-to-use-MSSQL-CLR-assembly-to-bypass-EDR/
+
+let VSId = dynamic(["Microsoft Visual Studio"]);
+let Condition1 =
+DeviceFileEvents
+| where InitiatingProcessVersionInfoFileDescription has_any(VSId)
+| where ActionType == "FileCreated" and tolower(FileName) endswith ".sql"
+| distinct DeviceName;
+let SQLStudioId = dynamic(["Microsoft SQL Server Management Studio"]);
+let Condition2 =
+DeviceFileEvents
+| where InitiatingProcessVersionInfoFileDescription has_any(SQLStudioId)
+| distinct DeviceName;
+DeviceProcessEvents
+| where ActionType == "ProcessCreated"
+| where FileName == "sqlservr.exe"
+| where DeviceName has_any (Condition1) and DeviceName has_any(Condition2)
+
