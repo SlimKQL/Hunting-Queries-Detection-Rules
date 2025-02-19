@@ -1,5 +1,7 @@
 // DefenderXDR Weekly OSINT Indicators Scan
 
+// https://www.linkedin.com/posts/0x534c_cybersecurity-osint-defenderxdr-activity-7297886477198180353-K_0Y/
+
 let WeeklyOSINT=externaldata(Type:string, Value:string, Source:string)
 [h'https://raw.githubusercontent.com/SlimKQL/Hunting-Queries-Detection-Rules/refs/heads/main/IOC/WeeklyOSINTHightlights17Feb2025.csv'];
 let OSINTSHA256 =
