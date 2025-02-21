@@ -1,0 +1,61 @@
+// Hunting New Variant of Snake Keylogger
+
+// https://www.fortinet.com/blog/threat-research/fortisandbox-detects-evolving-snake-keylogger-variant
+
+// FortiGuard Labs has identified a new variant of the Snake Keylogger, also known as 404 Keylogger, using FortiSandbox v5.0. This malware, classified as AutoIt/Injector.GTY!tr, has been responsible for over 280 million blocked infection attempts. The Snake Keylogger typically spreads through phishing emails and targets Windows users to steal sensitive information such as credentials and data from web browsers. Its capabilities include keystroke logging, credential harvesting from popular browsers, clipboard monitoring, and exfiltration of stolen data via SMTP and Telegram bots. Additionally, it employs persistence mechanisms to maintain access, process hollowing to evade detection, and retrieves the victim's IP address and geolocation.
+
+// Utilizing the file hash of the keylogger and the FileProfile KQL enrichment function, the keylogger has been detected in 1,110 MDE organizations worldwide, first appearing on January 14, 2025. I have extracted the IOCs from the FortiGuard blog and uploaded them to my GitHub. Leveraging my DefenderXDR All-In-One KQL Weekly OSINT Scan, I can hunt against your EmailAttachmentInfo, EmailUrlInfo, DeviceFileEvents, and DeviceNetworkEvents schemas for the past 30 days. (FortiGuard Blog and KQL available in the comment section)
+
+let WeeklyOSINT=externaldata(Type:string, Value:string, Source:string)
+[h'https://raw.githubusercontent.com/SlimKQL/Hunting-Queries-Detection-Rules/refs/heads/main/IOC/SnakeLogger.csv'];
+let OSINTSHA256 =
+WeeklyOSINT
+| where Type == "hash_sha256"
+| project Value;
+let OSINTSHA1 =
+WeeklyOSINT
+| where Type == "hash_sha1"
+| project Value;
+let OSINTMD5 =
+WeeklyOSINT
+| where Type == "hash_md5"
+| project Value;
+let OSINTDOMAIN =
+WeeklyOSINT
+| where Type == "domain"
+| project Value;
+let OSINTURL =
+WeeklyOSINT
+| where Type == "url"
+| project Value;
+let OSINTIP =
+WeeklyOSINT
+| where Type == "ip"
+| project Value;
+let ScanEmailAttachments =
+EmailAttachmentInfo
+| where Timestamp > ago(30d)
+| where SHA256 has_any(OSINTSHA256);
+let ScanEmailURLs =
+EmailUrlInfo
+| where Timestamp > ago(30d)
+| where UrlDomain has_any(OSINTDOMAIN) or Url has_any(OSINTURL);
+let ScanEndpointFiles =
+DeviceFileEvents
+| where Timestamp > ago(30d)
+| where ActionType == "FileCreated"
+| where MD5 has_any(OSINTMD5) or SHA1 has_any(OSINTSHA1) or SHA256 has_any(OSINTSHA256);
+let ScanEndpointNetwork1 =
+DeviceNetworkEvents
+| where Timestamp > ago(30d)
+| where ActionType == "ConnectionSuccess"
+| where RemoteIP has_any (OSINTIP) or RemoteUrl has_any (OSINTDOMAIN);
+let ScanEndpointNetwork2 =
+DeviceNetworkEvents
+| where Timestamp > ago(30d)
+| where ActionType == "HttpConnectionInspected"
+| extend ConnectInfo = todynamic(AdditionalFields)
+| extend HttpHost = ConnectInfo.host
+| where HttpHost has_any(OSINTDOMAIN);
+union ScanEmailAttachments, ScanEmailURLs, ScanEndpointFiles, ScanEndpointNetwork1, ScanEndpointNetwork2
+
