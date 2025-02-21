@@ -1,0 +1,5 @@
+type,value,source
+ip,51.38.247.67,https://www.fortinet.com/blog/threat-research/fortisandbox-detects-evolving-snake-keylogger-variant
+hash_sha1,7ff600a40521fb8267fd305f601832785f975d40,https://www.fortinet.com/blog/threat-research/fortisandbox-detects-evolving-snake-keylogger-variant
+hash_md5,77f8db41b320c0ba463c1b9b259cfd1b,https://www.fortinet.com/blog/threat-research/fortisandbox-detects-evolving-snake-keylogger-variant
+url,http://51.38.247.67:8081/_send_php?L,https://www.fortinet.com/blog/threat-research/fortisandbox-detects-evolving-snake-keylogger-variant
