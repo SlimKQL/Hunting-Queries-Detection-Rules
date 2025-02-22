@@ -1,0 +1,23 @@
+// M365 Copilot Chat SafeLink Monitoring
+// https://admin.microsoft.com/AdminPortal/home?#/MessageCenter/:/messages/MC1013453
+
+let M365CopilotChatURL =
+CloudAppEvents
+| where Timestamp > ago(1h)
+| where ActionType == @"CopilotInteraction"
+| extend UserID = tostring(RawEventData.UserId)
+| extend CopilotData = todynamic(RawEventData.CopilotEventData)
+| extend CopilotAccessResources = (CopilotData.AccessedResources)
+| extend CopilotAppHost = tostring(CopilotData.AppHost)
+| extend CopilotContexts = tostring(CopilotData.Contexts)
+| extend CopilotType = tostring(CopilotData.Type)
+| extend CopilotMessageIds = tostring(CopilotData.MessageIds)
+| extend CopilotThreadId = tostring(CopilotData.ThreadId)
+| mv-expand CopilotAccessResources
+| where CopilotAppHost == "Bing" and isnotempty(CopilotAccessResources.SiteUrl)
+| project CopilotAccessResources.SiteUrl;
+UrlClickEvents
+| where Timestamp > ago(1h)
+| where ActionType == "ClickBlocked"
+| where Url has_any(M365CopilotChatURL)
+
