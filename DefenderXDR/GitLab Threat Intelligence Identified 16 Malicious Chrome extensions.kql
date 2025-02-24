@@ -1,0 +1,13 @@
+// GitLab Threat Intelligence Identified 16 Malicious Chrome extensions
+
+// https://gitlab-com.gitlab.io/gl-security/security-tech-notes/threat-intelligence-tech-notes/malicious-browser-extensions-feb-2025/
+
+let GitLabTI=externaldata(MaliciousChromeID:string)
+[h'https://raw.githubusercontent.com/SlimKQL/Hunting-Queries-Detection-Rules/refs/heads/main/IOC/GitLabTI-MaliciousChromeExtID.csv'];
+let MID =
+GitLabTI
+| project MaliciousChromeID;
+DeviceFileEvents
+| where ActionType == "FileCreated" or ActionType == "FileModified" or ActionType == "FileRenamed"
+| where FileName endswith ".crx"
+| where FileName has_any(MID)
