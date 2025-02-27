@@ -1,0 +1,25 @@
+// Exploring M365 Accounts Investigation
+
+// https://www.linkedin.com/posts/0x534c_cybersecurity-m365investigation-kql-activity-7300859391950344192-xedq/
+
+let UserSSPR =
+AuditLogs
+| where TimeGenerated > ago(90d)
+| where OperationName has "Self-service password reset"
+| distinct tostring(TargetResources[0].userPrincipalName);
+let UserEPNonManaged =
+SigninLogs
+| where TimeGenerated > ago(90d)
+| where UserPrincipalName has_any(UserSSPR)
+| extend DeviceName = tostring(DeviceDetail.displayName)
+| extend TrustType = tostring(DeviceDetail.trustType)
+| extend OS = tostring(DeviceDetail.operatingSystem)
+| where OS !has "ios" and OS !has "android"
+| where TrustType !has "AD"
+| distinct UserPrincipalName;
+CloudAppEvents
+| where TimeGenerated > ago(90d)
+| where IPCategory has "VPN" or IPTags has "Anonymous proxy"
+| where tostring(RawEventData.UserId) has_any(UserEPNonManaged)
+| summarize Count=count() by ActionType, UserAgent, tostring(RawEventData.UserId)
+| sort by Count desc   
