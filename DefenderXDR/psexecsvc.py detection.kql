@@ -1,0 +1,19 @@
+// Detecting psexecsvc.py
+// https://sensepost.com/blog/2025/psexecing-the-right-way-and-why-zero-trust-is-mandatory/
+// https://github.com/sensepost/susinternals
+
+let QueryPeriod = 1h;
+let DeviceWithPSEXECSVC =
+DeviceFileEvents
+| where Timestamp > ago(QueryPeriod)
+| where FolderPath has "\\ADMIN$"
+| where ActionType == "FileCreated"
+| where FileName has "PSEXECSVC"
+| project DeviceId;
+DeviceEvents
+| where Timestamp > ago(QueryPeriod)
+| where ActionType == "ServiceInstalled"
+| where parse_json(AdditionalFields)["ServiceName"] has "PSEXECSVC" 
+or InitiatingProcessVersionInfoOriginalFileName == "PSEXECSVC1.9.exe"
+| where DeviceId has_any(DeviceWithPSEXECSVC)
+
