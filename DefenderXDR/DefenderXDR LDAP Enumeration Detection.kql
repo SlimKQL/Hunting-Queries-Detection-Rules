@@ -1,0 +1,10 @@
+// DefenderXDR LDAP Enumeration Detection
+
+let ADAdministrator = dynamic(["Jack.Sparrow@acme.org"]);
+IdentityQueryEvents
+| where ActionType == "LDAP query"
+| where QueryType == "AllObjects"
+| extend LDAPQueryCount = toint(parse_json(AdditionalFields)["Count"])
+| where LDAPQueryCount > 500
+| where not (TargetAccountUpn has_any(ADAdministrator))
+
