@@ -1,0 +1,12 @@
+// DefenderXDR: Medusa Ransomware Detection
+
+// https://www.cisa.gov/sites/default/files/2025-03/aa25-071a-stopransomware-medusa-ransomware.pdf
+
+let MedusaDiscovery = dynamic(["21", "22", "23", "80", "115", "443", "1433", "3050", "3128", "3306", "3389"]);
+DeviceNetworkEvents
+| where Timestamp > ago(1h)
+| where ActionType == @"ConnectionAttempt"
+| where parse_json(AdditionalFields)["direction"] == 'In'
+| where LocalPort in (MedusaDiscovery)
+| summarize TargetDevice=dcount(DeviceName), TargetPort=dcount(LocalPort) by RemoteIP
+| where TargetPort == 11 // Matched all the MedusaDiscovery ports
