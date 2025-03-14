@@ -1,0 +1,14 @@
+// Kerberos Roasting Detection 🕵️‍♀️🔥
+
+// Built a KQL detection with the IdentityLogonEvents table to outsmart attackers. Bonus? A VIP whitelist entry: Wendy@Wendy.com, roasting bad actors with style!🍔🤣
+
+let WhitelistAdminAccount = dynamic(["Wendy@Wendy.com"]);
+IdentityLogonEvents 
+| where Timestamp > ago(1h)
+| where Protocol == "Kerberos"
+| where parse_json(AdditionalFields)["AttackTechniques"] has 'T1558.003'
+| where parse_json(AdditionalFields)["EncryptionType"] has "rc4hmac"
+| extend SPNs = tostring(parse_json(AdditionalFields)["Spns"])
+| summarize Target_SPN=dcount(SPNs) by AccountUpn
+| where not (AccountUpn has_any(WhitelistAdminAccount))
+| where Target_SPN > 3
