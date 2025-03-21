@@ -1,0 +1,8 @@
+// Detecting Misconfigured EXO Transport Rules
+
+EmailEvents
+| where EmailDirection == "Inbound"
+| where isnotempty(ThreatClassification)
+| where LatestDeliveryAction == "Delivered"
+| where DeliveryLocation != "Junk folder"
+| summarize Count=count() by tostring(parse_json(AdditionalFields)["TransportRuleGuid"])
