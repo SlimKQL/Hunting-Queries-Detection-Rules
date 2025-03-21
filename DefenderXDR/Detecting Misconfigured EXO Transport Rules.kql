@@ -2,7 +2,7 @@
 
 EmailEvents
 | where EmailDirection == "Inbound"
-| where isnotempty(ThreatClassification)
+| where isnotempty(ThreatTypes)
 | where LatestDeliveryAction == "Delivered"
 | where DeliveryLocation != "Junk folder"
 | summarize Count=count() by tostring(parse_json(AdditionalFields)["TransportRuleGuid"])
