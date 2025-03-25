@@ -1,0 +1,10 @@
+// https://www.wiz.io/blog/ingress-nginx-kubernetes-vulnerabilities
+
+let InternetFacing =
+DeviceInfo
+| where IsInternetFacing == true and isnotempty(PublicIP)
+| distinct DeviceId;
+DeviceProcessEvents
+| where InitiatingProcessCommandLine has "nginx-ingress"
+| summarize arg_max(TimeGenerated, *) by DeviceId
+| where DeviceId has_any(InternetFacing)
