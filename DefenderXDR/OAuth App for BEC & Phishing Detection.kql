@@ -1,0 +1,7 @@
+// The new OAuthAppInfo table now included in DefenderXDR, enabling SecOps to monitor potential rogue OAuth app activity related to BEC and phishing threats. The custom hourly DefenderXDR detection outlined below ensures comprehensive detection coverage.
+
+OAuthAppInfo
+| where AddedOnTime > ago(1h)
+| where AppOrigin == "External"
+| where VerifiedPublisher == "{}"
+| where Permissions has "mail.readwrite"
