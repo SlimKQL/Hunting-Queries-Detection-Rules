@@ -1,0 +1,10 @@
+// Following the principle of least privilege, have you reviewed the permissions granted to your admin-consented OAuth applications? It’s important to identify applications with permissions that are no longer utilized after being consented. Use the KQL query below to audit and analyze the overprivileged permissions assigned to these applications.
+
+OAuthAppInfo
+| mv-expand Permissions
+| where Permissions.InUse == false
+| where IsAdminConsented == 1
+| where AppStatus == "Enabled"
+| summarize UnUsedPermission=count() by AppName,
+tostring(Permissions.TargetAppDisplayName),
+tostring(Permissions.PermissionValue)
