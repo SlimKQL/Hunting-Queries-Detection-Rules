@@ -1,3 +1,5 @@
+
+// KQL 1 - First Version
 let SecureAnnex=externaldata(extension_id:string)
 [h'https://raw.githubusercontent.com/SlimKQL/Hunting-Queries-Detection-Rules/refs/heads/main/IOC/SecureAnnexIOCs.csv'];
 let MID =
@@ -7,3 +9,16 @@ DeviceFileEvents
 | where ActionType == "FileCreated" or ActionType == "FileModified" or ActionType == "FileRenamed"
 | where FileName endswith ".crx"
 | where FileName has_any(MID)
+
+// KQL 2 - Optimized Version
+
+let SecureAnnex=externaldata(extension_id:string, extension_name:string)
+[h'https://raw.githubusercontent.com/SlimKQL/Hunting-Queries-Detection-Rules/refs/heads/main/IOC/SecureAnnexIOCs.csv']
+with (format='csv', ignoreFirstRecord=true);
+DeviceFileEvents
+| where ActionType == "FileCreated" or ActionType == "FileModified"
+| where FileName endswith ".crx"
+| extend ExtensionIDVersion = tostring(split(FileName, '.')[0])
+| extend ExtensionID = tolower(split(ExtensionIDVersion, '_')[0])
+| summarize arg_max(TimeGenerated, *) by DeviceName, ExtensionID
+| join SecureAnnex on $left.ExtensionID == $right.extension_id
