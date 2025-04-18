@@ -1,0 +1,9 @@
+let SecureAnnex=externaldata(extension_id:string)
+[h'https://raw.githubusercontent.com/SlimKQL/Hunting-Queries-Detection-Rules/refs/heads/main/IOC/SecureAnnexIOCs.csv'];
+let MID =
+SecureAnnex
+| project extension_id;
+DeviceFileEvents
+| where ActionType == "FileCreated" or ActionType == "FileModified" or ActionType == "FileRenamed"
+| where FileName endswith ".crx"
+| where FileName has_any(MID)
