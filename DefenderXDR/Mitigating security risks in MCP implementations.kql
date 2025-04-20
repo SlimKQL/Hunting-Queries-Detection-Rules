@@ -1,0 +1,11 @@
+// Mitigating security risks in MCP implementations
+
+// https://www.linkedin.com/posts/0x534c_cybersecurity-azuremcp-securitycompliance-activity-7319697806321938432-xRXh?utm_source=share&utm_medium=member_desktop&rcm=ACoAABpDyEoBICouOcdQOH4JkFdMxQhTXfnQe2w
+// https://techcommunity.microsoft.com/blog/microsoft-security-blog/understanding-and-mitigating-security-risks-in-mcp-implementations/4404667
+
+DeviceNetworkEvents
+| where TimeGenerated > ago(1h)
+| where ActionType == "ListeningConnectionCreated"
+| where LocalPort == 5008
+| where InitiatingProcessCommandLine has "azure/mcp"
+
