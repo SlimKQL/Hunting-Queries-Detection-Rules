@@ -1,0 +1,9 @@
+// https://thehackernews.com/2025/04/hackers-abuse-russian-bulletproof-host.html
+
+DeviceNetworkEvents
+| where TimeGenerated > ago(90d)
+| where ipv4_is_in_any_range(RemoteIP, '45.135.232.0/24', '91.212.166.0/24', '193.143.1.0/24', '45.140.17.0/24', '45.134.26.0/24')
+| where ActionType has "ConnectionSuccess" or ActionType has "InboundConnectionAccepted"
+| summarize NoOfHits=count() by DeviceName, ActionType, RemoteIP
+| sort by NoOfHits desc
+
