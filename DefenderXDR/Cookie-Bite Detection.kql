@@ -1,0 +1,13 @@
+// https://www.varonis.com/blog/cookie-bite
+// https://www.bleepingcomputer.com/news/security/cookie-bite-attack-poc-uses-chrome-extension-to-steal-session-tokens/
+
+let EPwithNewExt =
+DeviceFileEvents
+| where ActionType == "FileCreated"
+| where FileName endswith ".crx"
+| distinct DeviceName;
+DeviceProcessEvents
+| where FileName =~ "powershell.exe" or InitiatingProcessFileName =~"powershell.exe"
+| where ProcessCommandLine has_any ("load-extension")
+| where DeviceName has_any(EPwithNewExt)
+
