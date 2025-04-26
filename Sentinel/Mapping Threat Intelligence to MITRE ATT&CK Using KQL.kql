@@ -1,0 +1,19 @@
+// Mapping Threat Intelligence to MITRE ATT&CK Using KQL
+
+// Starting in April, Microsoft Sentinel will ingest all threat intelligence into the newly introduced ThreatIntelIndicator and ThreatIntelObjects tables. These tables support the STIX 2.1 schema, enabling the ingestion and querying of various threat intelligence objects, including identity, attack-patterns, threat-actors, and relationships.
+
+// To enhance threat analysis, I developed a KQL query that maps ThreatIntelIndicator IOCs to their respective MITRE ATT&CK techniques. As demonstrated in the query below, Sentinel threat intelligence IOCs are most commonly associated with "Web Protocols" (T1071.001).
+
+// This crucial MITRE ATT&CK technique information allows us to leverage specific techniques and IOC ObservableValues for targeted threat hunting, refining our approach based on adversary tactics and behaviors.
+
+ThreatIntelIndicators
+| where TimeGenerated > ago(365d)
+| where now() between (ValidFrom .. ValidUntil)
+| where isnotempty(Data.labels)
+| mv-expand Data.labels
+| where Data_labels has "mitre"
+| extend MitreID = parse_json(tostring(Data_labels)).Alias
+| extend MitreTechnique = parse_json(tostring(Data_labels)).FullName
+| extend MitreTechniqueName = parse_json(tostring(Data_labels)).Name
+| summarize TechniqueCount=count() by tostring(MitreID), tostring(MitreTechniqueName)
+| sort by TechniqueCount desc 
