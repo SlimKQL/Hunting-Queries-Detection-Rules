@@ -1,0 +1,17 @@
+// https://www.cisa.gov/news-events/cybersecurity-advisories/aa25-093a
+
+let FastFlux =
+ThreatIntelIndicators
+| where TimeGenerated > ago(365d)
+| where now() between (ValidFrom .. ValidUntil)
+| where isnotempty(Data.labels)
+| mv-expand Data.labels
+| where Data_labels has "mitre"
+| extend MitreID = parse_json(tostring(Data_labels)).Alias
+| where MitreID == "T1568.001"
+| project ObservableValue;
+DeviceNetworkEvents
+| where TimeGenerated > ago(1h)
+| where ActionType == "DnsConnectionInspected"
+| where AdditionalFields.direction == "Out"
+| where AdditionalFields.query has_any (FastFlux)
