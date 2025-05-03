@@ -1,0 +1,25 @@
+// Threat Hunting Mshta with Sentinel TI
+
+let QueryPeriod = 1d;
+let T1218IOC =
+ThreatIntelIndicators
+| where TimeGenerated > ago(365d)
+| where now() between (ValidFrom .. ValidUntil)
+| where isnotempty(Data.labels)
+| mv-expand Data.labels
+| where Data_labels has "mitre"
+| extend MitreID = parse_json(tostring(Data_labels)).Alias 
+| where MitreID == "T1218.005";
+let NetworkTraffic =
+DeviceNetworkEvents
+| where TimeGenerated > ago(QueryPeriod)
+| where ActionType == "ConnectionSuccess"
+| join T1218IOC on ($left.RemoteIP == $right.ObservableValue);
+let EmailURL =
+EmailUrlInfo
+| where TimeGenerated > ago(QueryPeriod)
+| join T1218IOC on $left.Url == $right.ObservableValue;
+DeviceFileEvents
+| where TimeGenerated > ago(QueryPeriod)
+| join T1218IOC on $left.SHA256 == $right.ObservableValue
+| union NetworkAccessTraffic, EmailURL
