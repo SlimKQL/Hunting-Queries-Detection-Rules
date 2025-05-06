@@ -1,0 +1,10 @@
+// https://www.recordedfuture.com/research/terrastealerv2-and-terralogger
+
+DeviceFileEvents
+| where Timestamp > ago(1h)
+| where ActionType == "FileCreated"
+| where FileName endswith ".txt"
+| where FolderPath startswith "c:\\programdata\\"
+| where InitiatingProcessCommandLine has "regsvr32" and
+InitiatingProcessCommandLine has ".ocx"
+
