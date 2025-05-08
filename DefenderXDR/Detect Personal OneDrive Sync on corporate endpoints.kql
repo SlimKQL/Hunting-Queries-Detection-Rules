@@ -1,0 +1,6 @@
+// https://www.microsoft.com/en-us/microsoft-365/roadmap?id=490064
+
+DeviceRegistryEvents 
+| where TimeGenerated > ago(1h)
+| where ActionType == "RegistryKeyCreated" or ActionType == "RegistryValueSet"
+| where RegistryKey has "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\OneDrive\\Personal"
