@@ -1,0 +1,16 @@
+// https://www.pentestpartners.com/security-blog/exploiting-copilot-ai-for-sharepoint/
+
+// Monitoring excessive prompts, a potential sign of prompt testing.
+
+let MonitorThreshold = 8;
+CloudAppEvents
+| where Timestamp > ago(1d)
+| where ActionType == @"CopilotInteraction"
+| extend UserID = tostring(RawEventData.UserId)
+| extend CopilotData = todynamic(RawEventData.CopilotEventData)
+| extend CopilotPlugin = tostring(CopilotData.AISystemPlugin[0].Id)
+| where CopilotPlugin == "EnterpriseSearch"
+| where parse_json(CopilotData)["Messages"][0]["isPrompt"] == 'true'
+| extend AccountUPN = UserID
+| summarize PromptCount=count() by AccountUPN
+| where PromptCount > MonitorThreshold
