@@ -1,0 +1,10 @@
+// https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/strengthening-email-ecosystem-outlook%e2%80%99s-new-requirements-for-high%e2%80%90volume-senders/4399730
+
+EmailEvents
+| where Timestamp > ago(3d) // Enforcement started on 5th May 2025
+| where EmailDirection == "Inbound"
+| where DeliveryAction == "Blocked"
+| where DeliveryLocation == @"Failed"
+| where SenderFromAddress == @"postmaster@outlook.com"
+| summarize RejectionCount=count() by RecipientEmailAddress // Impacted Users
+| sort by RejectionCount desc 
