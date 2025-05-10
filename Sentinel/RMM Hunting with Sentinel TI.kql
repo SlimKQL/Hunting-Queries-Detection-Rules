@@ -1,0 +1,11 @@
+
+ThreatIntelIndicators
+| where TimeGenerated > ago(365d)
+| where now() between (ValidFrom .. ValidUntil)
+| where isnotempty(Data.labels)
+| mv-expand Data.labels
+| where Data_labels has "mitre"
+| extend MitreID = parse_json(tostring(Data_labels)).Alias
+| where MitreID == "T1219" // Remote Access Tools 
+| summarize IOCcount=count() by ObservableKey, Confidence
+| sort by IOCcount desc 
