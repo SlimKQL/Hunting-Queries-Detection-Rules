@@ -1,0 +1,22 @@
+// SAP NetWeaver Attack by Chinese Threat Actor Impact Assessment
+// https://www.forescout.com/blog/threat-analysis-sap-vulnerability-exploited-in-the-wild-by-chinese-threat-actor/
+
+let InternetFacing =
+DeviceInfo
+| where IsInternetFacing == true and isnotempty(PublicIP)
+| distinct DeviceId;
+let SAPNetweaver =
+DeviceProcessEvents
+| where TimeGenerated > ago(90d)
+| where InitiatingProcessVersionInfoProductName has "netweaver"
+| summarize arg_max(TimeGenerated, *) by DeviceId
+| where DeviceId has_any(InternetFacing);
+let ForescoutIOC=externaldata(Type:string, Value:string, Source:string)
+[h'https://raw.githubusercontent.com/SlimKQL/Hunting-Queries-Detection-Rules/refs/heads/main/IOC/Chaya_004-IOC10May2025.csv'];
+DeviceNetworkEvents
+| where TimeGenerated > ago(30d)
+| join ForescoutIOC on $left.RemoteIP == $right.Value
+| where ActionType has "ConnectionSuccess" or ActionType has "InboundConnectionAccepted"
+| where DeviceId has_any(SAPNetweaver)
+| summarize NoOfHits=count() by DeviceName, ActionType, RemoteIP
+| sort by NoOfHits desc
