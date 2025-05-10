@@ -1,5 +1,6 @@
 // https://www.linkedin.com/posts/0x534c_cybersecurity-safelinkprotection-maliciousurl-activity-7325956438965518337-JV3o
 
+UrlClickEvents
 | where Timestamp > ago(1h)
 | where Workload == "Copilot"
 | where ActionType == "ClickBlocked"
