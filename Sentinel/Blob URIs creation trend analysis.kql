@@ -1,0 +1,8 @@
+// https://hackread.com/phishing-attack-blob-uri-fake-login-pages-browser/
+
+// Switch to Chart Mode to visualize
+
+DeviceFileEvents
+| where TimeGenerated > ago(90d)
+| where FileOriginUrl startswith "blob:https://"
+| summarize Count=count() by bin(TimeGenerated,1d)
