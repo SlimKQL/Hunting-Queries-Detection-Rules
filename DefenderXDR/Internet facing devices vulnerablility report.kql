@@ -1,0 +1,12 @@
+// https://www.greynoise.io/resources/how-resurgent-vulnerabilities-jeopardize-organizational-security
+
+// Internet facing devices vulnerablility report
+
+let InternetFacing =
+DeviceInfo
+| where IsInternetFacing == true and isnotempty(PublicIP)
+| distinct DeviceId;
+DeviceTvmSoftwareVulnerabilities
+| where DeviceId has_any(InternetFacing)
+| summarize VulnerabilityCount=count() by DeviceName, VulnerabilitySeverityLevel
+| sort by VulnerabilityCount desc 
