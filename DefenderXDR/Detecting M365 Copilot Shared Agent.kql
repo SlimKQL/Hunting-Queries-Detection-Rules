@@ -1,0 +1,6 @@
+// Detecting M365 Copilot Shared Agent
+
+CloudAppEvents
+| where Timestamp > ago(1h)
+| where Application == @"Microsoft 365"
+| where ActionType in ("BotCreate", "BotUpdateOperation-BotPublish")
