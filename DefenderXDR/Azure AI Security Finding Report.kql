@@ -1,0 +1,8 @@
+// Azure AI Security Finding Report
+
+ExposureGraphEdges 
+| where TargetNodeCategories[0] == "AI"
+| where SourceNodeCategories[1] == "security_finding"
+| extend FindingDate = parse_json(EdgeProperties)["rawData"]["publishedDate"]
+| extend SecurityRiskLevel = parse_json(EdgeProperties)["rawData"]["risk"]["riskLevel"]
+| project FindingDate, SecurityRiskLevel, TargetNodeName, SourceNodeName
