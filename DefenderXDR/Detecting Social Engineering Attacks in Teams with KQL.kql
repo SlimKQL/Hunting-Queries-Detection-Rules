@@ -1,0 +1,21 @@
+// https://redcanary.com/blog/threat-intelligence/storm-1811-black-basta/
+// https://techcommunity.microsoft.com/blog/microsoftsecurityexperts/phish-click-breach-hunting-for-a-sophisticated-cyber-attack/4267916
+
+// E.g Approved Corporate RMM - Whitelisting
+let SanctionRMM = dynamic("bomgarcloud.com");
+// Lookup list of RMM Tools Url from Microsoft
+let RMMList=externaldata(URI: string, RMMTool: string)
+[h'https://raw.githubusercontent.com/jischell-msft/RemoteManagementMonitoringTools/refs/heads/main/Network%20Indicators/RMM_SummaryNetworkURI.csv'];
+let RMMUrl =
+RMMList
+| project URI;
+MessageUrlInfo
+| where Timestamp > ago(1h)
+// Scan all external inbound Teams message for RMM Tools URL
+// For example: Storm-1811 exploits RMM tools to drop Black Basta ransomware 
+| where Url has_any(RMMUrl)
+| where not (Url has_any(SanctionRMM))
+| join MessageEvents on TeamsMessageId
+| where IsExternalThread == "1"
+| where ThreadType == "chat"
+| where DeliveryLocation == "Teams"
