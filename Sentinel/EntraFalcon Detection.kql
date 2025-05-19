@@ -1,0 +1,18 @@
+// https://blog.compass-security.com/2025/04/introducing-entrafalcon-a-tool-to-enumerate-entra-id-objects-and-assignments/
+
+let QueryPeriod = 1h;
+let InteractiveSignin =
+SigninLogs 
+| where TimeGenerated > ago(QueryPeriod)
+| where (AppId == "1b730954-1685-4b74-9bfd-dac224a7b894" and
+ResourceIdentity == "00000003-0000-0000-c000-000000000000") or 
+(AppId == "04b07795-8ddb-461a-bbee-02f9e1bf7b46" and
+ResourceIdentity == "00000003-0000-0000-c000-000000000000");
+AADNonInteractiveUserSignInLogs
+| where TimeGenerated > ago(QueryPeriod)
+| where (AppId == "eb20f3e3-3dce-4d2c-b721-ebb8d4414067" and
+ResourceIdentity == "00000003-0000-0000-c000-000000000000") or 
+(AppId == "04b07795-8ddb-461a-bbee-02f9e1bf7b46" and
+ResourceIdentity == "797f4846-ba00-4fd7-ba43-dac1f8f63013")
+| union InteractiveSignin
+
