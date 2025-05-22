@@ -1,0 +1,17 @@
+// BadSuccessor Detection
+// Abusing dMSA to escalate privileges in Active Directory
+// https://www.akamai.com/blog/security-research/abusing-dmsa-for-privilege-escalation-in-active-directory
+
+let QueryPeriod = 1h;
+let dMSARegKey = dynamic(["DelegatedMSAEnabled"]);
+let dMSAMonitor =
+SecurityEvent
+| where TimeGenerated > ago(QueryPeriod)
+| where EventID == 307 or // dMSA Migration
+EventID == 308 or // dMSA Permission Add
+EventID == 309; // dMSA Key Fetch
+DeviceRegistryEvents
+| where TimeGenerated > ago(QueryPeriod)
+| where ActionType == @"RegistryKeyCreated" or ActionType  == @"RegistryValueSet"
+| where RegistryKey has_any(dMSARegKey)
+| union dMSAMonitor
