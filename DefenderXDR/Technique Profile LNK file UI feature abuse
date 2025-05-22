@@ -1,0 +1,13 @@
+// Technique Profile: LNK file UI feature abuse
+// https://security.microsoft.com/threatanalytics3/a7afa4d1-a34e-4439-9d7a-417e86a1e246/overview
+
+let MonitoredCommands = dynamic(["cmd","powershell","conhost","pwsh","regsvr32","rundll32","bitsadmin","certutil"]);
+DeviceEvents
+| where Timestamp > ago(1h)
+| where ActionType == "ShellLinkCreateFileEvent"
+| where tostring(AdditionalFields) contains "ShellLink"
+| where parse_json(AdditionalFields)["ShellLinkShowCommand"] != 'SW_SHOWNORMAL'
+| extend ShellLinkCommandLine = parse_json(AdditionalFields)["ShellLinkCommandLine"]
+| extend ShellLinkIconPath = parse_json(AdditionalFields)["ShellLinkIconPath"]
+| where ShellLinkCommandLine != ""
+| where ShellLinkCommandLine has_any (MonitoredCommands)
