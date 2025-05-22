@@ -1,0 +1,10 @@
+// Blob URI Unique Domain Count
+
+DeviceFileEvents
+| where TimeGenerated > ago(90d)
+| where FileOriginUrl startswith "blob:https://"
+| extend dURL = trim_start("blob:https", FileOriginUrl)
+| extend dURL2 = strcat("https" , dURL)
+| extend Domain = tostring(parse_url(dURL2).Host)
+| summarize Count=count() by Domain
+| sort by Count desc
