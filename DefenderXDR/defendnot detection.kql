@@ -1,0 +1,18 @@
+// https://emsroute.com/2025/05/23/why-defendnot-is-a-wakeup-call-a-ground-level-analysis/
+// https://github.com/es3n1n/defendnot
+
+// Remember to set the query period
+
+let AvModeDescription = dynamic({"0":"Normal", "1":"Passive", "4":"EDR Block"});
+let DeviceEDRPassive =
+DeviceTvmInfoGathering
+| extend AdditionalFields = parse_json(AdditionalFields)
+| extend AvEngineVersion = tostring(AdditionalFields.["AvEngineVersion"])
+| extend AvPlatformVersion = tostring(AdditionalFields.["AvPlatformVersion"])
+| extend AvMode =  tostring(AvModeDescription[tostring(AdditionalFields.["AvMode"])])
+| where isnotempty( AvMode ) and AvMode == "Passive"
+| distinct DeviceName;
+DeviceRegistryEvents
+| where ActionType == "RegistryValueSet"
+| where RegistryKey has "\\SOFTWARE\\Microsoft\\Security Center\\Provider\\Av"
+| where DeviceName has_any(DeviceEDRPassive)
