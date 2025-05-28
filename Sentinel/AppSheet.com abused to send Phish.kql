@@ -1,0 +1,12 @@
+// AppSheet.com abused to send Phish
+// https://blog.knowbe4.com/impersonating-meta-powered-by-appsheet-a-rising-phishing-campaign-exploits-trusted-platforms-to-evade-detection
+
+let MonitorKeywords = dynamic(["intellectual property", "campaign", "infringement", "disabled"]);
+EmailEvents
+| where TimeGenerated > ago(90d)
+| where EmailDirection == "Inbound"
+| where DeliveryAction != "Blocked"
+| where SenderFromAddress == "noreply@appsheet.com"
+| where SenderDisplayName has "facebook" or SenderDisplayName has "meta"
+| where Subject has_any(MonitorKeywords)
+
