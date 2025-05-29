@@ -1,0 +1,18 @@
+// Hunting DragonForce with ANY.RUN Threat Intelligence
+
+let WeeklyOSINT=externaldata(Type:string, Value:string, Source:string)
+[h'https://raw.githubusercontent.com/SlimKQL/Hunting-Queries-Detection-Rules/refs/heads/main/IOC/DragonForce_AnyRun.csv'];
+let OSINTSHA256 =
+WeeklyOSINT
+| where Type == "hash_sha256"
+| project Value;
+let ScanEmailAttachments =
+EmailAttachmentInfo
+| where Timestamp > ago(30d)
+| where SHA256 has_any(OSINTSHA256);
+let ScanEndpointFiles =
+DeviceFileEvents
+| where Timestamp > ago(30d)
+| where ActionType == "FileCreated"
+| where SHA256 has_any(OSINTSHA256);
+union ScanEmailAttachments, ScanEndpointFiles
