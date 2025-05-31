@@ -1,0 +1,15 @@
+// NTLMv2 Hash Leak via COM Detection
+// https://medium.com/@andreabocchetti88/ntlmv2-hash-leak-via-com-auto-execution-543919e577cb
+
+let QueryPeriod = 1h;
+let UserDeviceLogon =
+DeviceLogonEvents 
+| where Timestamp > ago(QueryPeriod)
+| where ActionType == "LogonSuccess" and LogonType == "Interactive"
+| where parse_json(AdditionalFields)["IsLocalLogon"] == 'true'
+| distinct DeviceName;
+DeviceNetworkEvents
+| where Timestamp > ago(QueryPeriod)
+| where RemotePort == "445" and RemoteIPType == "Public"
+| where ActionType == "ConnectionSuccess"
+| where DeviceName has_any (UserDeviceLogon)
