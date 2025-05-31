@@ -1,0 +1,12 @@
+// OAuth app using the OD file picker permission
+// https://thehackernews.com/2025/05/microsoft-onedrive-file-picker-flaw.html
+
+OAuthAppInfo
+| where Timestamp > ago(30d) 
+| where AppStatus == "Enabled"
+| mv-expand Permissions
+| where parse_json(Permissions)["TargetAppDisplayName"] == 'Microsoft Graph'
+| where parse_json(Permissions)["PermissionValue"] == 'MyFiles.Write' or
+parse_json(Permissions)["PermissionValue"] == 'Files.ReadWrite.All' or
+parse_json(Permissions)["PermissionValue"] == 'Sites.ReadWrite.All' or
+parse_json(Permissions)["PermissionValue"] == 'AllSites.Write'
