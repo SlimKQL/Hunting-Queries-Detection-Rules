@@ -1,0 +1,18 @@
+// https://any.run/cybersecurity-blog/ottercookie-malware-analysis/
+
+let QueryLookup = 1h;
+let CompressData =
+DeviceFileEvents
+| where Timestamp > ago(QueryLookup)
+| where ActionType == "FileCreated"
+| where InitiatingProcessFileName has "tar"
+| distinct DeviceName;
+DeviceNetworkEvents
+| where Timestamp > ago(QueryLookup)
+| where ActionType == "HttpConnectionInspected"
+| where parse_json(AdditionalFields)["direction"] == 'Out'
+| where parse_json(AdditionalFields)["status_code"] == '200'
+| extend GeoCtry = tostring(geo_info_from_ip_address(RemoteIP).country)
+| where GeoCtry == "United States"
+| where RemotePort == "1224"
+| where DeviceName has_any(CompressData)
