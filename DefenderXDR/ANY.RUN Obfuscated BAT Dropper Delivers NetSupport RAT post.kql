@@ -1,0 +1,20 @@
+// ANY.RUN Obfuscated BAT Dropper Delivers NetSupport RAT post
+// https://www.linkedin.com/posts/any-run_obfuscated-virustotal-powershell-activity-7336393368698028034-cayg/
+
+let QueryLookup = 1h;
+let ObfuscatedBAT =
+DeviceProcessEvents
+| where Timestamp > ago(QueryLookup)
+| where InitiatingProcessFileName =~ "cmd.exe" and 
+InitiatingProcessCommandLine has ".bat"
+| where FileName =~ "powershell.exe" and 
+ProcessCommandLine has "-WindowsStyle Hidden" and 
+ProcessCommandLine has "Invoke-WebRequest"
+| distinct DeviceName;
+DeviceRegistryEvents
+| where Timestamp > ago(QueryLookup)
+| where ActionType == "RegistryValueSet"
+| where RegistryKey has "\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"
+| where RegistryValueData has "client32.exe"
+| where DeviceName has_any(ObfuscatedBAT)
+
