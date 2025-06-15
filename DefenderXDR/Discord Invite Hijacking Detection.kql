@@ -1,0 +1,16 @@
+// Discord Invite Hijacking Detection
+// https://darkatlas.io/blog/discord-invite-hijacking-how-fake-links-are-delivering-infostealers
+
+let QueryPeriod = 1h;
+let MonitorURLs = dynamic(["discord.com","discord.gg"]);
+let DiscordAccess =
+DeviceNetworkEvents
+| where Timestamp > ago(QueryPeriod)
+| where isnotempty(RemoteUrl)
+| where ActionType == @"ConnectionSuccess"
+| where RemoteUrl has_any (MonitorURLs);
+DeviceNetworkEvents
+| where Timestamp > ago(QueryPeriod)
+| where isnotempty(RemoteUrl)
+| where ActionType == @"ConnectionSuccess"
+| where DeviceName has_any(DiscordAccess) and RemoteUrl =~ "captchaguard.me"
