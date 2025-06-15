@@ -8,7 +8,8 @@ DeviceNetworkEvents
 | where Timestamp > ago(QueryPeriod)
 | where isnotempty(RemoteUrl)
 | where ActionType == @"ConnectionSuccess"
-| where RemoteUrl has_any (MonitorURLs);
+| where RemoteUrl has_any (MonitorURLs)
+| distinct DeviceName;
 DeviceNetworkEvents
 | where Timestamp > ago(QueryPeriod)
 | where isnotempty(RemoteUrl)
