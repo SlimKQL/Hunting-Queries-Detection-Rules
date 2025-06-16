@@ -1,0 +1,13 @@
+// TA4557 drops More_Eggs
+// https://www.proofpoint.com/au/blog/threat-insight/security-brief-ta4557-targets-recruiters-directly-email
+
+let MonitoredCommands = dynamic(["ie4uinit","ie4uinit.exe"]);
+DeviceEvents
+| where Timestamp > ago(1hr)
+| where ActionType == "ShellLinkCreateFileEvent"
+| where tostring(AdditionalFields) contains "ShellLink"
+| where parse_json(AdditionalFields)["ShellLinkShowCommand"] != 'SW_SHOWNORMAL'
+| extend ShellLinkCommandLine = parse_json(AdditionalFields)["ShellLinkCommandLine"]
+| extend ShellLinkIconPath = parse_json(AdditionalFields)["ShellLinkIconPath"]
+| where ShellLinkCommandLine != ""
+| where ShellLinkCommandLine has_any (MonitoredCommands)
