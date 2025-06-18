@@ -3,6 +3,7 @@
 
 let MailBombVictim =
 EmailEvents
+| where TimeGenerated > ago(1h)
 | where isnotempty(DetectionMethods)
 | where tostring(DetectionMethods) has "Mail Bombing"
 | distinct RecipientEmailAddress;
