@@ -2,13 +2,12 @@
 // "The one KQL query that unveils the entire external surface of your MDE device fleet"
 
 let InternetFacingDevices =
-ExposureGraphNodes
-| where NodeLabel == 'device' or 
-(Categories has 'virtual_machine' and set_has_element(Categories, 'virtual_machine'))
-| where NodeProperties.rawData.isInternetFacing == true
-| distinct NodeName;
+   ExposureGraphNodes
+   | where NodeLabel == 'device' or (Categories has 'virtual_machine' and set_has_element(Categories, 'virtual_machine'))
+   | where NodeProperties.rawData.isInternetFacing == true
+   | distinct NodeName;
 DeviceNetworkEvents
-| where TimeGenerated > ago(30d)
+| where Timestamp > ago(30d)
 | where ActionType == "ListeningConnectionCreated"
 | where DeviceName has_any(InternetFacingDevices)
 | where LocalIP != @"127.0.0.1"
