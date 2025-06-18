@@ -1,0 +1,21 @@
+// Social Engineering Attack (Mail Bomb followed by Social Engineered Call - Initial access via RMM Tool)
+// https://admin.microsoft.com/?ref=MessageCenter/:/messages/MC1096885
+
+let MailBombVictim =
+EmailEvents
+| where isnotempty(DetectionMethods)
+| where tostring(DetectionMethods) has "Mail Bombing"
+| distinct RecipientEmailAddress;
+let ApprovedRMM = dynamic("bomgarcloud.com"); // E.g Approved Corporate RMM - Whitelisting
+let RMMList=externaldata(URI: string, RMMTool: string) // Lookup list of RMM Tools Url from Microsoft
+[h'https://raw.githubusercontent.com/jischell-msft/RemoteManagementMonitoringTools/refs/heads/main/Network%20Indicators/RMM_SummaryNetworkURI.csv'];
+let RMMUrl =
+RMMList
+| project URI;
+DeviceNetworkEvents
+| where TimeGenerated > ago(1h)
+| where ActionType == @"ConnectionSuccess"
+| where RemoteUrl has_any(RMMUrl)
+| where not (RemoteUrl has_any(ApprovedRMM)) // Unauthorized Outbound RMM Tool Connection
+| summarize arg_max(TimeGenerated, *) by DeviceId
+| where InitiatingProcessAccountUpn has_any(MailBombVictim) // RMM Tool Connection made by Mail Bomb Victim
