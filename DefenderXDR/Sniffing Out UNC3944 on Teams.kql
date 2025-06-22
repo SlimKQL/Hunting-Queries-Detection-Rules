@@ -1,0 +1,17 @@
+// Spidey Senses Tingling: Sniffing Out UNC3944 on Teams
+
+let M365Domains =
+IdentityInfo
+| summarize arg_max(Timestamp, *) by AccountUpn
+| where isnotempty(AccountDomain)
+| distinct tolower(AccountDomain);
+let MonitorDomainKeyword =dynamic(["connect","corp","duo","help","he1p","helpdesk",
+"helpnow","info","internal","mfa","my","okta","onelogin","schedule","service","servicedesk","servicenow",
+"rci","rsa","sso","ssp","support","usa","vpn","work","dev","workspace","it","ops"]);
+MessageEvents
+| where Timestamp > ago(1h)
+| join MessageUrlInfo on TeamsMessageId
+| extend SenderDomain = tolower(tostring(split(SenderEmailAddress, '@')[1]))
+| where not(SenderDomain has_any(M365Domains))        // External Teams Inbound Message Detected
+| where SenderDomain has_any(MonitorDomainKeyword)    // Check domain keyword match for Scattered Spider TTPs
+
