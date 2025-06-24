@@ -1,7 +1,7 @@
 // FileFix - Social Engineering Attack Detection
 // https://mrd0x.com/filefix-clickfix-alternative/
 
-let MonitoredCommands = dynamic(["powershell","pwsh","regsvr32","bitsadmin","certutil"]);
+let MonitoredCommands = dynamic(["powershell","pwsh","regsvr32","bitsadmin","certutil", "mshta"]);
 let BrowserList = dynamic(["chrome","msedge","firefox","brave"]);
 DeviceProcessEvents
 | where Timestamp > ago(1h)
