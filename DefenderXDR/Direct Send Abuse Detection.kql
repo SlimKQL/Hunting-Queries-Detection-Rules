@@ -1,0 +1,7 @@
+// https://www.bleepingcomputer.com/news/security/microsoft-365-direct-send-abused-to-send-phishing-as-internal-users/
+
+DeviceEvents
+| where Timestamp > ago(1h)
+| where ActionType == "DnsQueryResponse"
+| extend QueryName = tolower(tostring(parse_json(AdditionalFields)["DnsQueryString"]))
+| where QueryName endswith "-com.mail.protection.outlook.com"
