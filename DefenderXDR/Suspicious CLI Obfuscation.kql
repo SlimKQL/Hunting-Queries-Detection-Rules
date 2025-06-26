@@ -1,0 +1,10 @@
+// Goal is to catch powershell and bash obfuscation techniques. Mostly powershell.
+// If the intention is to use this as a detection, it will most likely need tuned to your environment but it has been succesful in mine though multiple tests.
+// If you have questions or reccomendations, please email me at eatinsundip@ccaves.net
+
+DeviceProcessEvents
+| where ProcessCommandLine matches regex @"'[^']+'\s*\+\s*'[^']+'" or //Checking for 'A'+'B' style obfuscation
+    ProcessCommandLine matches regex @'"[^"]+"\s*\+\s*"[^"]+"' or //Checking for "A"+"B" style obfuscation
+    ProcessCommandLine matches regex @".Replace\s*\(" // Checking for .replace obfuscation
+| project Timestamp, AccountName, InitiatingProcessFileName, ProcessCommandLine, DeviceId, ReportId
+| sort by Timestamp desc
