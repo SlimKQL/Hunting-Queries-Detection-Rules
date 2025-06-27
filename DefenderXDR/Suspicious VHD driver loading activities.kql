@@ -1,0 +1,17 @@
+// Update your monitored applications and your filter to match with your organization's businesses
+let monitoredApplications = dynamic(["outlook.exe", "firefox.exe", "chrome.exe", "msedge.exe", "opera.exe", "coccoc.exe", "brave.exe", "chromium.exe","discord.exe", "viber.exe", "zalo.exe", "line.exe", "telegram.exe"]);
+let fileCreationEvents = DeviceFileEvents
+    | where FileName endswith ".img" or FileName endswith ".iso" or FileName endswith ".vhd"
+    | where InitiatingProcessFileName in (monitoredApplications)
+    | project DeviceId, DeviceName, InitiatingProcessFileName,ActionType, FileCreationTimeName=FileName, FileCreationTimestamp=Timestamp,ReportId;
+let driverLoadEvents = DeviceEvents
+    | where ActionType == "DriverLoad"
+    | where FileName in ("cdfs.sys", "fsdepends.sys", "vhdmp.sys")
+    | project DeviceId, DeviceName, ActionType, DriverLoadFileName=FileName, DriverLoadTimestamp=Timestamp;
+fileCreationEvents
+    | join kind=inner (
+        driverLoadEvents
+    ) on DeviceId
+    | where DriverLoadTimestamp > FileCreationTimestamp and DriverLoadTimestamp <= FileCreationTimestamp + 30m
+    | project DeviceId, DeviceName, InitiatingProcessFileName,FileCreationTimestamp, FileCreationTimeName, DriverLoadTimestamp, DriverLoadFileName, ReportId
+    | extend Timestamp=FileCreationTimestamp
