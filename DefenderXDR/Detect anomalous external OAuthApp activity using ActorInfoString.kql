@@ -1,0 +1,12 @@
+// Detect anomalous external OAuthApp activity using ActorInfoString
+// https://techcommunity.microsoft.com/blog/microsoft-security-blog/introducing-actorinfostring-a-new-era-of-audit-log-accuracy-in-exchange-online/4408093
+
+CloudAppEvents
+| where Timestamp > ago(1h)
+| where Application == @"Microsoft Exchange Online"
+| where isnotempty(parse_json(RawEventData)["ActorInfoString"])
+| extend ActorInfoString = tostring(parse_json(RawEventData)["ActorInfoString"])
+| where UncommonForUser has "CountryCode" and UncommonForUser has "UserAgent"
+| where isnotempty(OAuthAppId)
+| join OAuthAppInfo on OAuthAppId
+| where AppOrigin == @"External"
