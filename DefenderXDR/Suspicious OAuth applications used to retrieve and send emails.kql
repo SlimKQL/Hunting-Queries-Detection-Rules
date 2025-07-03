@@ -1,7 +1,7 @@
 // Suspicious OAuth applications used to retrieve and send emails
 // https://security.microsoft.com/threatanalytics3/ba008625-320a-4c71-b996-977049575144/analystreport
 
-let MonitoredScope = dynamic(["Files.ReadWrite","IMAP.AccessAsUser.All","Mail.Read","Mail.ReadBasic","Mail.ReadWrite","Mail.Send","POP.AccessAsUser.All","SMTP.Send","User.Read"])
+let MonitoredScope = dynamic(["Files.ReadWrite","IMAP.AccessAsUser.All","Mail.Read","Mail.ReadBasic","Mail.ReadWrite","Mail.Send","POP.AccessAsUser.All","SMTP.Send","User.Read"]);
 OAuthAppInfo
 | where AddedOnTime > ago(1h)
 | where AppOrigin == "External"
