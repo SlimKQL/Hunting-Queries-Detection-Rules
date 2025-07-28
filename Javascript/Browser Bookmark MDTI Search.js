@@ -1,0 +1,1 @@
+javascript: let intelsearch = prompt("Please enter your Intel Explorer search term:", ""); if (intelsearch) {window.location = 'https://security.microsoft.com/search/mdti?q=' + encodeURIComponent(intelsearch);}
