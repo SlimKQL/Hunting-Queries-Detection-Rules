@@ -1,4 +1,3 @@
-|
 // Newly registered devices in Azure AD [DCSecurityOperations].
   let NewDevices = AuditLogs
       | where OperationName == "Register device"
