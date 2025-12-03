@@ -1,0 +1,8 @@
+// contact@ccaves.net for questions or contact
+// 7-Zip Spawning Suspicious Child Process
+
+DeviceProcessEvents
+| where InitiatingProcessCommandLine has_any (@"\7z.exe", @"\7zG.exe", @"\7zFM.exe")
+    or InitiatingProcessParentFileName has_any (@"\7z.exe", @"\7zG.exe", @"\7zFM.exe")
+| where FileName has_any ("cmd.exe", "powershell.exe", "pwsh.exe", "cscript.exe", "wscript.exe", "rundll32.exe", "regsvr32.exe", "bash.exe")
+| project Timestamp, DeviceName, InitiatingProcessAccountName, FileName, ProcessCommandLine, InitiatingProcessCommandLine, InitiatingProcessParentFileName, DeviceId, ReportId
