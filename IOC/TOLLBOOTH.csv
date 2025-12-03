@@ -1,0 +1,16 @@
+﻿Type,Value,Source,Reference
+hash_sha256,913431f1d36ee843886bb052bfc89c0e5db903c673b5e6894c49aabc19f1e2fc,WingtbCLI.exe,HIDDENCLI
+hash_sha256,f9dd0b57a5c133ca0c4cab3cca1ac8debdc4a798b452167a1e5af78653af00c1,Winkbj.sys,HIDDENDRIVER
+hash_sha256,c1ca053e3c346513bac332b5740848ed9c496895201abc734f2de131ec1b9fb2,caches.dll,TOLLBOOTH
+hash_sha256,c348996e27fc14e3dce8a2a476d22e52c6b97bf24dd9ed165890caf88154edd2,scripts.dll,TOLLBOOTH
+hash_sha256,82b7f077021df9dc2cf1db802ed48e0dec8f6fa39a34e3f2ade2f0b63a1b5788,scripts.dll,TOLLBOOTH
+hash_sha256,bd2de6ca6c561cec1c1c525e7853f6f73bf6f2406198cd104ecb2ad00859f7d3,caches.dll,TOLLBOOTH
+hash_sha256,915441b7d7ddb7d885ecfe75b11eed512079b49875fc288cd65b023ce1e05964,CustomIISModule.dll,TOLLBOOTH
+hash_sha256,bae5a7722814948fbba197e9b0f8ec5a6fe8328c7078c3adcca0022a533a84fe,1.aspx,Godzilla-forked webshell (Similar sample from VirusTotal)
+hash_sha256,230b84398e873938bbcc7e4a1a358bde4345385d58eb45c1726cee22028026e9,GotoHTTP.exe,GotoHTTP
+domain,c.cseo99.com,,TOLLBOOTH config server
+domain,f.fseo99.com,,TOLLBOOTH SEO farming config server
+domain,api.aseo99.com,,TOLLBOOTH crawler reporting & page redirector API
+domain,mlxya.oss-accelerate.aliyuncs.com,,TOLLBOOTH page hijacker payload hosting server
+domain,asf-sikkeiyjga.cn-shenzhen.fcapp.run,,TOLLBOOTH page hijacker content-fetching server
+domain,ask-bdtj-selohjszlw.cn-shenzhen.fcapp.run,,TOLLBOOTH page hijacker content-fetching server
