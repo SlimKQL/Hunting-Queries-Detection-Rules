@@ -1,0 +1,14 @@
+// contact@ccaves.net for questions or contact
+//7-Zip Spawning Suspicious Child Process
+
+DeviceFileEvents
+| where InitiatingProcessFileName has_any (@"7z.exe", @"7zG.exe", @"7zFM.exe")
+| where FileName endswith ".exe"
+    or FileName endswith ".dll"
+    or FileName endswith ".bat"
+    or FileName endswith ".cmd"
+    or FileName endswith ".ps1"
+    or FileName endswith ".vbs"
+    or FileName endswith ".iso"
+| where FolderPath has_any (@"\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\", @"\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\", @"\Windows\System32\", @"\Windows\SysWOW64\", @"\Windows\Tasks\", @"\Windows\Temp\")
+| project Timestamp, DeviceName, InitiatingProcessAccountName, InitiatingProcessFileName, FolderPath, FileName, InitiatingProcessCommandLine, DeviceId, ReportId
