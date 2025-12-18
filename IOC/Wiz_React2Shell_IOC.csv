@@ -1,0 +1,71 @@
+Type,Subtype,IOC
+IP Address,C2,37.27.217.205
+IP Address,C2,212.237.120.249
+IP Address,Exfil,5.161.227.224
+IP Address,Sliver C2,154.26.190.6
+IP Address,Malware Host,45.32.158.54
+IP Address,Malware Host,104.238.61.32
+IP Address,Malware Host,193.34.213.150
+IP Address,Malware Host,154.89.152.240
+IP Address,Payload Host,172.245.79.16
+IP Address,Stealer,47.84.82.8
+IP Address,Stealer,8.222.213.56
+IP Address,Miner Host,216.158.232.43
+IP Address,Malware Host,185.229.32.220
+Domain,Malware Infra,anywherehost.site
+Domain,Malware Infra,inerna1.site
+Domain,Malware Infra,ip.inovanet.pt
+Domain,Sliver Infra,keep.camdvr.org
+Domain,Sliver Cert,t.cnzzs.co
+Domain,Loader Infra,ax29g9q123.anondns.net
+Domain,Loader Infra,aws.orgserv.dnsnet.cloud.anondns.net
+Domain,Exfil / SMTP,mail.wrufff.de
+Domain,Beacon,tr.earn.top
+URL,Dropper,hxxp://anywherehost.site/xms/k1.sh?grep
+URL,Dropper,hxxp://anywherehost.site/xms/kill2.sh
+URL,Dropper,hxxp://anywherehost.site/xms/su
+URL,Dropper,hxxp://anywherehost.site/xms/t1.ps1
+URL,Miner,hxxp://anywherehost.site/xb/runner.zip
+URL,Miner,hxxp://anywherehost.site/xb/systemd-devd.$(uname -m)
+URL,Dropper,hxxp://inerna1.site/xms/k1.sh
+URL,Miner,hxxp://ip.inovanet.pt/systemprofile.zip
+URL,Miner,hxxp://inerna1.site/xb/systemd-devd.x86_64
+URL,Miner,hxxp://inerna1.site/xb/runner.zip
+URL,Dropper,hxxp://inerna1.site/xms/t1.ps1
+URL,Malware,hxxp://45.32.158.54/5e51aff54626ef7f/x86_64
+URL,Malware,hxxp://193.34.213.150/nuts/bolts
+URL,Malware,hxxp://193.34.213.150/nuts/x86
+URL,Miner,hxxp://superminecraft.net.br:3000/sex.sh
+URL,Miner,hxxp://216.158.232.43:12000/sex.sh
+URL,Sliver Payload,hxxp://keep.camdvr.org:8000/BREAKABLE_PARABLE5
+URL,Dropper,hxxp://154.89.152.240/check.sh
+URL,Malware,hxxp://185.229.32.220:21642/2lt4de8wgl54wtjgo8/winds
+URL,Sliver Dropper,hxxp://keep.camdvr.org:8000/d5.sh
+URL,Sliver Payload,hxxp://keep.camdvr.org:8000/BREAKABLE_PARABLE10
+URL,Stealer,hxxp://47.84.82.8/index
+URL,Stealer Exfil,hxxp://47.84.82.8/upload
+URL,Stealer,hxxp://8.222.213.56/index
+URL,Malware,hxxp://104.238.61.32:8080/zold
+URL,Loader,hxxp://ax29g9q123.anondns.net
+URL,Beacon,hxxps://tr.earn.top/Log.php?id=
+SHA1,Script,264e1a820b8b3bbd13325955f06aff2678c69935
+SHA1,Script,20e1465fd07f0d4e19c299fb0d9af8e5ec1b21d2
+SHA1,Script,6e43e26fa62dfa89fe8b016dc831a9ec44507af9
+SHA1,Miner,d6e97c9783f0907f1ee9415736816e272a9df060
+SHA1,Miner,732226c0966fe29116b147e893c35ce7df1c8f1a
+SHA1,Miner,be86823d73a01266b096dab1628cfa2e4ca77265
+SHA1,Malware,7fe3826fc7b90e20c9fe76a7891eff350d73b6b3
+SHA1,Miner,7c8010d9ab6dfdc7a99aba7075a793260acbf2b8
+SHA1,Stealer,91152e6ffe0474b06bb52f41ab3f3545ac360e64
+SHA1,Stealer,5d368356bd49c4b8e3c423c10ba777ff52a4f32a
+SHA1,Payload,34551bca762be99d732c0ced6ad8b0a2f7b11ad7
+SHA1,Script,1ce4b6a89d2daa0cab820711d8424a7676ef5ff2
+SHA1,Sliver,0972859984decfaf9487f9a2c2c7f5d2b03560a0
+SHA1,Sliver,470ce679589e1c3518c3ed2b818516f27ccad089
+SHA1,Dropper,c67e8aa881317cb32d7c36b2e3c0c5cfa21bf5e3
+SHA1,Sliver,0972859984decfaf9487f9a2c2c7f5d2b03560a0
+SHA1,Sliver,2937c58115c131ae84a1b2a7226c666f6a27ef88
+SHA1,Script,1ce4b6a89d2daa0cab820711d8424a7676ef5ff2
+Monero,Wallet,44VvVLU2Vmja6gTMbhNHAzc7heYTiT7V mQEXkjdaYo6K41WqH8qWw1CL8wKAAgz5 xLYT3XL3pb9KCUZS7PPZbzUGCCpZ9Ee
+Monero,Wallet,42NTfUjbU3Gj536zubU7vpjfC7X9DPEC ciwbCXrrjBk5KqkJS1Xq4saVgQLP1yqU YHKzn7apt1p3W6mDWm87n3nwDEmWeSh
+IP Address,C2 Address,144.91.87.221
