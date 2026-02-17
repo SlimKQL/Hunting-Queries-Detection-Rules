@@ -1,0 +1,8 @@
+// An alternate and slightly more succesful way of catching even obfuscated clipboard clearing. This technique is used for defense evasion with clickfix attacks.
+// This detection can be ran in Defender NRT for quick response.
+
+DeviceEvents
+| extend Command =  tolower(parse_json(AdditionalFields)["Command"])
+| where Command has_all ("set-clipboard", "-value")
+| where Command has_any ("' '", '" "')
+| project Timestamp, InitiatingProcessAccountName, parse_json(AdditionalFields)["Command"], DeviceId, ReportId
