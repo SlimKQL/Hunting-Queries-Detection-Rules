@@ -15,6 +15,23 @@ and UserId !endswith "your_corporate_domain_3"
 | distinct UserIPs
 | join ThreatIntelligenceIndicator on $left.UserIPs == $right.NetworkIP
 
+// Upgrade Detection to new Table ThreatIntelIndicators. Ref : https://learn.microsoft.com/en-us/azure/sentinel/work-with-stix-objects-indicators 
+
+OfficeActivity
+| where TimeGenerated > ago(1h)
+| where RecordType =~ 'MicrosoftTeams'
+| where Operation == "MessageCreatedHasLink"
+| where CommunicationType == "OneOnOne" or CommunicationType == "GroupChat"
+| where UserId !endswith "your_corporate_domain_1"     // Filter off all internal teams user 1-to-1 message
+and UserId !endswith "your_corporate_domain_2"
+and UserId !endswith "your_corporate_domain_3"
+| extend UserDomains = tostring(split(UserId, '@')[1])
+| extend UserIPs = tostring(split(ClientIP, '::ffff:')[1])
+| where UserIPs != ""
+| distinct UserIPs
+| join kind = inner ThreatIntelIndicators
+| where IndicatorType in ("ipv4-addr", "ipv6-addr", "network-traffic") )on $left.UserIPs == $right.ObservableValue
+
 // MITRE ATT&CK Mapping
 
 // Based on the operations and objectives of the KQL code, the following MITRE ATT&CK techniques are relevant:
