@@ -1,0 +1,29 @@
+﻿AI Model Provider,Domain,Risk Score
+Asana MCP,mcp.asana.com,10
+Atlassian MCP,mcp.atlassian.com,10
+CloudFlare MCP,mcp.cloudflare.com,9
+Sentry MCP,mcp.sentry.dev,9
+Neon MCP,mcp.neon.tech,9
+Intercom MCP,mcp.intercom.com,9
+Wix MCP,mcp.wix.com,9
+PayPal MCP,mcp.paypal.com,9
+Webflow MCP,mcp.webflow.com,9
+Workato MCP,mcp.workato.com,8
+Zapier MCP,mcp.zapier.com,8
+Needle MCP,mcp.needle-ai.com,8
+Apify MCP,mcp.apify.com,8
+Linear MCP,mcp.linear.app,8
+Square MCP,mcp.squareup.com,8
+Semgrep MCP,mcp.semgrep.com,7
+Supabase MCP,mcp.supabase.com,7
+Mercado Pago MCP,mcp.mercadopago.com,7
+Invideo MCP,mcp.invideo.io,5
+Kollektiv MCP,mcp.thekollektiv.ai,5
+DeepWiki MCP,mcp.deepwiki.com,5
+Simplescraper MCP,mcp.simplescraper.io,4
+Scorecard MCP,scorecard-mcp.dare-d5b.workers.dev,4
+OneContext MCP,rag-mcp-2.whatsmcp.workers.dev,4
+Turkish Airlines MCP,mcp.turkishtechlab.com,3
+Bitte MCP,mcp.bitte.ai,3
+McPoogle MCP,mcp.mcpoogle.com,3
+LLM Text MCP,mcp.llmtxt.dev,2
