@@ -1,4 +1,4 @@
-KQL Sentinel & Defender queries
+KQLWizard 🧙‍♂️ - KQL Sentinel & Defender queries
 
 KQL for Defender XDR, Microsoft Sentinel & other Microsoft Solutions
 
@@ -10,5 +10,13 @@ Presenting this material as your own is illegal and forbidden. A reference to Li
     - [Azure KQLs](https://github.com/SlimKQL/Hunting-Queries-Detection-Rules/tree/main/Azure)
     - [DefenderXDR KQLs](https://github.com/SlimKQL/Hunting-Queries-Detection-Rules/tree/main/DefenderXDR)
     - [Sentinel KQLs](https://github.com/SlimKQL/Hunting-Queries-Detection-Rules/tree/main/Sentinel)
+
+Detections.Ai Community Group
+
+[SlimKQL Group - Invite Code: SlimKQL2026](https://detections.ai/workspace/group/1b5275d9-4a30-4a11-8718-de08bc85b109/detections)
+
+[SlimKQL 2026 Group - Invite Code: KQLWizard](https://detections.ai/workspace/group/58ab8193-5d7f-4472-b44c-8978883b6d03/detections)
+
+[SlimKQL 2026 Knowledge](https://detections.ai/workspace/group/1b5275d9-4a30-4a11-8718-de08bc85b109/knowledge)
 
 
