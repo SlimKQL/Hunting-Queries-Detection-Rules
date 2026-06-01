@@ -1,0 +1,6 @@
+//ClickFix Defense Evasion Checking for the use of 'SetClipboard -value " "'
+
+DeviceProcessEvents
+| Where ProcessCommandLine has_all ("set-clipboard", "-value")
+| where ProcessCommandLine has_any ('" "', "' '")
+| project AccountName, ProccessCommandLine
