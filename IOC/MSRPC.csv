@@ -1,0 +1,9 @@
+MSRPC Interface,UUID,Functional Area,Security Monitoring Context
+LSARPC,3919286a-b10c-11d0-9ba8-00c04fd92ef5,Local Security Authority,Auditing for unusual account or domain policy enumeration.
+SAMR,12345778-1234-abcd-ef00-0123456789ac,Security Account Manager,Monitoring for large-scale queries of user and group membership.
+SCMR,367abb81-9844-35f1-ad32-98f038001003,Service Control Manager,Tracking remote service installations or state changes.
+ATSVC,1ff70682-0a51-30e8-076d-740be8cee98b,Task Scheduler,Identifying unauthorized remote task creation or scheduling.
+MS-RPRN,f358b927-5bf6-475b-9abf-0bab7a20c388,Print System Remote,Observing unexpected remote calls to print system functions.
+MS-DFSNM,4fc742e0-4a10-11cf-8273-00aa004ae673,Distributed File System,Detecting non-standard configuration requests to DFS namespaces.
+WinReg,338cd001-2244-31f1-aaaa-900038001003,Remote Registry Service,Auditing remote access to sensitive system registry keys.
+SRVSVC,4b324fc8-1670-01d3-1278-5a47bf6ee188,Server Service,Monitoring legacy RPC traffic for compatibility and patch verification.
