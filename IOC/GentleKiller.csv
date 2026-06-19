@@ -1,0 +1,28 @@
+﻿SHA-1,Filename,Detection,Description
+8AE6BD18B129061F63642531F1B684CF0383C75D,Kasps.exe,Win64/KillAV.EA,GentleKiller (Kaspersky variant).
+BA914FE77B177B45799403B16DD14765C510A074,eb.sys,Win64/Agent.ITG,A custom rootkit used by the Kaspersky variant of GentleKiller.
+D605994FC72A2BB59B5CFB1624A1B9170ECA73A2,FaceIT1.exe,Win64/KillAV.EA,"GentleKiller (FACEIT Anti-Cheat variant, Enigma-protected)."
+B0B912A3FD1C05D72080848EC4C92880004021A1,nseckrnl.sys,Win64/VulnDriver.NSecsoft.A,NSecsoft NSecKrnl driver abused by the FACEIT Anti-Cheat variant of GentleKiller.
+5AA3124E5C4921E5EDFC60133B5D71DA21B07DA3,Valorant2.exe,Win64/KillAV.EA,"GentleKiller (Valorant variant, Themida-protected)."
+7556AE58C215B8245A43F764F0676C7A8F0FDD1A,vgk.sys,Win64/VulnDriver.PerfectWorld.A,Tower of Fantasy AntiCheat driver abused by the Valorant variant of GentleKiller.
+331879F5EEC8892BBD896F90BDBB1BAD0BF63BD6,EASolo2Light.exe,Win64/KillAV.EA,GentleKiller (Javelin variant abusing Safetica’s newer driver).
+F11AEBCCB9A86A7E2E653F90BAEC697F233C255F,EASOLO1clear.exe,Win64/KillAV.EA,GentleKiller (Javelin variant abusing Safetica’s older driver).
+EF9CD06683159397F099CAA244E94E6EAAD96EBA,EAAntiCheatLight.exe,Win64/KillAV.EA,GentleKiller (Javelin variant abusing both drivers).
+711EF221526997039E804A18DB9647C91680BBE2,stpm_old.sys,Win64/VulnDriver.Safetica.A,Safetica’s Process Monitor Driver (older) abused by the Javelin variant of GentleKiller.
+68FEC379F2AE76C3D2CE913F7BE650CEA1D06990,stpm_new.sys,Win64/VulnDriver.Safetica.H,Safetica’s Process Monitor Driver (newer) abused by the Javelin variant of GentleKiller.
+A11EE9CDC59E5CAA59AEFD27B30D104F3AD68E62,BitD1.exe,Win64/KillAV.EA,"GentleKiller (WatchDog variant, Themida-protected)."
+96F0DBF52AED0AFD43E44500116B04B674F7358E,dmx.sys,Win64/VulnDriver.WatchDogDev.C,Zemana’s WatchDog Antimalware Driver abused by the WatchDog variant of GentleKiller.
+2F86898528C6CAB3540C486A9BFAA0C029B73950,MB2.exe,Win64/KillAV.EA,"GentleKiller (Network Blocker variant, Themida-protected)."
+9AD51AD97C01E97AB59214116740785E0F6320A8,360netmon_wfp.sys,Win64/VulnDriver.Qihoo360.A,360netmon.sys driver abused by the Network Blocker variant of GentleKiller.
+A19117175DBC9BA4D23B5DCE8415E299A2E32192,Deletor.exe,Win64/KillAV.EA,GentleKiller (Cleaner variant).
+12500F6C87CE62712A0ED6652C57468D15C14223,IMFForceDelete,Win64/VulnDriver.IObit.D.gen,IMF ForceDelete filter driver abused by the Cleaner variant of GentleKiller.
+D29670E684E40DDC89B47010C37CBC96737035B6,Symantec.exe,Win64/KillAV.EA,GentleKiller (G11 variant).
+56BEE9DF5833A637F5C54D5911DF98B0812FE643,G11.sys,Win64/Agent.IYQ,PoisonX rootkit used by the G11 variant of GentleKiller.
+CF4D74DF17A91B4A36A2911B22AFEC5D8FA93A01,Avast.exe,Win32/KillAV.NVL,HexKiller incorporated into Gentlemen modus operandi by adding the evasion layer.
+EC296F9501AD71E430810CB5CDC38D954D4BA536,googleApiUtil64.sys,Win64/VulnDriver.Baidu.B,Baidu Antivirus BdApi driver abused by HexKiller.
+7131B377E96016DC1911020C9F95B1B4D042D7B4,Sent.exe,Win64/KillAV.AT,ThrottleBlood incorporated into Gentlemen modus operandi by adding the evasion layer.
+82ED942A52CDCF120A8919730E00BA37619661A3,ThrottleBlood.sys,Win64/VulnDriver.GPUZ.B,ThrottleStop.sys driver abused by ThrottleBlood.
+F0537CBB773AE12100B36731E7C39F5A9D852B14,Sophos.exe,Win64/KillAV.DE,HavocKiller incorporated into Gentlemen modus operandi by adding the evasion layer.
+1FA071303FB846308571E64727501FB98B1C2BE6,havoc.sys,Win64/VulnDriver.Huawei.D,Vulnerable driver abused by HavocKiller.
+A5CF917EC4A7DFBDFA43621398604805D860C718,buildx641.exe,Win64/Spy.Agent.AGC,OxideHarvest.
+D4B19141102015D436321E6F26976E98183CFD27,buildx64.exe,Win64/Spy.Agent.AGC,OxideHarvest.
