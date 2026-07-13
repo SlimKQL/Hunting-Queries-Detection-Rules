@@ -1,0 +1,15 @@
+SigninLogs
+  | where AuthenticationRequirement != "multiFactorAuthentication"
+  | where HomeTenantId == ResourceTenantId
+  | where tostring(NetworkLocationDetails) == "[]"
+  | where ResultType == 0
+  | where ConditionalAccessStatus == "success"
+  | where todynamic(AuthenticationDetails)[0].authenticationMethod != "Windows Hello for Business"
+  | where AppDisplayName != "Microsoft Intune Company Portal"
+  | where AppDisplayName != "Microsoft Intune Web Company Portal"
+  | where AppDisplayName != "Microsoft Office Web Apps Service"
+  | where AppDisplayName != "Microsoft Account Controls V2"
+  | where ResourceDisplayName != "Microsoft Intune Enrollment"
+  | project UserPrincipalName, UserId, AppDisplayName, ResourceDisplayName, NetworkLocationDetails, AuthenticationRequirement
+  | summarize count() by UserPrincipalName, AppDisplayName, ResourceDisplayName, AuthenticationRequirement
+  | sort by UserPrincipalName asc, count_ desc
