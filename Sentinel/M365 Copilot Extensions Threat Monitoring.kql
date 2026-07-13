@@ -24,6 +24,23 @@ CloudAppEvents
 | extend Action = tostring(PluginAccessURL.Action)
 | join ThreatIntelligenceIndicator on $left.Domain == $right.DomainName
 
+// Upgrade Detection to new Table ThreatIntelIndicators. Ref : https://learn.microsoft.com/en-us/azure/sentinel/work-with-stix-objects-indicators 
+
+CloudAppEvents
+| where TimeGenerated > ago(1h)
+| where ActionType == @"CopilotInteraction"
+| extend UserID = tostring(RawEventData.UserId)
+| extend CopilotData = todynamic(RawEventData.CopilotEventData)
+| extend CopilotPlugin = tostring(CopilotData.AISystemPlugin[0].Id)
+| where isnotempty(CopilotPlugin)
+| extend PluginAccessURL = tostring(CopilotData.AccessedResources)
+| mv-expand todynamic(PluginAccessURL)
+| where PluginAccessURL has "SiteUrl"
+| extend Url = tostring(PluginAccessURL.SiteUrl)
+| extend Domain = tostring(parse_url(Url).Host)
+| extend Action = tostring(PluginAccessURL.Action)
+| join kind = inner (ThreatIntelligenceIndicator
+| where IndicatorType == "domain-name"  )on $left.Domain == $right.ObservableValue
 
 // MITRE ATT&CK
 // T1116 Browser Extensions
