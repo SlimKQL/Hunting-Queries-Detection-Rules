@@ -1,0 +1,78 @@
+#,extension_id,version,payload,beacon_hosts,first_seen,sha256_vsix
+1,lego-education.ev3-micropython,0.0.2,A,d9j3drkeib4sa01kk82014tt97wxnndam.cb.mangorbit.com,2026-07-26,b8cd87d5e36f167f51ed6a6d2e824f76dc1b3792de9c10091e46f87ad07f5d5a
+2,better-ts-errors.better-ts-errors,0.0.1,A,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-27,8763bda130fe4305c4d13c25584c981424dc47d3de3df46ae0ef05466b05526a
+3,groksrc.ruby,0.0.1,A,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-27,415cef17b6560643c0e4dddccd956ae6887c369d84c7f45be638a76dc4930dc1
+4,maptz.regionfolder,0.0.1,A,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-27,7342f26ff97c0f8dc29edb1c5a5460bafcaacbc84356020a785628b36156ab6e
+5,mitsuhiko.insta,0.0.1,A,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-27,5d62cfb190145bd21f930d4c21da01e8dc951e4112992790361e2fd4b09e66f6
+6,SBSnippets.pytorch-snippets,0.0.1,A,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-27,d51e331ae110eb37d453e78ac4cf3063d4606ebd2357d8ee4342fd8f06933e20
+7,slb235.vscode-coffeelint,0.0.1,A,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-27,0ccd62eb6c1155c252248a98c8ff8e1a45a5cc721d6725511effb770037690d5
+8,amd.gaia-vscode,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-28,1b775ad3ca61addf5bf3e326951314d80ab526cbab0d745edb3e2bd85de2fcd9
+9,artsy.artsy-studio-extension-pack,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-28,a3dbc0a35a781c61c34bf41e9d21eadbf2e77d18531236d1d9c1e622aaf418ef
+10,configcat.configcat-feature-flags,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-28,941e9cf4fb7a1cdadb1a0e64fce3262426847f167ad255a3f724d77f2d0ee103
+11,iotaledger.iota-move,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-28,fde634f337ab81b3d6bfa320047ff4fe450556fd90f44a30612d549b996edc86
+12,marketplace.visualstudio,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-28,9f8a69c193c3c4b83db18149408a9687d1cb6ca149ffa3a1ca6d72e95e3b6954
+13,obyte.oscript-vscode-plugin,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-28,7179f11710f242a578bd50187dadd7fa2ba0062e11e1a631edcd75417bda3f7e
+14,openeuphoria.vscode-euphoria,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-28,0e99e23329f3ca908d7a88ccf102e4b10bd9b67f24fc79408aae15d5d10dfd0a
+15,oss.sfmc-devtools-vscode,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-28,fc3a32f59300c7e8b3e486f23146224beb658d10ae04098a9e27faf341356fbe
+16,rumbledb.jsoniq-vscode,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-28,498b0c9632959eb37cc278f35561f0736c91884b370251dfebae07ff9a942bc3
+17,ssagov.uef-snippets,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-28,95fbdc4c81e14a46dd8f3eb5c4207567baae99712e3ccf8644af09680f3caf5e
+18,taskfile.vscode-task,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-28,2526c160b6a08377d02e035fc166e91e8029b997fa6c91169640c2ad2c2ec60b
+19,doi.fileheadercomment,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-30,15cd6a4909161c406b8428100d688999377e399ae13aa4da49bb73744933807d
+20,MengsiCode.vscode-django-boilerplate,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-30,d35b690502fd3b73312aacf62dc700ac1e43bbc01b53d129096c2c0cdf92a1c4
+21,move.move-analyzer,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-30,3b407a548040927802f2cfa05b81eabf48f8b03785ba9fd69a3caa3981a7bc22
+22,uavcan.dsdl,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-30,d19c076fc8213617f889a313a3da1565d8364e35c53290fa96400183127b1187
+23,vs-publisher-988541.apexsql-power-tools,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-30,9e148da1d338c32286b54a102ba3a42c7c2627855c3cc820122cff2ee4fc0d90
+24,365businessdevelopment.bdev-al-xml-doc,0.0.1,A,pulse.mangorbit.com,2026-07-31,03d81fce32d898e4791672e8e324ca8854d4667f56131f9c2b9d13d66faade4f
+25,AcademiaDosDevs.javafx,0.0.1,A,pulse.mangorbit.com,2026-07-31,5a1fb5758a6f4b1635d1e1d3fd83c2c13376f466508a949cdad23114af82db45
+26,AlDuncanson.react-hooks-snippets,0.0.1,A,pulse.mangorbit.com,2026-07-31,508d3fb15d317846239e8d1f89ab5a5f31242d159f102602cfbf671103658bd3
+27,Alex-Chen.gitee-code-settings-sync,0.0.1,A,pulse2.mangorbit.com,2026-07-31,7dc683fc3e0acf757cb48091c259bd71a7e3fe985f83d5b40468fa5b58e70804
+28,AndenetAlexander.vim-cheatsheet,0.0.1,A,pulse.mangorbit.com,2026-07-31,3f97f02073caab6208d103693b13105f9dd42daca379e07953e433bd50ec5d3a
+29,AndreyVolosovich.monokai-st3,0.0.1,A,pulse.mangorbit.com,2026-07-31,3e9c96b913b54af9d50966b27b878750c3ae9d8e7944c4437a40d5a5cbc5ef21
+30,angelo-breuer.license-header-manager,0.0.2,A,pulse.mangorbit.com,2026-07-31,aac1efa84293929006436160f77e58e70d9025fc0b320ecc64953e066785a0fa
+31,AshhadDevLab.customtkinter-snippets,0.0.1,A,pulse.mangorbit.com,2026-07-31,8e90e637bd7f3a2eaee077f216610248bf4d41c8d1f7880a2d2623be13be339f
+32,AzureADB2CTools.aadb2c,0.0.1,A,pulse2.mangorbit.com,2026-07-31,410e6b62b5e62cd8603b374f34e5ec6dad62bb95435fa320e08a850fa359f8c5
+33,AzurePolicy.azurepolicyextension,0.0.1,A,pulse.mangorbit.com,2026-07-31,805c0c50271afbe94301d376cc5eb191feb7a409ea05f7771dcb4a07dcb0442a
+34,BartmanAbyss.amiga-debug,0.0.1,A,pulse2.mangorbit.com,2026-07-31,9afe7dd8f3eece28719edac1572ca7adbf307fdb29580535cbc109dec2e44da0
+35,BDZNH.c-cpp-compile-run-windows,0.0.1,A,pulse2.mangorbit.com,2026-07-31,1a1211418b048678ff5a219d29587cb4beea251615bd8319b2a39caca0ac9cf9
+36,bradymholt.pgformatter,0.0.1,A,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-31,67d23c83dfe5199815aeb471bf468bb99faa6103e7238484e26e106194548642
+37,BretDoyle.javascript-extensions-pack---js-essentials,0.0.1,A,pulse2.mangorbit.com,2026-07-31,cf3593f41cb52c4b52386b539bc1b5095e6123de3d6bfda6f85f98b4570af6a4
+38,casualjim.gotemplate,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-31,abcdee583b02c827fdd746acad814545f9e823d5c7859743d090e176e0f344f4
+39,drewbourne.vscode-remark-lint,0.0.3,A,pulse2.mangorbit.com,2026-07-31,48976edf057d4064db52c8ccd5d2b70769008556072cc411617dc6eeb28cbd53
+40,garaemon.vscode-emacs-tab,0.0.3,A,pulse.mangorbit.com,2026-07-31,573072c5107fb2fc749225caeee8ddabe7b1b6c9b45463a9e3247d4658870d33
+41,jakeboone02.cypher-query-language,0.0.2,A,pulse.mangorbit.com,2026-07-31,796d0536a0de16cd09f768b24d56763bdf8b36535c4ff946a754ff1f16857a65
+42,jcamp.dotnet-test-provider-view,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-31,3d734eb54a45f18ffa885f21240c95fccbd4a222368044ae01920176a3666d0e
+43,madhavd1.javadoc-tools,0.0.2,A,pulse2.mangorbit.com,2026-07-31,db253057b1d54c0d4bf2ea5d358e33043292c0e1780989a030f489a194d83cb5
+44,miclo.sort-typescript-imports,0.0.3,A,pulse.mangorbit.com,2026-07-31,e25513c12e71784067a36db09670c244eb2f22272a5cf4589cb46bc6a27b6fb7
+45,Mukundan.python-docs,0.0.3,A,pulse2.mangorbit.com,2026-07-31,1a5b4ea5cb768aec7bbba28d881774a124aeb84ee8827d56aa0213ecf59a77a1
+46,npxms.hide-gitignored,0.0.2,A,pulse.mangorbit.com,2026-07-31,52a54dd4b72d7c113b22c54a3fe48131d064215f1987589b4ce5aac13573c96d
+47,qiu.llvm-ir-language-support,0.0.6,A,pulse.mangorbit.com,2026-07-31,b0e0615140a5aebf3ef3e99693e11f3fcc2c2c0c8a60e92fd4152a8e29c418a5
+48,superposition.supertoml-analyzer,0.0.1,B,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-31,b7655dd07d18bfb6f9b724647fd393ce2f312b2a874a046e2f568aa9c1eec32f
+49,tamuratak.vscode-lezer,0.0.1,A,"pulse.mangorbit.com, pulse2.mangorbit.com",2026-07-31,a27ef5dc929616d46ca1bb3fc12e25195e42726db9135b5946e53036992aa3a5
+50,tgreen7.vs-code-node-require,0.0.1,A,pulse2.mangorbit.com,2026-07-31,fd8d100ee32bf3f23f9cf82a16c43a61c701380d443d246c34da5aa1d4352e84
+51,yardensachs.copy-python-path,0.0.1,A,pulse.mangorbit.com,2026-07-31,98bcafa86bc15ecb93ab47a4e5b7914932699d0ae38ff5f50020cb3d54f3b603
+52,zoxon.monokai-deep,0.0.1,A,pulse.mangorbit.com,2026-07-31,f6ae05bdf6ed9fd092d0c8976850980b7a03703f9412a8369a5d7ccd8412dba8
+53,bdaeumer.vscode-eslint,0.0.1,A,pulse.mangorbit.com,2026-08-01,18e952ea9848a7bff90d1fdde4b3d6b6648df30959ce6771840ca8cc67fbdfe6
+54,chavyleung.vscode-pnpm-verlens,0.0.1,A,pulse2.mangorbit.com,2026-08-01,6682a6142cf38e877b2683269c413eab1580e36f8e40876febaf1bf72e12c0f8
+55,chris-hock.pioasm,0.0.1,A,pulse.mangorbit.com,2026-08-01,a4f0dd467b3abbdacd5ebb2929de3899c6b3d7b0b90da9ea4ae58e30d101db8f
+56,davidpallinder.rails-test-runner,0.0.1,A,pulse.mangorbit.com,2026-08-01,0039e6d3a653d255841320db1dcd9664e1c9ae8b0a0d8a2e9f7e0ecb5fd2c0f6
+57,Flutterando.flutter-mobx,0.0.1,A,pulse.mangorbit.com,2026-08-01,280ef259644dfbd888ad3eb630aaf6f895449b5e97e075e459fc96c266fb8682
+58,Glavin001.unibeautify-vscode,0.0.1,A,pulse.mangorbit.com,2026-08-01,5c41fa68ce0f879199d9b5646cf9b82ebde426e1ee0fa2ae10dd6447b0223c54
+59,GoBystrokReactJS.gobystrok,0.0.1,A,pulse2.mangorbit.com,2026-08-01,15cd8ee6f874539d915a9284adf17a3c2eb0b970c331725a8388f58efba48719
+60,helixquar.asciidecorator,0.0.1,A,pulse.mangorbit.com,2026-08-01,375216cb58f3700c181da52c62eccd4534b0d2aaa0d84df6a9f476f35a87217d
+61,HyperledgerComposer.composer-support-client,0.0.1,A,pulse.mangorbit.com,2026-08-01,58b7c5b92ed0756034af0de02c7addcab215ab612bd37c86bad11aafdfb25d62
+62,Insigne.powershell,0.0.1,A,pulse2.mangorbit.com,2026-08-01,041019527f4c13b1007b71d35d4383b13ee8c7bf3eaaff366abe90c6c9a804c3
+63,Jeremy38100.init-node-script,0.0.1,A,pulse.mangorbit.com,2026-08-01,b461c72229cefd5f2078db74565451dc656e71af3a1e95f13db70bf7dec94c70
+64,jt.jakt,0.0.1,A,pulse2.mangorbit.com,2026-08-01,8af30a4e2c57034a64e924a893de50450dd668528f2723a94f907a8a758965ea
+65,kaellarkin.hugo-shortcode-syntax,0.0.1,A,pulse.mangorbit.com,2026-08-01,e7ba9bff28fa17d507753e0ca157d7add64cbfed593530504b153e24b6c982c9
+66,Levertion.mcjson,0.0.1,A,pulse.mangorbit.com,2026-08-01,f04b8c9af22fd8e20fd070806b1aa21424a0f6d5e2c770fa9fb1d131b08393fd
+67,magne-sjaastad.opm-flow-editor-support,0.0.1,A,pulse.mangorbit.com,2026-08-01,b490d56da1c5a4e26de8c07f907157b0e328c84464df38d2bd1cb92858906f83
+68,MarinhoBrandao.Angular2Tests,0.0.1,A,pulse2.mangorbit.com,2026-08-01,6bbaee0ccfbbd45c7683efbf4688ad4532050f8a0ad6b39ea1b435ce2b6cf546
+69,microsoft-dciborow.align-bicep,0.0.1,A,pulse.mangorbit.com,2026-08-01,c5fe26dbc56a84ab672a28d3d3d767dd1496a56b027ecec7e3f8f25f83cd6a7d
+70,mkdirdocs.mkd-docs,0.0.1,A,pulse.mangorbit.com,2026-08-01,0937bfa48a6b2ee53c978c1edea77a04db6ef407adef108b12fb6612e308b275
+71,nihilus118.perl-debugger,0.0.1,A,pulse2.mangorbit.com,2026-08-01,c578b03b8bd150ec9bf71326293f9f1abc2f1d451b3ca2ee05a516ec53866b1b
+72,pwrs.cem-language-server-vscode,0.0.1,A,pulse2.mangorbit.com,2026-08-01,2364b4cf089da6d4d6c1fe854daca03047eea0849b325a3e9f28fac4584418d2
+73,wghats.vscode-nxunit-test-adapter,0.0.1,A,api.mangorbit.com,2026-08-01,b301202210164188696b6a6fced62cf0c1641dca650ea4981f81b210ced9116f
+74,wordpresstools.wordpress,0.0.1,A,pulse.mangorbit.com,2026-08-01,9ec8c53e41766b7b1dbc7fd9acf759b63f65353434231de57d22a6002fef7998
+75,xnerd.ampscript-language,0.0.1,A,pulse.mangorbit.com,2026-08-01,81402a5dc2901bc68ae7e866d78ad7c0ab1c77868d1cb026f95a68a0de851f5d
+76,ydaveluy.xsmp-modeler,0.0.1,A,pulse2.mangorbit.com,2026-08-01,4b3dfffd11366d4171ba57efe53fc4fe4d4c39e9b8590c81365453005aed9b80
+77,ydaveluy.xsmp-tas-mdk,0.0.1,A,pulse2.mangorbit.com,2026-08-01,b9f36f1e416a3b6c650cebcad3dc046c0a0164442d0a2c3ed35279179f457c24
