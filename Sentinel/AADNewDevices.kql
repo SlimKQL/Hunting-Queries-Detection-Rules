@@ -1,0 +1,16 @@
+// Newly registered devices in Azure AD [DCSecurityOperations].
+  let NewDevices = AuditLogs
+      | where OperationName == "Register device"
+      | project TimeGenerated, DeviceID=AdditionalDetails[4].value, OS=AdditionalDetails[3].value, DeviceTrustType=AdditionalDetails[2].value, InitiatedBy=InitiatedBy.user.userPrincipalName;
+  let DisplayNames = AuditLogs
+      | where OperationName == "Add device"
+      | extend Replaced=replace_string(tostring(TargetResources[0].modifiedProperties[6].newValue), '[\"', '')
+      | project DeviceID=replace_string(Replaced, '\"]', ''), DeviceName=TargetResources[0].displayName;
+  NewDevices
+      | extend DeviceID = tostring(DeviceID)
+      | join kind=inner (
+          DisplayNames
+          | extend DeviceID = tostring(DeviceID)
+      ) on $left.DeviceID == $right.DeviceID
+      | summarize by TimeGenerated, DeviceID, tostring(DeviceName), tostring(OS), tostring(DeviceTrustType), tostring(InitiatedBy)
+      | order by TimeGenerated
