@@ -17,6 +17,10 @@ DeviceNetworkEvents
 | where LocalPort == "445"
 | where RemoteIPType == @"Public"
 | where not (ipv4_is_private(LocalIP))
+// KQL does not currently have a IPv6 private check function
+| where not(LocalIP startswith "fe80:") // IPv6 Link-local
+| where not(LocalIP startswith "fc") // IPv6 ULA
+| where not(LocalIP startswith "fd") // IPv6 ULA
 
 
 
