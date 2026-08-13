@@ -15,12 +15,13 @@ DeviceNetworkEvents
 | where Timestamp > ago(30d)
 | where ActionType == @"InboundConnectionAccepted"
 | where LocalPort == "445"
-| where RemoteIPType == @"Public"
-| where not (ipv4_is_private(LocalIP))
-// KQL does not currently have a IPv6 private check function
-| where not(LocalIP startswith "fe80:") // IPv6 Link-local
-| where not(LocalIP startswith "fc") // IPv6 ULA
-| where not(LocalIP startswith "fd") // IPv6 ULA
+| extend ExtractedIPv4 = extract(@"::ffff:(\d+\.\d+\.\d+\.\d+)$", 1, LocalIP) // Parse IPv4 address when LocalIPType == "FourToSixMapping"
+| where RemoteIPType == "Public"
+| where LocalIPType == "Public" or
+    (LocalIPType == "FourToSixMapping" and
+     isnotempty(ExtractedIPv4) and  //Ignore if ExtractedIPv4 is null meaning it was not FourToSixMapping
+     not(ipv4_is_private(ExtractedIPv4))
+    )
 
 
 
