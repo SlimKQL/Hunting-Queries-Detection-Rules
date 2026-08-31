@@ -8,6 +8,14 @@ MicrosoftGraphActivityLogs
 | distinct IPAddress
 | join ThreatIntelligenceIndicator on $left.IPAddress == $right.NetworkIP
 
+// Add New Query for new Table ThreatIntelIndicators as the previous one is deprecated and will shut down soon. Ref : https://learn.microsoft.com/en-us/azure/sentinel/work-with-stix-objects-indicators
+
+MicrosoftGraphActivityLogs
+| where TimeGenerated > ago(1h)
+| distinct IPAddress
+| join kind = inner (ThreatIntelIndicators
+| where IndicatorType in ("ipv4-addr", "ipv6-addr", "network-traffic"))on $left.IPAddress == $right.ObservableValue
+
 //Microsoft have released a new premium user risk detection in Identity Protection called Suspicious API Traffic. This detection is reported when Identity Protection detects anomalous Graph traffic by a user. Suspicious API traffic might suggest that a user is compromised and conducting reconnaissance in their environment. 
 
 SigninLogs
