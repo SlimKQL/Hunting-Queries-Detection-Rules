@@ -12,7 +12,7 @@ let MaliciousDomainTable=externaldata(RawData:string)
 | parse RawData with MaliciousDomain:string;
 EmailUrlInfo
 | where Timestamp > ago(1h)
-| where UrlDomain endswith ".pages.dev" or UrlDomain endswith ".workers.dev"
+| where UrlDomain endswith ".pages.dev" or UrlDomain endswith ".workers.dev" or UrlDomain  endswith ".r2.dev" 
 | join EmailEvents on NetworkMessageId
 | where EmailDirection == "Inbound"
 | where DeliveryAction != "Blocked"
