@@ -1,0 +1,339 @@
+[
+  {
+    "id": "excortlex.cloudrix.workers.dev",
+    "domainName": "excortlex.cloudrix.workers.dev",
+    "time": "2026-09-09T07:45:30.877Z",
+    "threatLevel": 0,
+    "isNew": false,
+    "relatedUrls": [
+      {
+        "value": "https://organich20.org/api/verification/init?session=13jmyxub85ymttsk1go&flow=first_party&prompt_profile=default",
+        "threatLevel": 2
+      },
+      {
+        "value": "https://organich20.org/api/verification/init?session=qg3tip2z2nmmtrc3qba&flow=first_party&prompt_profile=default",
+        "threatLevel": 2
+      }
+    ],
+    "relatedIps": [
+      {
+        "value": "188.114.96.3",
+        "port": "443",
+        "geo": "us",
+        "asn": "CLOUDFLARENET",
+        "threatLevel": 3
+      },
+      {
+        "value": "188.114.97.3",
+        "port": "443",
+        "geo": "us",
+        "asn": "CLOUDFLARENET",
+        "threatLevel": 3
+      }
+    ],
+    "isExpanded": false
+  },
+  {
+    "id": "panel.superspeed.co.uk",
+    "domainName": "panel.superspeed.co.uk",
+    "time": "2026-09-08T18:30:43.349Z",
+    "threatLevel": 2,
+    "isNew": false,
+    "relatedUrls": [
+      {
+        "value": "https://panel.superspeed.co.uk/api/verification/init?session=i9hr5k0nq5emtt0946g&flow=prt&prompt_profile=default&link_id=lnk_b3f73a4f3586bb7a",
+        "threatLevel": 2
+      },
+      {
+        "value": "https://panel.superspeed.co.uk/api/verification/init?session=b0aab1ap61bmtj2xyvm&flow=prt&prompt_profile=default&link_id=lnk_11f0fc9452934fe6",
+        "threatLevel": 2
+      }
+    ],
+    "relatedIps": [
+      {
+        "value": "202.155.8.217",
+        "port": "443",
+        "geo": "us",
+        "asn": "AS-ULTAHOST",
+        "threatLevel": 2
+      }
+    ],
+    "isExpanded": false
+  },
+  {
+    "id": "panova.jojojavasurvey.com",
+    "domainName": "panova.jojojavasurvey.com",
+    "time": "2026-09-04T13:36:30.980Z",
+    "threatLevel": 2,
+    "isNew": false,
+    "relatedUrls": [
+      {
+        "value": "https://panova.jojojavasurvey.com/api/verification/check?session=482cvmi19jcmtmzwl4y",
+        "threatLevel": 0
+      }
+    ],
+    "relatedIps": [
+      {
+        "value": "192.155.93.152",
+        "port": "443",
+        "geo": "sg",
+        "asn": "AKAMAI-LINODE-AP Akamai Connected Cloud",
+        "threatLevel": 2
+      }
+    ],
+    "isExpanded": false
+  },
+  {
+    "id": "panel.carmalpmc.co.zw",
+    "domainName": "panel.carmalpmc.co.zw",
+    "time": "2026-09-04T08:23:27.483Z",
+    "threatLevel": 2,
+    "isNew": false,
+    "relatedUrls": [
+      {
+        "value": "https://panel.carmalpmc.co.zw/api/verification/init?session=xpw0haq8qkpmtmosr1q&flow=prt&prompt_profile=default&link_id=lnk_3dabca32980267c6",
+        "threatLevel": 2
+      },
+      {
+        "value": "https://panel.carmalpmc.co.zw/api/verification/init?session=r7ilk0eed6mtjpdxbi&flow=prt&prompt_profile=default&link_id=lnk_3dabca32980267c6",
+        "threatLevel": 2
+      }
+    ],
+    "relatedIps": [
+      {
+        "value": "144.172.118.30",
+        "port": "443",
+        "geo": "us",
+        "asn": "ROUTERHOSTING",
+        "threatLevel": 2
+      }
+    ],
+    "isExpanded": false
+  },
+  {
+    "id": "dauntingmoon.online",
+    "domainName": "dauntingmoon.online",
+    "time": "2026-09-02T16:57:38.291Z",
+    "threatLevel": 2,
+    "isNew": false,
+    "relatedUrls": [
+      {
+        "value": "https://dauntingmoon.online/api/verification/init?session=sy2yt87o2vmtkc50ge&flow=broker&prompt_profile=default&link_id=lnk_5d1df663a0c3a098",
+        "threatLevel": 2
+      }
+    ],
+    "relatedIps": [
+      {
+        "value": "206.206.127.153",
+        "port": "443",
+        "geo": "us",
+        "asn": "LATITUDE-SH",
+        "threatLevel": 2
+      }
+    ],
+    "isExpanded": false
+  },
+  {
+    "id": "msoft-common-cs-8110.us-east-1.linodeobjects.com",
+    "domainName": "msoft-common-cs-8110.us-east-1.linodeobjects.com",
+    "time": "2026-09-02T14:35:54.286Z",
+    "threatLevel": 2,
+    "isNew": false,
+    "relatedUrls": [
+      {
+        "value": "https://msoft-common-cs-8110.us-east-1.linodeobjects.com/api/verification/init?session=9x24df4mi8lmtk75vf7&flow=prt&prompt_profile=default&link_id=lnk_f46e024187dbe339",
+        "threatLevel": 2
+      },
+      {
+        "value": "https://msoft-common-cs-8110.us-east-1.linodeobjects.com/api/verification/init?session=ucgnq5si52omtk785u7&flow=prt&prompt_profile=default&link_id=lnk_f46e024187dbe339",
+        "threatLevel": 2
+      }
+    ],
+    "relatedIps": [
+      {
+        "value": "172.104.215.163",
+        "port": "443",
+        "geo": "sg",
+        "asn": "AKAMAI-LINODE-AP Akamai Connected Cloud",
+        "threatLevel": 2
+      },
+      {
+        "value": "45.33.67.90",
+        "port": "",
+        "geo": "",
+        "asn": "",
+        "threatLevel": null
+      },
+      {
+        "value": "172.104.26.177",
+        "port": "",
+        "geo": "",
+        "asn": "",
+        "threatLevel": null
+      },
+      {
+        "value": "172.104.215.250",
+        "port": "",
+        "geo": "",
+        "asn": "",
+        "threatLevel": null
+      },
+      {
+        "value": "50.116.58.96",
+        "port": "",
+        "geo": "",
+        "asn": "",
+        "threatLevel": null
+      },
+      {
+        "value": "97.107.136.17",
+        "port": "",
+        "geo": "",
+        "asn": "",
+        "threatLevel": null
+      },
+      {
+        "value": "172.104.215.45",
+        "port": "",
+        "geo": "",
+        "asn": "",
+        "threatLevel": null
+      },
+      {
+        "value": "97.107.136.40",
+        "port": "",
+        "geo": "",
+        "asn": "",
+        "threatLevel": null
+      },
+      {
+        "value": "50.116.58.170",
+        "port": "",
+        "geo": "",
+        "asn": "",
+        "threatLevel": null
+      },
+      {
+        "value": "172.104.215.98",
+        "port": "",
+        "geo": "",
+        "asn": "",
+        "threatLevel": null
+      },
+      {
+        "value": "45.79.190.199",
+        "port": "",
+        "geo": "",
+        "asn": "",
+        "threatLevel": null
+      },
+      {
+        "value": "97.107.136.9",
+        "port": "443",
+        "geo": "sg",
+        "asn": "AKAMAI-LINODE-AP Akamai Connected Cloud",
+        "threatLevel": 2
+      }
+    ],
+    "isExpanded": false
+  },
+  {
+    "id": "panel.info-newcentury.com",
+    "domainName": "panel.info-newcentury.com",
+    "time": "2026-09-02T12:28:26.952Z",
+    "threatLevel": 2,
+    "isNew": false,
+    "relatedUrls": [
+      {
+        "value": "https://panel.info-newcentury.com/api/verification/init?session=hdo6rat6225mtk2o4o2&flow=prt&prompt_profile=default&link_id=lnk_f46e024187dbe339",
+        "threatLevel": 2
+      }
+    ],
+    "relatedIps": [
+      {
+        "value": "38.146.25.183",
+        "port": "443",
+        "geo": "us",
+        "asn": "COGENT-174",
+        "threatLevel": 2
+      }
+    ],
+    "isExpanded": false
+  },
+  {
+    "id": "bonanstones.com",
+    "domainName": "bonanstones.com",
+    "time": "2026-09-02T00:49:35.028Z",
+    "threatLevel": 0,
+    "isNew": false,
+    "relatedUrls": [
+      {
+        "value": "https://bonanstones.com/api/verification/init?session=rlouxoqmicmtjdpe1f&flow=first_party&prompt_profile=default",
+        "threatLevel": 2
+      }
+    ],
+    "relatedIps": [
+      {
+        "value": "172.67.182.66",
+        "port": "443",
+        "geo": "us",
+        "asn": "CLOUDFLARENET",
+        "threatLevel": 3
+      },
+      {
+        "value": "104.21.64.108",
+        "port": "",
+        "geo": "",
+        "asn": "",
+        "threatLevel": null
+      }
+    ],
+    "isExpanded": false
+  },
+  {
+    "id": "panel.bcarl24.icu",
+    "domainName": "panel.bcarl24.icu",
+    "time": "2026-09-02T00:08:51.630Z",
+    "threatLevel": 2,
+    "isNew": false,
+    "relatedUrls": [
+      {
+        "value": "https://panel.bcarl24.icu/api/verification/init?session=s6y98ftyb3jmtjc8tmg&flow=broker&prompt_profile=default&link_id=lnk_3b229345a9d8d6f5",
+        "threatLevel": 2
+      }
+    ],
+    "relatedIps": [
+      {
+        "value": "185.215.151.205",
+        "port": "443",
+        "geo": "hk",
+        "asn": "MILLENIALHOSTLIMITED-AS-GB MillenialHost Limited",
+        "threatLevel": 2
+      }
+    ],
+    "isExpanded": false
+  },
+  {
+    "id": "panel.reliablelifecure.com",
+    "domainName": "panel.reliablelifecure.com",
+    "time": "2026-09-01T08:56:48.055Z",
+    "threatLevel": 2,
+    "isNew": false,
+    "relatedUrls": [
+      {
+        "value": "https://panel.reliablelifecure.com/api/verification/init?session=aji0cd4f8ecmtifo2vn&flow=prt&prompt_profile=default&link_id=lnk_f4091e4d6508836f",
+        "threatLevel": 2
+      }
+    ],
+    "relatedIps": [
+      {
+        "value": "151.241.99.187",
+        "port": "443",
+        "geo": "us",
+        "asn": "AS-ULTAHOST",
+        "threatLevel": 2
+      }
+    ],
+    "isExpanded": false
+  }
+]
