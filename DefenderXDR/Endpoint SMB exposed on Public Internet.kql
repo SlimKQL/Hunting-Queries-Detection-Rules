@@ -15,8 +15,13 @@ DeviceNetworkEvents
 | where Timestamp > ago(30d)
 | where ActionType == @"InboundConnectionAccepted"
 | where LocalPort == "445"
-| where RemoteIPType == @"Public"
-| where not (ipv4_is_private(LocalIP))
+| extend ExtractedIPv4 = extract(@"::ffff:(\d+\.\d+\.\d+\.\d+)$", 1, LocalIP) // Parse IPv4 address when LocalIPType == "FourToSixMapping"
+| where RemoteIPType == "Public"
+| where LocalIPType == "Public" or
+    (LocalIPType == "FourToSixMapping" and
+     isnotempty(ExtractedIPv4) and  //Ignore if ExtractedIPv4 is null meaning it was not FourToSixMapping
+     not(ipv4_is_private(ExtractedIPv4))
+    )
 
 
 
