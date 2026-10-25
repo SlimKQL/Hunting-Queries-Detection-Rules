@@ -1,0 +1,5 @@
+﻿SHA-256,Sample,Classification
+0c5486f06620e26e316f4b33f318b0d646d5e1133789331aa2fed012360d1486,nfs,Mirai-derived DDoS bot
+7d9965deae0d3d9834a1299e98ce901329ae071f8744f97746137ea033f100a9,x86_64 (2),Mirai variant 2.0.4_socks5
+a5289abece66fbaf33a6186f315fb6901658e8551c68933e56e65838b95fc3af,cb,"Nim implant crong3-agent (build 3.0.0-929), posing as sysmon"
+f0aa83bbbd2c75e2f71ec16029ee5fcfad59f3a8efa30a500b815f0f6c18d987,f0aa…,Unknown malware
