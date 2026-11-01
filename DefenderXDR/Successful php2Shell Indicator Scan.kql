@@ -1,0 +1,11 @@
+let IOC = dynamic([
+"2.59.133.151",
+"185.65.134.250",
+"185.184.222.160",
+"206.245.153.56",
+"23.234.81.67"
+]);
+DeviceNetworkEvents
+| where Timestamp > ago(30d)
+| where ActionType == "InboundConnectionAccepted"
+| where RemoteIP has_any(IOC)
